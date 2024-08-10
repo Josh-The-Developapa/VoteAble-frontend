@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import avatarPic from '../../assets/Logo.svg';
-import Header from '../../components/Header/Header.jsx';
-import HomepageSVG from '../../assets/Blocks.svg';
-import LoginSVG from '../../assets/Account.svg';
+import LoginSVG from '../../assets/LoginGraphic.svg';
 
 import './Login.css';
 
@@ -80,8 +78,6 @@ export default function Login() {
 
   return (
     <div className="joinOuterContainer">
-      {/* <Header /> */}
-      <img src={HomepageSVG} className="login-svg1" />
       <div className="joinInnerContainer">
         <img src={avatarPic} className="avPic" alt="VoteAble" />
         <h2 className="heading">Login</h2>
@@ -142,7 +138,7 @@ export default function Login() {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              marginTop: '15px',
+              marginTop: '0px',
             }}
           >
             <label style={{ marginRight: '20px', fontFamily: 'Kumbh Sans' }}>
@@ -175,9 +171,6 @@ export default function Login() {
             marginTop: '15px',
           }}
         >
-          {/* <label style={{ fontFamily: 'Kumbh Sans', marginBottom: '5px' }}>
-            Select House:
-          </label> */}
           <select
             value={selectedHouse}
             onChange={handleHouseChange}
@@ -187,9 +180,9 @@ export default function Login() {
               borderRadius: '4px',
               fontSize: '16px',
               width: '100%',
-              marginBottom: '5px',
+              // marginBottom: '5px',
             }}
-            className="joinInput mt-10"
+            className="joinInput"
           >
             <option value="">Select a house</option>
             <option value="Hawks">Hawks</option>
@@ -214,7 +207,7 @@ export default function Login() {
           </p>
         </button>
       </div>
-      {/* <img src={LoginSVG} className="login-svg2" /> */}
+      <img src={LoginSVG} className="login-svg" />
     </div>
   );
 }

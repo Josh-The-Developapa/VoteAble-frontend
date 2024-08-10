@@ -57,15 +57,14 @@ function MyPolls() {
   }, []);
 
   const handleNext = () => {
-    setTimeout(() => {
-      if (carouselRef.current) {
-        carouselRef.current.next();
-      }
-    }, 2000); // wait for 5 seconds
+    if (carouselRef.current) {
+      carouselRef.current.next();
+    }
   };
+
   const handleBack = () => {
     if (carouselRef.current) {
-      carouselRef.current.back();
+      carouselRef.current.prev();
     }
   };
 
@@ -74,18 +73,18 @@ function MyPolls() {
     setCurrentIndex(selectedIndex);
   };
 
-  const handleProgressBarClick = (e) => {
-    const progressBar = e.target;
-    const clickPosition =
-      (e.clientX - progressBar.getBoundingClientRect().left) /
-      progressBar.offsetWidth;
-    const newIndex = Math.floor(clickPosition * polls.length);
-    console.log('Progress bar clicked:', clickPosition, newIndex);
-    setCurrentIndex(newIndex);
-    if (carouselRef.current) {
-      carouselRef.current.to(newIndex);
-    }
-  };
+  // const handleProgressBarClick = (e) => {
+  //   const progressBar = e.target;
+  //   const clickPosition =
+  //     (e.clientX - progressBar.getBoundingClientRect().left) /
+  //     progressBar.offsetWidth;
+  //   const newIndex = Math.floor(clickPosition * polls.length);
+  //   console.log('Progress bar clicked:', clickPosition, newIndex);
+  //   setCurrentIndex(newIndex);
+  //   if (carouselRef.current) {
+  //     carouselRef.current.to(newIndex);
+  //   }
+  // };
 
   return (
     <div>
@@ -156,7 +155,7 @@ function MyPolls() {
               </div>
               <div
                 className="progress-bar-container"
-                onClick={handleProgressBarClick}
+                // onClick={handleProgressBarClick}
               >
                 <div
                   className="progress-bar"

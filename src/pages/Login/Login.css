@@ -5,6 +5,7 @@ body {
   margin: 0;
   font-family: 'Kumbh Sans', sans-serif;
   background-color: #ffffff;
+  overflow-x: hidden;
 }
 #root {
   height: 100vh;
@@ -14,7 +15,7 @@ body {
   position: relative;
   object-fit: contain;
   top: 15px;
-  height: 60px;
+  height: 50px;
 }
 * {
   box-sizing: border-box;
@@ -35,13 +36,13 @@ body {
   padding-left: 25px;
   padding-bottom: 25px;
   padding-right: 30px;
-  padding-top: 35px;
+  padding-top: 15px;
   margin-top: 100px;
   margin-bottom: auto;
-  max-width: 400px;
+  min-width: 300px;
   width: 350px;
   margin-left: auto;
-  margin-right: auto;
+  margin-right: 200px;
   background-color: #ffffff;
   border-radius: 5px;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -71,14 +72,8 @@ h3 {
   border-radius: 10px;
   padding: 10px 15px;
   width: 100%;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-family: 'Kumbh Sans', sans-serif;
-}
-
-.heading {
-  color: black;
-  font-size: 45px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   font-family: 'Kumbh Sans', sans-serif;
 }
 .ALSU {
@@ -126,39 +121,45 @@ h3 {
   background: #4a00aa;
 }
 
-@media screen and (max-width: 400px) {
+.login-svg {
+  height: auto;
+  width: 85vw;
+  /* min-width: 200px; */
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0;
+  object-fit: cover;
+  margin-top: 75px;
+  margin-left: 0px;
+  margin-right: 0px;
+  /* background-color: blue; */
+}
+
+/* @media screen and (max-width: 400px) { */
+
+.heading {
+  font-size: 35px;
+  font-weight: 550;
+  color: #000000;
+  font-family: 'Kumbh Sans', sans-serif;
+}
+.avPic {
+  height: 40px;
+}
+
+@media screen and (max-width: 740px) {
   .joinInnerContainer {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .heading {
-    font-size: 30px;
-    font-weight: 550;
-  }
-  .avPic {
-    height: 40px;
+    margin-right: auto;
   }
 }
 
 @media screen and (min-width: 701px) {
-  .login-svg1 {
-    height: 100vh;
-    width: 30vw;
-    position: absolute;
-    left: -15px;
-    padding: 0;
-    object-fit: cover;
-  }
 }
 
-@media screen and (max-width: 700px) {
-  .login-svg2 {
-    position: absolute;
-    right: 0;
-    height: 250px;
-    bottom: 0;
-  }
-  .login-svg1 {
-    display: none;
+@media screen and (max-width: 370px) {
+  .joinInnerContainer {
+    margin-right: 10px;
+    margin-left: 10px;
   }
 }

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-// import { CircularProgress } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Spinner } from 'react-bootstrap';
 import './Poll.css';
 
 function Poll(props) {
@@ -12,10 +11,12 @@ function Poll(props) {
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [signupFirstErr, setSignupFirstErr] = useState();
+  const [loading, setLoading] = useState(false); // State for loading
+  const [buttonDisabled, setButtonDisabled] = useState(false); // State for disabling button
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    async function poll() {
+    async function fetchPoll() {
       const res = await fetch(
         `https://voteable-backend.onrender.com/v1/poll/${
           pollId ? pollId : props.pollId
@@ -27,7 +28,6 @@ function Poll(props) {
       const data = await res.json();
       if (data.error) {
         setPollNotFound(data.error);
-
         return;
       } else {
         setQuestion(data.data.question);
@@ -35,7 +35,7 @@ function Poll(props) {
       }
       console.log(data);
     }
-    poll();
+    fetchPoll();
   }, [pollId, props.pollId]);
 
   async function vote() {
@@ -43,6 +43,9 @@ function Poll(props) {
       setSignupFirstErr('Please select an option to vote.');
       return;
     }
+
+    setLoading(true); // Start loading
+    setButtonDisabled(true); // Disable button immediately
 
     const res = await fetch(
       `https://voteable-backend.onrender.com/v1/vote/${
@@ -62,14 +65,20 @@ function Poll(props) {
     );
 
     const data = await res.json();
+    setLoading(false); // End loading
+
     if (res.ok) {
       setSignupFirstErr('Voted');
-      // props.handleNext(); // Call the function to go to the next item
-    }
-    if (data.error) {
+      props.handleNext(); // Call the function to go to the next item
+    } else if (data.error) {
       setSignupFirstErr(data.error);
-      return;
+      props.handleNext(); // Call the function to go to the next item
     }
+
+    // Re-enable the button after 5 seconds
+    setTimeout(() => {
+      setButtonDisabled(false);
+    }, 2000);
   }
 
   return (
@@ -90,7 +99,6 @@ function Poll(props) {
           </p>
         ) : (
           <p
-            // className="passp"
             className="mainTitleQuestion"
             style={{
               fontSize: '30px',
@@ -117,7 +125,6 @@ function Poll(props) {
                 <img
                   src={`https://voteable-backend.onrender.com/uploads/${option.photo}`}
                   alt={option.text}
-                  // className="optionImg"
                 />
               )}
               <div className="candidate-info">
@@ -143,16 +150,22 @@ function Poll(props) {
 
           <div className="buttonContainer">
             <button
-              // to={`/poll/results/${props.pollId}`}
-              onClick={() => {
-                props.handleBack();
-              }}
+              onClick={() => props.handleBack()}
               className="vote-button"
+              disabled={buttonDisabled} // Disable button based on state
             >
               Back
             </button>
-            <button className="vote-button" onClick={vote}>
-              Vote
+            <button
+              className="vote-button"
+              onClick={vote}
+              disabled={buttonDisabled || loading} // Disable button during loading and for 5 seconds after
+            >
+              {loading ? (
+                <Spinner animation="border" size="sm" /> // Show spinner during loading
+              ) : (
+                'Vote'
+              )}
             </button>
           </div>
         </div>

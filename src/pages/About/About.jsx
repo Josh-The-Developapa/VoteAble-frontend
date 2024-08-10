@@ -2,11 +2,11 @@ import React from 'react';
 import './About.css';
 import Header from '../../components/Header/Header.jsx';
 import Logo from '../../assets/Logo.svg';
-import TeamPic from '../../assets/team-pic.jpg';
+import TeamPic from '../../assets/team-pic.jpeg';
 import LaptopPic from '../../assets/Laptop.png';
 import EmmanuelImage from '../../assets/Emmanuel Asiimwe.jpeg';
 import AkhilImage from '../../assets/Akhil Muni.jpeg';
-import JoshuaImage from '../../assets/JMuks.jpeg';
+import JoshuaImage from '../../assets/JMuks.png';
 import AlbertImage from '../../assets/Albert Jordan Mulumba.jpeg';
 import KhushImage from '../../assets/Khush Shah.jpeg';
 
@@ -17,16 +17,18 @@ function AboutVoteable() {
       <div className="about-container">
         <div className="about-left">
           <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              justifyContent: 'flex-start',
-              width: '100%',
-              padding: 0,
-              // marginTop: '20px',
-              textAlign: 'left',
-            }}
+            style={
+              {
+                // display: 'flex',
+                // flexDirection: 'column',
+                // alignItems: 'flex-start',
+                // justifyContent: 'flex-start',
+                // width: '100%',
+                // padding: 0,
+                // // marginTop: '20px',
+                // textAlign: 'left',
+              }
+            }
           >
             <img src={Logo} alt="VoteAble Logo" className="logo2" />
             <h1>
@@ -44,17 +46,7 @@ function AboutVoteable() {
           </p>
         </div>
         <div className="about-middle">
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              padding: '15px',
-              paddingTop: '0px',
-              // marginBottom: '100px',
-              marginTop: '0px',
-              height: '50%',
-            }}
-          >
+          <div className="middle-top">
             <h2
               style={{
                 fontFamily: 'Kumbh Sans',
@@ -87,8 +79,6 @@ function AboutVoteable() {
             <h2
               style={{
                 textAlign: 'center',
-                marginBottom: '25px',
-                marginTop: '25px',
               }}
             >
               Our Team
@@ -125,7 +115,7 @@ function AboutVoteable() {
                   Co-Founder & CFO
                 </p>
               </div>
-              <div className="team-member" style={{ marginLeft: '20px' }}>
+              <div className="team-member">
                 <img
                   src={EmmanuelImage}
                   alt="Emmanuel's Pic"

@@ -1,210 +1,155 @@
-.user-card {
-  height: 380px;
-  width: 320px;
-  background-color: white;
-  margin-top: -160px;
-  border-radius: 10px;
-  box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
+.account-page {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 10px;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.231), 0 6px 10px rgba(0, 0, 0, 0.284);
-}
-.about-card {
-  height: 480px;
-  width: 320px;
-  background-color: white;
-  margin-top: 100px;
-  border-radius: 10px;
-  box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  margin-left: 50px;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  text-align: center;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.231), 0 6px 10px rgba(0, 0, 0, 0.284);
-  z-index: 10;
-}
-
-.vote-now {
-  height: 480px;
-  width: 320px;
-  background-color: white;
-  margin-top: 250px;
-  border-radius: 10px;
-  box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  margin-left: 50px;
-  justify-content: flex-start;
-  align-items: center;
-  text-align: center;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.231), 0 6px 10px rgba(0, 0, 0, 0.284);
-}
-
-.profile-pic {
-  height: 150px;
-  width: 100%;
-  margin: 0;
-}
-
-.team-pic {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
-  height: 250px;
-  width: 100%;
-  object-fit: cover;
-  margin: 0;
-  border: none;
-}
-
-.vote-now-pic {
-  height: 250px;
-  width: 100%;
-  object-fit: cover;
-  margin: 0;
-}
-
-/* .user-card {
-  height: 380px;
-  max-width: 320px;
-  min-width: 250px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 10px;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.231), 0 6px 10px rgba(0, 0, 0, 0.284);
-  margin-top: -10%;
-}
-.about-card {
-  padding-bottom: 20px;
-  max-width: 320px;
-  min-width: 300px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  margin-left: 50px;
-  justify-content: flex-start;
-  align-items: center;
-  text-align: center;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.231), 0 6px 10px rgba(0, 0, 0, 0.284);
-}
-
-.vote-now {
-  min-width: 300px;
-  max-width: 480px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  margin-left: 50px;
-  justify-content: flex-start;
-  align-items: center;
-  text-align: center;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.231), 0 6px 10px rgba(0, 0, 0, 0.284);
-}
-
-.profile-pic {
-  height: 150px;
-  width: 100%;
-  margin: 0;
-}
-
-.team-pic {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
-  height: 240px;
-  width: 100%;
-  object-fit: cover;
-  margin: 0;
-  border: none;
-}
-
-.vote-now-pic {
-  height: 250px;
-  width: 100%;
-  object-fit: cover;
-  margin: 0;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
 .cards-container {
   display: flex;
-  flex-direction: row;
-  width: 100vw;
-  height: 100vh;
   justify-content: center;
-  align-items: center;
-  padding-top: 100px;
-  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 50px;
+  padding: 20px;
 }
 
 .card {
-  margin: 10px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  overflow: hidden;
+  justify-content: flex-start;
 }
 
-.user-card,
-.about-card,
+.user-card {
+  height: 380px;
+  margin-top: 85px;
+  padding: 10px;
+}
+
+.about-card {
+  height: 480px;
+  margin-top: 170px;
+}
+
 .vote-now {
-  flex: 1 1 calc(33.33% - 20px);
-  box-sizing: border-box;
+  height: 480px;
+  margin-top: 220px;
 }
 
-@media screen and (max-width: 940px) {
-  .user-card,
-  .about-card,
-  .vote-now {
-    flex: 1 2 40%;
-  }
+.profile-pic {
+  height: 150px;
+  width: 100%;
+  margin: 0;
 }
 
-.Accounts-btn-style {
+.team-pic {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  height: 250px;
+  width: 100%;
+  object-fit: cover;
+  margin: 0;
+  border: none;
+}
+.vote-now-pic {
+  height: 250px;
+  width: 100%;
+  object-fit: cover;
+  margin: 0;
+}
+
+h2 {
+  margin: 20px 0 10px;
+  font-weight: 550;
+  text-align: center;
+}
+
+.user-info {
+  display: flex;
+  justify-content: center;
+  /* gap: 25px; */
+  /* margin-bottom: 20px; */
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  /* gap: 5px; */
+}
+
+.vote-status {
+  display: flex;
+  align-items: center;
+  /* gap: 5px; */
+  font-size: 25px;
+}
+
+.status-dot {
+  font-size: 30px;
+}
+
+.status-dot.voted {
+  color: green;
+}
+.status-dot.not-voted {
+  color: red;
+}
+
+.card p {
+  text-align: center;
+  margin: 10px 0;
+  padding: 0 10px;
+}
+
+.account-buttons {
   cursor: pointer;
   color: #fff !important;
-  background: linear-gradient(
-    to right,
-    #312783 0%,
-    #1c164a 33%,
-    #0b091d 67%,
-    #4a2342 100%
-  );
+  background: #27003c;
   padding: 10px 25px;
   margin: 0 10px;
-  margin-bottom: 20px;
   border-radius: 5px;
   font-family: 'Kumbh Sans', sans-serif;
   font-size: 20px;
 }
 
-@media screen and (min-width: 680px) {
-  .welcome-account {
-    display: none;
+.gradient-bg {
+  background: linear-gradient(to right, #312783, #1c164a, #0b091d, #4a2342);
+}
+
+.background-svg {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 400px;
+  z-index: -1;
+}
+
+@media screen and (max-width: 1007px) {
+  .cards-container {
+    flex-wrap: wrap;
+  }
+
+  .vote-now {
+    margin-top: 20px;
   }
 }
 
-@media screen and (max-width: 679px) {
-  .welcome-account {
-    text-align: center;
-    font-family: 'Kumbh Sans';
-    margin-top: 100px;
-    margin-bottom: 10px;
-    font-size: 36px;
-    font-weight: 520;
-    margin-left: auto;
-    margin-right: auto;
-  }
+@media screen and (max-width: 690px) {
   .cards-container {
-    padding-top: 0px;
+    flex-direction: column;
+    /* gap: 20px; */
   }
-} */
+
+  .about-card {
+    margin-top: 20px;
+  }
+}

@@ -219,7 +219,7 @@ function CreatePoll() {
                       marginBottom: '5px',
                     }}
                   >
-                    {/* <option value="">Select a class</option>
+                    <option value="">Select a class</option>
                     <option value="N/A">N/A</option>
                     <option value="Y7">Y7</option>
                     <option value="Y8">Y8</option>
@@ -227,9 +227,8 @@ function CreatePoll() {
                     <option value="Y10">Y10</option>
                     <option value="Y11">Y11</option>
                     <option value="IB1">IB1</option>
-                    <option value="IB2">IB2</option> */}
-                    <option value="">Select a class</option>
-                    <option value="N/A">N/A</option>
+                    <option value="IB2">IB2</option>
+                    {/* <option value="N/A">N/A</option>
                     <option value="S1S">S1S</option>
                     <option value="S1N">S1N</option>
                     <option value="S2S">S2S</option>
@@ -241,7 +240,7 @@ function CreatePoll() {
                     <option value="S5S">S5S</option>
                     <option value="S5A">S5A</option>
                     <option value="S6S">S6S</option>
-                    <option value="S6A">S6A</option>
+                    <option value="S6A">S6A</option> */}
                   </select>
                   <select
                     value={option.house}
@@ -314,7 +313,7 @@ function CreatePoll() {
               width: '100%',
             }}
           >
-            {/* <option value="">Select a class</option>
+            <option value="">Select a class</option>
             <option value="N/A">N/A</option>
             <option value="Y7">Y7</option>
             <option value="Y8">Y8</option>
@@ -322,8 +321,8 @@ function CreatePoll() {
             <option value="Y10">Y10</option>
             <option value="Y11">Y11</option>
             <option value="IB1">IB1</option>
-            <option value="IB2">IB2</option> */}
-            <option value="">Select a class</option>
+            <option value="IB2">IB2</option>
+            {/* <option value="">Select a class</option>
             <option value="N/A">N/A</option>
             <option value="S1S">S1S</option>
             <option value="S1N">S1N</option>
@@ -336,7 +335,7 @@ function CreatePoll() {
             <option value="S5S">S5S</option>
             <option value="S5A">S5A</option>
             <option value="S6S">S6S</option>
-            <option value="S6A">S6A</option>
+            <option value="S6A">S6A</option> */}
           </select>
           <select
             id="houseDropdown"

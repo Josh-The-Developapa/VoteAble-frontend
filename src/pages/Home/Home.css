@@ -1,11 +1,11 @@
 .flex-bg {
-  padding-top: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #ffffff;
-  font-family: 'Kumbh Sans', sans-serif;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: calc(100vh - 75px);
+  width: 100vw;
+  margin-top: 75px;
 }
 
 .highlight {
@@ -16,11 +16,10 @@
 @media screen and (max-width: 700px) {
   .homepage-svg {
     position: absolute;
-    height: 40vh;
-    min-height: 300px;
     bottom: 0;
     left: -15px;
     object-fit: cover;
+    height: 45%;
   }
 
   .logo {
@@ -28,19 +27,19 @@
   }
 
   .content {
-    position: absolute;
-    top: 100px;
     margin-left: auto;
     margin-right: auto;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
+    height: 50%;
+    width: 100%;
   }
 
   .title {
-    font-size: 40px;
-    font-weight: 580;
+    font-size: 45px;
+    font-weight: 600;
     text-align: justify;
     letter-spacing: 3px;
     font-family: 'Kumbh Sans', sans-serif;
@@ -48,11 +47,13 @@
 
   .vote-now-btn {
     color: white;
-    padding-left: 30px;
-    padding-left: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
+    /* padding-left: 30px;
+    padding-left: 30px; */
     padding-top: 15px;
     padding-bottom: 15px;
-    font-size: 19px;
+    font-size: 20px;
     font-weight: 300;
     background: linear-gradient(
       to right,
@@ -70,7 +71,7 @@
 
 @media screen and (min-width: 701px) {
   .homepage-svg {
-    height: 100vh;
+    height: calc(100vh - 75px);
     width: 40vw;
     min-width: 200px;
     position: absolute;
@@ -79,6 +80,7 @@
     left: -15px;
     padding: 0;
     object-fit: cover;
+    margin-top: 75px;
   }
 
   .content {
