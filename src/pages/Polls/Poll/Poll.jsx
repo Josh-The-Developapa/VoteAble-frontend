@@ -13,9 +13,12 @@ function Poll(props) {
   const [signupFirstErr, setSignupFirstErr] = useState();
   const [loading, setLoading] = useState(false); // State for loading
   const [buttonDisabled, setButtonDisabled] = useState(false); // State for disabling button
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+
     async function fetchPoll() {
       const res = await fetch(
         `https://voteable-backend.onrender.com/v1/poll/${
@@ -43,6 +46,8 @@ function Poll(props) {
       setSignupFirstErr('Please select an option to vote.');
       return;
     }
+
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
     setLoading(true); // Start loading
     setButtonDisabled(true); // Disable button immediately
@@ -93,7 +98,7 @@ function Poll(props) {
         {signupFirstErr === 'Voted' ? (
           <p
             className="mainTitleQuestion"
-            style={{ fontSize: '30px', marginLeft: '10px', fontWeight: 700 }}
+            style={{ fontSize: '20px', marginLeft: '35px', fontWeight: 700 }}
           >
             Voted
           </p>
@@ -101,8 +106,8 @@ function Poll(props) {
           <p
             className="mainTitleQuestion"
             style={{
-              fontSize: '30px',
-              marginLeft: '10px',
+              fontSize: '20px',
+              marginLeft: '35px',
               fontWeight: 700,
               color: 'red',
             }}
@@ -110,65 +115,125 @@ function Poll(props) {
             {signupFirstErr}
           </p>
         )}
-        <div className="candidates">
-          {options.map((option) => (
-            <div
-              key={option.text}
-              className={`candidate-card ${
-                selectedOption && selectedOption.text === option.text
-                  ? 'selected'
-                  : ''
-              }`}
-              onClick={() => setSelectedOption(option)}
-            >
-              {option.photo && (
-                <img
-                  src={`https://voteable-backend.onrender.com/uploads/${option.photo}`}
-                  alt={option.text}
-                />
-              )}
-              <div className="candidate-info">
-                <div style={{ height: '190px' }}>
-                  <h1 className="poll-class">{option.class}</h1>
-                  <h1 className={option.house}>{option.house}</h1>
-                </div>
-                <div>
-                  <h2
-                    style={{
-                      color:
-                        selectedOption && selectedOption.text === option.text
-                          ? '#ffffff'
-                          : '#000000',
-                    }}
-                  >
-                    {option.text}
-                  </h2>
+        {options.length > 4 || (options.length <= 4 && screenWidth < 680) ? (
+          <div className="candidates">
+            {options.map((option) => (
+              <div
+                key={option.text}
+                className={`candidate-card-many-options ${
+                  selectedOption && selectedOption.text === option.text
+                    ? 'selected'
+                    : ''
+                }`}
+                onClick={() => setSelectedOption(option)}
+              >
+                {option.photo && (
+                  <img
+                    src={`https://voteable-backend.onrender.com/uploads/${option.photo}`}
+                    alt={option.text}
+                  />
+                )}
+                <div className="candidate-info">
+                  <div>
+                    <h1 className="poll-class">{option.class}</h1>
+                    <h1 className={option.house}>{option.house}</h1>
+                  </div>
+                  <div>
+                    <h2
+                      style={{
+                        color:
+                          selectedOption && selectedOption.text === option.text
+                            ? '#ffffff'
+                            : '#000000',
+                      }}
+                    >
+                      {option.text}
+                    </h2>
+                  </div>
                 </div>
               </div>
+            ))}
+            <div className="buttonContainer">
+              <button
+                onClick={() => props.handleBack()}
+                className="vote-button"
+                disabled={buttonDisabled} // Disable button based on state
+              >
+                Back
+              </button>
+              <button
+                className="vote-button"
+                onClick={vote}
+                disabled={buttonDisabled || loading} // Disable button during loading and for 5 seconds after
+              >
+                {loading ? (
+                  <Spinner animation="border" size="sm" /> // Show spinner during loading
+                ) : (
+                  'Vote'
+                )}
+              </button>
             </div>
-          ))}
-
-          <div className="buttonContainer">
-            <button
-              onClick={() => props.handleBack()}
-              className="vote-button"
-              disabled={buttonDisabled} // Disable button based on state
-            >
-              Back
-            </button>
-            <button
-              className="vote-button"
-              onClick={vote}
-              disabled={buttonDisabled || loading} // Disable button during loading and for 5 seconds after
-            >
-              {loading ? (
-                <Spinner animation="border" size="sm" /> // Show spinner during loading
-              ) : (
-                'Vote'
-              )}
-            </button>
           </div>
-        </div>
+        ) : (
+          <div className="candidates">
+            {options.map((option) => (
+              <div
+                key={option.text}
+                className={`candidate-card ${
+                  selectedOption && selectedOption.text === option.text
+                    ? 'selected'
+                    : ''
+                }`}
+                onClick={() => setSelectedOption(option)}
+              >
+                {option.photo && (
+                  <img
+                    src={`https://voteable-backend.onrender.com/uploads/${option.photo}`}
+                    alt={option.text}
+                  />
+                )}
+                <div className="candidate-info">
+                  <div style={{ height: '190px' }}>
+                    <h1 className="poll-class">{option.class}</h1>
+                    <h1 className={option.house}>{option.house}</h1>
+                  </div>
+                  <div>
+                    <h2
+                      style={{
+                        color:
+                          selectedOption && selectedOption.text === option.text
+                            ? '#ffffff'
+                            : '#000000',
+                      }}
+                    >
+                      {option.text}
+                    </h2>
+                  </div>
+                </div>
+              </div>
+            ))}
+            <div className="buttonContainer">
+              <button
+                onClick={() => props.handleBack()}
+                className="vote-button"
+                disabled={buttonDisabled} // Disable button based on state
+              >
+                Back
+              </button>
+              <button
+                className="vote-button"
+                onClick={vote}
+                disabled={buttonDisabled || loading} // Disable button during loading and for 5 seconds after
+              >
+                {loading ? (
+                  <Spinner animation="border" size="sm" /> // Show spinner during loading
+                ) : (
+                  'Vote'
+                )}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

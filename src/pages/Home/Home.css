@@ -16,10 +16,11 @@
 @media screen and (max-width: 700px) {
   .homepage-svg {
     position: absolute;
-    bottom: 0;
+    bottom: -50px;
     left: -15px;
     object-fit: cover;
-    height: 45%;
+    height: 40%;
+    width: 50%;
   }
 
   .logo {

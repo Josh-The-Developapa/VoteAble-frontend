@@ -319,12 +319,15 @@
   font-weight: bold;
   font-size: 20px;
   font-family: Kumbh Sans;
+  position: relative;
+  bottom: 20px;
+  left: 0px;
 }
 
 .progress-bar-container {
-  position: fixed;
+  position: relative;
   bottom: 20px; /* Adjust the position as needed */
-  width: 400px;
+  width: 280px;
   left: 50%;
   transform: translateX(-50%);
   background-color: #e0e0e0;

@@ -6,6 +6,21 @@
   position: relative;
   overflow: hidden;
 }
+.account-container {
+  background-color: whitesmoke;
+  padding: 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  /* align-items: center; */
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  margin: 0;
+  /* margin-top: 90px; */
+}
 
 .cards-container {
   display: flex;
