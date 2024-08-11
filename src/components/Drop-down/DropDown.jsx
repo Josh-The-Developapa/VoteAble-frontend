@@ -33,27 +33,23 @@ const DropDown = () => {
       <div className="tsBG" onClick={handleClose}></div>
       <div className="dropdown">
         {localStorage.getItem('name') ? (
-          <div className="user-info">
-            <NavLink to="/account" className="nav-link">
-              <img className="dropDownAvatarImage" src={Profile} />
-              <h2 style={{ textAlign: 'center', fontFamily: 'Kumbh Sans' }}>
-                Welcome,
-                <br />
-                <span
-                  className="highlight"
-                  style={{ fontFamily: 'Kumbh Sans' }}
-                >
-                  {formatName(localStorage.getItem('name'))}
-                </span>
-              </h2>
-            </NavLink>
-            <NavLink
-              to="/account"
-              className="dropDownPollLink"
-              onClick={handleClose}
-            >
-              Account
-            </NavLink>
+          <div>
+            {' '}
+            <div className="user-info">
+              <NavLink to="/account" className="nav-link">
+                <img className="dropDownAvatarImage" src={Profile} />
+                <h2 style={{ textAlign: 'center', fontFamily: 'Kumbh Sans' }}>
+                  Welcome,
+                  <br />
+                  <span
+                    className="highlight"
+                    style={{ fontFamily: 'Kumbh Sans' }}
+                  >
+                    {formatName(localStorage.getItem('name'))}
+                  </span>
+                </h2>
+              </NavLink>
+            </div>
           </div>
         ) : (
           <NavLink to="/login">
@@ -65,6 +61,17 @@ const DropDown = () => {
         <NavLink to="/home" className="dropDownPollLink" onClick={handleClose}>
           Home
         </NavLink>
+        {localStorage.getItem('name') ? (
+          <NavLink
+            to="/account"
+            className="dropDownPollLink"
+            onClick={handleClose}
+          >
+            Account
+          </NavLink>
+        ) : (
+          ''
+        )}
         <NavLink to="/about" className="dropDownPollLink" onClick={handleClose}>
           About Us
         </NavLink>
