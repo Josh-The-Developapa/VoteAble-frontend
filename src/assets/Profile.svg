@@ -1,18 +1,1 @@
-<svg width="198" height="198" viewBox="0 0 198 198" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_61_98)">
-<rect width="198" height="198" rx="99" fill="url(#paint0_linear_61_98)"/>
-<ellipse cx="99" cy="187.5" rx="79" ry="68.5" fill="#D9D9D9"/>
-<circle cx="99" cy="78" r="31" fill="#D9D9D9"/>
-</g>
-<defs>
-<linearGradient id="paint0_linear_61_98" x1="0" y1="99" x2="198" y2="99" gradientUnits="userSpaceOnUse">
-<stop stop-color="#312783"/>
-<stop offset="0.333333" stop-color="#1C164A"/>
-<stop offset="0.666667" stop-color="#0B091D"/>
-<stop offset="1" stop-color="#4A2342"/>
-</linearGradient>
-<clipPath id="clip0_61_98">
-<rect width="198" height="198" rx="99" fill="white"/>
-</clipPath>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="198" height="198" fill="none" xmlns:v="https://vecta.io/nano"><g clip-path="url(#B)"><rect width="198" height="198" rx="99" fill="url(#A)"/><g fill="#d9d9d9"><ellipse cx="99" cy="187.5" rx="79" ry="68.5"/><circle cx="99" cy="78" r="31"/></g></g><defs><linearGradient id="A" x1="0" y1="99" x2="198" y2="99" gradientUnits="userSpaceOnUse"><stop stop-color="#312783"/><stop offset=".333" stop-color="#1c164a"/><stop offset=".667" stop-color="#0b091d"/><stop offset="1" stop-color="#4a2342"/></linearGradient><clipPath id="B"><rect width="198" height="198" rx="99" fill="#fff"/></clipPath></defs></svg>
