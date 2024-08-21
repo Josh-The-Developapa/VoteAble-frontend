@@ -86,6 +86,13 @@ const Header = React.memo(function Header(props) {
         ) : (
           ''
         )}
+        {!localStorage.getItem('name') ? (
+          <NavLink to="/about" className="pollLink">
+            About Us
+          </NavLink>
+        ) : (
+          ''
+        )}
         {localStorage.getItem('name') ? (
           <div
             className="profileWrapper"
