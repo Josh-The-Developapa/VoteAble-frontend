@@ -12,8 +12,6 @@ body {
 
 .pollContainer {
   background-color: whitesmoke;
-  padding-left: 0px;
-  padding-right: 0px;
   padding-top: 60px;
   text-align: left;
   display: flex;
@@ -22,10 +20,11 @@ body {
   align-items: flex-start;
   /* align-items: center; */
   width: 100vw;
-  min-height: 100vh;
+  min-height: 85vh;
   z-index: 10;
   margin: 0;
-  margin-bottom: 100px;
+  margin-bottom: 30px;
+  /* margin-bottom: 100px; */
   z-index: 10;
 }
 

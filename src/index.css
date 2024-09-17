@@ -25,6 +25,11 @@
   width: 100%;
 } */
 
+::selection {
+  background: #312783; /* Background color of the selection */
+  color: #ffffff;
+}
+
 p,
 h2,
 h1,

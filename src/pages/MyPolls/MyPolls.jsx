@@ -5,8 +5,11 @@ import './MyPolls.css';
 import Header from '../../components/Header/Header.jsx';
 import Poll from '../Polls/Poll/Poll.jsx';
 import PollSVG from '../../assets/Poll.svg';
+import { useNavigate } from 'react-router-dom';
+import Results from '../Results/Results.jsx';
 
 function MyPolls() {
+  const navigate = useNavigate();
   const [copy, setCopy] = useState(true);
   const [signupFirstErr, setSignupFirstErr] = useState(false);
   const [error, setError] = useState('');
@@ -14,6 +17,7 @@ function MyPolls() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0); // Track current carousel index
   const carouselRef = useRef(null);
+  const [HAR, setHAR] = useState(false); // State for has administrative rights
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -46,6 +50,14 @@ function MyPolls() {
         setError(data.error);
         return;
       }
+
+      if (data.message == 'You do not have admin access') {
+        setHAR(false);
+      }
+
+      if (data.message == 'You have admin access') {
+        setHAR(true);
+      }
     };
 
     if (localStorage.getItem('name')) {
@@ -54,9 +66,20 @@ function MyPolls() {
     } else {
       setSignupFirstErr(true);
     }
+
+    console.log(HAR);
   }, []);
 
   const handleNext = () => {
+    if (currentIndex + 1 == polls.length) {
+      navigate('/account');
+    }
+    if (carouselRef.current) {
+      carouselRef.current.next();
+    }
+  };
+
+  const handleNextResults = () => {
     if (carouselRef.current) {
       carouselRef.current.next();
     }
@@ -72,19 +95,6 @@ function MyPolls() {
     console.log('Carousel selected index:', selectedIndex);
     setCurrentIndex(selectedIndex);
   };
-
-  // const handleProgressBarClick = (e) => {
-  //   const progressBar = e.target;
-  //   const clickPosition =
-  //     (e.clientX - progressBar.getBoundingClientRect().left) /
-  //     progressBar.offsetWidth;
-  //   const newIndex = Math.floor(clickPosition * polls.length);
-  //   console.log('Progress bar clicked:', clickPosition, newIndex);
-  //   setCurrentIndex(newIndex);
-  //   if (carouselRef.current) {
-  //     carouselRef.current.to(newIndex);
-  //   }
-  // };
 
   return (
     <div>
@@ -112,7 +122,6 @@ function MyPolls() {
             </p>
           </div>
         )}
-
         {isLoading && (
           <div
             style={{
@@ -128,7 +137,47 @@ function MyPolls() {
           </div>
         )}
 
-        {!isLoading && polls.length > 0 ? (
+        {HAR && polls.length > 0 ? (
+          <div>
+            <Carousel
+              ref={carouselRef}
+              controls={false}
+              touch={true}
+              interval={null}
+              onSelect={handleSelect}
+              indicators={false} // Hide default indicators
+              activeIndex={currentIndex} // Set activeIndex to control the current slide
+            >
+              {polls.map((poll, index) => (
+                <Carousel.Item key={poll._id}>
+                  <Results
+                    pollId={poll._id}
+                    handleNext={handleNextResults}
+                    handleBack={handleBack}
+                  />
+                </Carousel.Item>
+              ))}
+            </Carousel>
+            <div className="carousel-caption">
+              {currentIndex + 1} of {polls.length}
+            </div>
+            <div
+              className="progress-bar-container"
+              // onClick={handleProgressBarClick}
+            >
+              <div
+                className="progress-bar"
+                style={{
+                  width: `${((currentIndex + 1) / polls.length) * 100}%`,
+                }}
+              />
+            </div>
+          </div>
+        ) : (
+          ''
+        )}
+
+        {HAR == false && polls.length > 0 ? (
           <div>
             <Carousel
               ref={carouselRef}
@@ -149,21 +198,19 @@ function MyPolls() {
                 </Carousel.Item>
               ))}
             </Carousel>
-            <div>
-              <div className="carousel-caption">
-                {currentIndex + 1} of {polls.length}
-              </div>
+            <div className="carousel-caption">
+              {currentIndex + 1} of {polls.length}
+            </div>
+            <div
+              className="progress-bar-container"
+              // onClick={handleProgressBarClick}
+            >
               <div
-                className="progress-bar-container"
-                // onClick={handleProgressBarClick}
-              >
-                <div
-                  className="progress-bar"
-                  style={{
-                    width: `${((currentIndex + 1) / polls.length) * 100}%`,
-                  }}
-                />
-              </div>
+                className="progress-bar"
+                style={{
+                  width: `${((currentIndex + 1) / polls.length) * 100}%`,
+                }}
+              />
             </div>
           </div>
         ) : (

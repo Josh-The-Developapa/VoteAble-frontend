@@ -11,6 +11,7 @@ import AccountSVG from '../../assets/Account.svg';
 
 function Account() {
   const [voted, setVoted] = useState('Status Pending...');
+  const [HAR, setHAR] = useState(false);
 
   useEffect(() => {
     const hasVoted = (async function checkPolls() {
@@ -34,6 +35,11 @@ function Account() {
         }
 
         const data = await res.json();
+
+        if (data.message == 'You have admin access') {
+          setHAR(true);
+        }
+
         const pollsArray = data.data;
 
         const hasVoted = pollsArray.every((poll) =>
@@ -49,6 +55,7 @@ function Account() {
         return false; // Return false if there is an error
       }
     })();
+
     setVoted(hasVoted);
   }, []);
 
@@ -83,10 +90,19 @@ function Account() {
             </div>
           </div>
           <div className="vote-status">
-            <GoDotFill
-              className={`status-dot ${voted === true ? 'voted' : 'not-voted'}`}
-            />
-            <p>{voted === true ? 'Voted' : 'Not Voted'}</p>
+            {!HAR ? (
+              <div className="vote-status">
+                {' '}
+                <GoDotFill
+                  className={`status-dot ${
+                    voted === true ? 'voted' : 'not-voted'
+                  }`}
+                />
+                <p>{voted === true ? 'Voted' : 'Not Voted'}</p>{' '}
+              </div>
+            ) : (
+              ''
+            )}
           </div>
         </div>
 
@@ -113,10 +129,11 @@ function Account() {
         </div>
 
         <div className="vote-now card">
-          <h2>Vote Now</h2>
+          <h2> {HAR ? 'Results' : 'Vote Now'}</h2>
           <p>
-            Cast your vote in the AKHS Student Council{' '}
-            {new Date().getFullYear()} Elections
+            {HAR
+              ? 'Keep track of the elections results'
+              : 'Cast your vote now!'}
           </p>
           <NavLink
             to="/polls"
@@ -132,7 +149,7 @@ function Account() {
                 'linear-gradient(to right, #312783 0%, #1C164A 33%, #0B091D 67%, #4A2342 100%)',
             }}
           >
-            Vote Now
+            {!HAR ? 'Vote Now' : 'Results'}
           </NavLink>
           <img className="vote-now-pic" src={BallotBox} alt="Ballot Box" />
         </div>

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import './Poll.css';
 
 function Poll(props) {
-  const { pollId } = useParams();
+  const pollId = props.pollId;
   const navigate = useNavigate();
   const [pollNotFound, setPollNotFound] = useState();
   const [question, setQuestion] = useState();
@@ -14,6 +15,7 @@ function Poll(props) {
   const [loading, setLoading] = useState(false); // State for loading
   const [buttonDisabled, setButtonDisabled] = useState(false); // State for disabling button
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [HAR, setHAR] = useState(false); // State for has administrative rights
 
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
@@ -21,9 +23,7 @@ function Poll(props) {
 
     async function fetchPoll() {
       const res = await fetch(
-        `https://voteable-backend.onrender.com/v1/poll/${
-          pollId ? pollId : props.pollId
-        }`,
+        `https://voteable-backend.onrender.com/v1/poll/${pollId}`,
         {
           method: 'GET',
         }
@@ -38,6 +38,29 @@ function Poll(props) {
       }
       console.log(data);
     }
+    async function checkResults() {
+      const res = await fetch(
+        `https://voteable-backend.onrender.com/v1/results/${pollId}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            Student_ID: localStorage.getItem('Student_ID'),
+          }),
+        }
+      );
+
+      const data = await res.json();
+      if (data.error) {
+        setHAR(false);
+        return;
+      } else {
+        setHAR(true);
+      }
+    }
+    checkResults();
     fetchPoll();
   }, [pollId, props.pollId]);
 
@@ -74,13 +97,17 @@ function Poll(props) {
 
     if (res.ok) {
       setSignupFirstErr('Voted');
-      props.handleNext(); // Call the function to go to the next item
+      setTimeout(() => {
+        props.handleNext(); // Call the function to go to the next item
+      }, 1500);
     } else if (data.error) {
       setSignupFirstErr(data.error);
-      props.handleNext(); // Call the function to go to the next item
+      setTimeout(() => {
+        props.handleNext(); // Call the function to go to the next item
+      }, 1500);
     }
 
-    // Re-enable the button after 5 seconds
+    // Re-enable the button after 2 seconds
     setTimeout(() => {
       setButtonDisabled(false);
     }, 2000);
@@ -96,18 +123,18 @@ function Poll(props) {
           </div>
         </div>
         {signupFirstErr === 'Voted' ? (
-          <p
+          <h1
             className="mainTitleQuestion"
-            style={{ fontSize: '20px', marginLeft: '35px', fontWeight: 700 }}
+            style={{ fontSize: '25px', padding: '15px', fontWeight: 700 }}
           >
             Voted
-          </p>
+          </h1>
         ) : (
           <p
             className="mainTitleQuestion"
             style={{
-              fontSize: '20px',
-              marginLeft: '35px',
+              fontSize: '25px',
+              padding: '15px',
               fontWeight: 700,
               color: 'red',
             }}
@@ -220,9 +247,17 @@ function Poll(props) {
               >
                 Back
               </button>
+              {/* {HAR ? (
+                <Link to={`/results/${pollId}`} className="vote-button">
+                  Results
+                </Link>
+              ) : (
+                ''
+              )} */}
+
               <button
                 className="vote-button"
-                onClick={vote}
+                onClick={!loading ? vote : () => {}}
                 disabled={buttonDisabled || loading} // Disable button during loading and for 5 seconds after
               >
                 {loading ? (

@@ -84,7 +84,7 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  margin-top: 8%;
+  /* margin-top: 8%; */
   position: relative;
   padding-left: 20px;
   padding-bottom: 20px;
@@ -99,7 +99,7 @@
   margin-bottom: 40px;
   height: 310px;
   width: 320px;
-  margin-top: 150px;
+  margin-top: 0px;
 }
 
 .FlexBG {
@@ -109,6 +109,7 @@
 }
 .carousel {
   position: relative;
+  /* background-color: green; */
 }
 .carousel.pointer-event {
   touch-action: pan-y;
@@ -128,6 +129,7 @@
   display: none;
   float: left;
   width: 100vw;
+  /* min-height: 90vh; */
   margin-right: -100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -318,7 +320,7 @@
   color: grey;
   font-weight: bold;
   font-size: 20px;
-  font-family: Kumbh Sans;
+  font-family: 'Kumbh Sans';
   position: relative;
   bottom: 20px;
   left: 0px;

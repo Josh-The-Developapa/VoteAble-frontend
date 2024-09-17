@@ -41,7 +41,7 @@ const router = createBrowserRouter([
   //   element: <VotedUsers />,
   // },
   {
-    path: '/poll/results/:pollId',
+    path: '/results/:pollId',
     element: <Layout page={<Results />} />,
   },
   {
