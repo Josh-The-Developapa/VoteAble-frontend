@@ -70,7 +70,7 @@ h2 {
   border-radius: 8px;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.231), 0 6px 10px rgba(0, 0, 0, 0.284);
   overflow: hidden;
-  width: 310px;
+  /* width: auto; */
   height: 300px;
   text-align: center;
   display: flex;
@@ -127,13 +127,13 @@ h2 {
 }
 
 .candidate-card img {
-  width: 55%;
+  width: auto;
   height: 100%;
   object-fit: cover;
-  margin: 0;
+  margin-bottom: 0;
 }
 .candidate-card-many-options img {
-  width: 55%;
+  /* width: 55%; */
   height: 100%;
   object-fit: cover;
   margin: 0;
