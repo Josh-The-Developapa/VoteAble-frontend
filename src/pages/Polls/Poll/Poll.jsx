@@ -23,7 +23,7 @@ function Poll(props) {
 
     async function fetchPoll() {
       const res = await fetch(
-        `https://voteable-backend.onrender.com/v1/poll/${pollId}`,
+        `https://backend.voteable.live/v1/poll/${pollId}`,
         {
           method: 'GET',
         }
@@ -40,7 +40,7 @@ function Poll(props) {
     }
     async function checkResults() {
       const res = await fetch(
-        `https://voteable-backend.onrender.com/v1/results/${pollId}`,
+        `https://backend.voteable.live/v1/results/${pollId}`,
         {
           method: 'POST',
           headers: {
@@ -76,9 +76,7 @@ function Poll(props) {
     setButtonDisabled(true); // Disable button immediately
 
     const res = await fetch(
-      `https://voteable-backend.onrender.com/v1/vote/${
-        pollId ? pollId : props.pollId
-      }`,
+      `https://backend.voteable.live/v1/vote/${pollId ? pollId : props.pollId}`,
       {
         method: 'POST',
         body: JSON.stringify({
@@ -142,7 +140,7 @@ function Poll(props) {
             {signupFirstErr}
           </p>
         )}
-        {options.length > 4 || (options.length <= 4 && screenWidth < 680) ? (
+        {options.length >= 4 || (options.length < 4 && screenWidth < 680) ? (
           <div className="candidates">
             {options.map((option) => (
               <div
@@ -156,14 +154,14 @@ function Poll(props) {
               >
                 {option.photo && (
                   <img
-                    src={`https://voteable-backend.onrender.com/uploads/${option.photo}`}
+                    src={`https://backend.voteable.live/uploads/${option.photo}`}
                     alt={option.text}
                   />
                 )}
                 <div className="candidate-info">
                   <div>
                     <h1 className="poll-class">{option.class}</h1>
-                    <h1 className={option.house}>{option.house}</h1>
+                    {/* <h1 className={option.house}>{option.house}</h1> */}
                   </div>
                   <div>
                     <h2
@@ -215,14 +213,14 @@ function Poll(props) {
               >
                 {option.photo && (
                   <img
-                    src={`https://voteable-backend.onrender.com/uploads/${option.photo}`}
+                    src={`https://backend.voteable.live/uploads/${option.photo}`}
                     alt={option.text}
                   />
                 )}
                 <div className="candidate-info">
                   <div style={{ height: '190px' }}>
                     <h1 className="poll-class">{option.class}</h1>
-                    <h1 className={option.house}>{option.house}</h1>
+                    {/* <h1 className={option.house}>{option.house}</h1> */}
                   </div>
                   <div>
                     <h2

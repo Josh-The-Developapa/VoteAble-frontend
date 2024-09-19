@@ -52,7 +52,7 @@ function Results(props) {
       setIsLoading(true);
 
       const res = await fetch(
-        `https://voteable-backend.onrender.com/v1/results/${pollId}`,
+        `https://backend.voteable.live/v1/results/${pollId}`,
         {
           method: 'POST',
           headers: {

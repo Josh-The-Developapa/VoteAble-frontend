@@ -18,6 +18,7 @@ import About from './pages/About/About.jsx';
 import './index.css';
 import Account from './pages/Account/Account.jsx';
 import Layout from './Layout/Layout.jsx';
+import FeedPage from './pages/Feed/Feed.jsx';
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
     path: '/create-poll',
     element: <Layout page={<CreatePoll />} />,
   },
+  // {
+  //   path: '/feed',
+  //   element: <Layout page={<FeedPage />} />,
+  // },
   // {
   //   path: '/poll/:pollId',
   //   element: <Poll />,

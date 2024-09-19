@@ -24,19 +24,16 @@ function MyPolls() {
 
     const myPolls = async () => {
       setIsLoading(true);
-      const res = await fetch(
-        'https://voteable-backend.onrender.com/v1/myPolls',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            Student_ID: localStorage.getItem('Student_ID'),
-            password: localStorage.getItem('password'),
-          }),
-        }
-      );
+      const res = await fetch('https://backend.voteable.live/v1/myPolls', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          Student_ID: localStorage.getItem('Student_ID'),
+          password: localStorage.getItem('password'),
+        }),
+      });
 
       const data = await res.json();
       setIsLoading(false);
