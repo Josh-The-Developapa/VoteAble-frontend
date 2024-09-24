@@ -111,6 +111,10 @@ function Poll(props) {
     }, 2000);
   }
 
+  // async function next() {
+  //   props.handleNext();
+  // }
+
   return (
     <div>
       <div className="pollContainer">
@@ -140,7 +144,75 @@ function Poll(props) {
             {signupFirstErr}
           </p>
         )}
-        {options.length >= 4 || (options.length < 4 && screenWidth < 680) ? (
+        {screenWidth < 680 ? (
+          <div className="candidates">
+            {options.map((option) => (
+              <div
+                key={option.text}
+                className={`candidate-card-mobile ${
+                  selectedOption && selectedOption.text === option.text
+                    ? 'selected'
+                    : ''
+                }`}
+                onClick={() => setSelectedOption(option)}
+              >
+                {option.photo && (
+                  <img
+                    src={`https://backend.voteable.live/uploads/${option.photo}`}
+                    alt={option.text}
+                  />
+                )}
+                <div className="candidate-info">
+                  <div>
+                    <h1
+                      className="poll-class"
+                      style={{ marginBottom: '-15px' }}
+                    >
+                      {option.class}
+                    </h1>
+                    {/* <h1 className={option.house}>{option.house}</h1> */}
+                  </div>
+                  <div>
+                    <h4
+                      style={{
+                        color:
+                          selectedOption && selectedOption.text === option.text
+                            ? '#ffffff'
+                            : '#000000',
+                        fontSize: '18px',
+                      }}
+                    >
+                      {option.text}
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            ))}
+            <div className="buttonContainer">
+              <button
+                onClick={() => props.handleBack()}
+                className="vote-button"
+                disabled={buttonDisabled} // Disable button based on state
+              >
+                Back
+              </button>
+              <button
+                className="vote-button"
+                onClick={vote}
+                disabled={buttonDisabled || loading} // Disable button during loading and for 5 seconds after
+              >
+                {loading ? (
+                  <Spinner animation="border" size="sm" /> // Show spinner during loading
+                ) : (
+                  'Vote'
+                )}
+              </button>
+            </div>
+          </div>
+        ) : (
+          ''
+        )}
+        {options.length >= 4 && screenWidth >= 680 ? (
           <div className="candidates">
             {options.map((option) => (
               <div
@@ -200,6 +272,9 @@ function Poll(props) {
             </div>
           </div>
         ) : (
+          ''
+        )}
+        {options.length < 4 && screenWidth >= 680 ? (
           <div className="candidates">
             {options.map((option) => (
               <div
@@ -266,6 +341,8 @@ function Poll(props) {
               </button>
             </div>
           </div>
+        ) : (
+          ''
         )}
       </div>
     </div>

@@ -47,7 +47,6 @@ body {
   margin-bottom: 0px;
   margin-top: 0px;
   margin-left: 20px;
-
   color: #312783;
 }
 
@@ -96,6 +95,28 @@ h2 {
   z-index: 10;
 }
 
+.candidate-card-mobile {
+  background-color: whitesmoke;
+  border-radius: 8px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.231), 0 6px 10px rgba(0, 0, 0, 0.284);
+  overflow: hidden;
+  /* width: 300px; */
+  height: 130px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 90%;
+  text-align: center;
+  margin-right: 10px;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  z-index: 10;
+  padding-left: 10px;
+}
+
 .candidate-card:hover {
   background-color: #f9f9f9;
   box-shadow: 0 15px 15px rgba(0, 0, 0, 0.455), 0 12px 15px rgba(0, 0, 0, 0.419);
@@ -106,7 +127,22 @@ h2 {
   box-shadow: 0 15px 15px rgba(0, 0, 0, 0.455), 0 12px 15px rgba(0, 0, 0, 0.419);
 }
 
+.candidate-card-mobile {
+  background-color: #f9f9f9;
+  box-shadow: 0 15px 15px rgba(0, 0, 0, 0.455), 0 12px 15px rgba(0, 0, 0, 0.419);
+}
+
 .candidate-card-many-options.selected {
+  background: linear-gradient(
+    to right,
+    #312783 0%,
+    #1c164a 33%,
+    #0b091d 67%,
+    #4a2342 100%
+  );
+}
+
+.candidate-card-mobile.selected {
   background: linear-gradient(
     to right,
     #312783 0%,
@@ -133,6 +169,13 @@ h2 {
   margin-bottom: 0;
 }
 .candidate-card-many-options img {
+  /* width: 55%; */
+  height: 100%;
+  object-fit: cover;
+  margin: 0;
+}
+
+.candidate-card-mobile img {
   /* width: 55%; */
   height: 100%;
   object-fit: cover;
@@ -270,6 +313,6 @@ h2 {
 @media screen and (max-width: 700px) {
   .mainTitleQuestion,
   .mainTitle {
-    font-size: 38px;
+    font-size: 35px;
   }
 }

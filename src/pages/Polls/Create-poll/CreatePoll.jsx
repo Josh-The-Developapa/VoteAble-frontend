@@ -258,10 +258,10 @@ function CreatePoll() {
                   >
                     <option value="">Select a house</option>
                     <option value="N/A">N/A</option>
-                    <option value="Hawks">Hawks</option>
-                    <option value="Falcons">Falcons</option>
-                    <option value="Eagles">Eagles</option>
-                    <option value="Kites">Kites</option>
+                    <option value="HAWKS">HAWKS</option>
+                    <option value="FALCONS">FALCONS</option>
+                    <option value="EAGLES">EAGLES</option>
+                    <option value="KITES">KITES</option>
                   </select>
                 </div>
               ))}
@@ -354,10 +354,10 @@ function CreatePoll() {
           >
             <option value="">Select a house</option>
             <option value="N/A">N/A</option>
-            <option value="Hawks">Hawks</option>
-            <option value="Falcons">Falcons</option>
-            <option value="Eagles">Eagles</option>
-            <option value="Kites">Kites</option>
+            <option value="HAWKS">HAWKS</option>
+            <option value="FALCONS">FALCONS</option>
+            <option value="EAGLES">EAGLES</option>
+            <option value="KITES">KITES</option>
           </select>
         </div>
         <button

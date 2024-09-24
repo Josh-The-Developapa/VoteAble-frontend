@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Carousel } from 'react-bootstrap';
 import Spinner from 'react-bootstrap/Spinner';
 import './MyPolls.css';
-import Header from '../../components/Header/Header.jsx';
 import Poll from '../Polls/Poll/Poll.jsx';
 import PollSVG from '../../assets/Poll.svg';
 import { useNavigate } from 'react-router-dom';
@@ -39,8 +38,15 @@ function MyPolls() {
       setIsLoading(false);
 
       if (res.ok) {
-        setPolls(data.data);
-        console.log(data.data);
+        // Custom sorting by date or any other field
+        const sortedPolls = data.data.sort((a, b) => {
+          const rankA = Number(a.rank); // Replace `a.date` with your actual date field
+          const rankB = Number(b.rank);
+          return rankA - rankB; // Ascending order
+        });
+
+        setPolls(sortedPolls);
+        console.log(sortedPolls);
       }
 
       if (data.error) {
@@ -48,11 +54,11 @@ function MyPolls() {
         return;
       }
 
-      if (data.message == 'You do not have admin access') {
+      if (data.message === 'You do not have admin access') {
         setHAR(false);
       }
 
-      if (data.message == 'You have admin access') {
+      if (data.message === 'You have admin access') {
         setHAR(true);
       }
     };
@@ -68,7 +74,7 @@ function MyPolls() {
   }, []);
 
   const handleNext = () => {
-    if (currentIndex + 1 == polls.length) {
+    if (currentIndex + 1 === polls.length) {
       navigate('/account');
     }
     if (carouselRef.current) {
@@ -96,7 +102,6 @@ function MyPolls() {
   return (
     <div>
       <div className="FlexBG" style={{ flexDirection: 'row' }}>
-        {/* <Header /> */}
         <img
           src={PollSVG}
           alt="Polls background SVG"
@@ -158,10 +163,7 @@ function MyPolls() {
             <div className="carousel-caption">
               {currentIndex + 1} of {polls.length}
             </div>
-            <div
-              className="progress-bar-container"
-              // onClick={handleProgressBarClick}
-            >
+            <div className="progress-bar-container">
               <div
                 className="progress-bar"
                 style={{
@@ -174,7 +176,7 @@ function MyPolls() {
           ''
         )}
 
-        {HAR == false && polls.length > 0 ? (
+        {HAR === false && polls.length > 0 ? (
           <div>
             <Carousel
               ref={carouselRef}
@@ -198,10 +200,7 @@ function MyPolls() {
             <div className="carousel-caption">
               {currentIndex + 1} of {polls.length}
             </div>
-            <div
-              className="progress-bar-container"
-              // onClick={handleProgressBarClick}
-            >
+            <div className="progress-bar-container">
               <div
                 className="progress-bar"
                 style={{
