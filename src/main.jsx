@@ -17,15 +17,17 @@ import About from './pages/About/About.jsx';
 // import App from './App'
 import './index.css';
 import Account from './pages/Account/Account.jsx';
+import Layout from './Layout/Layout.jsx';
+import FeedPage from './pages/Feed/Feed.jsx';
 
 const router = createBrowserRouter([
   {
     path: '/home',
-    element: <Home />,
+    element: <Layout page={<Home />} />,
   },
   {
     path: '/*',
-    element: <NotFound />,
+    element: <Layout page={<NotFound />} />,
   },
   {
     path: '/',
@@ -33,27 +35,31 @@ const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <Login />,
+    element: <Layout page={<Login />} />,
   },
   // {
   //   path: '/voted-users/:pollId',
   //   element: <VotedUsers />,
   // },
   {
-    path: '/poll/results/:pollId',
-    element: <Results />,
+    path: '/results/:pollId',
+    element: <Layout page={<Results />} />,
   },
   {
     path: '/create-poll',
-    element: <CreatePoll />,
+    element: <Layout page={<CreatePoll />} />,
   },
+  // {
+  //   path: '/feed',
+  //   element: <Layout page={<FeedPage />} />,
+  // },
   // {
   //   path: '/poll/:pollId',
   //   element: <Poll />,
   // },
   {
     path: '/polls',
-    element: <MyPolls />,
+    element: <Layout page={<MyPolls />} />,
   },
   // {
   //   path: '/subscribe',
@@ -77,11 +83,11 @@ const router = createBrowserRouter([
   // },
   {
     path: '/account',
-    element: <Account />,
+    element: <Layout page={<Account />} />,
   },
   {
     path: '/about',
-    element: <About />,
+    element: <Layout page={<About />} />,
   },
 ]);
 

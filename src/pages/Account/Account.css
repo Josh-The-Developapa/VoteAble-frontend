@@ -1,58 +1,70 @@
-.user-card{
-    height:380px;
-    width:320px;
-    background-color: white;
-    margin-top: -160px;
-    border-radius: 10px;
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
-    display:flex;
-    flex-direction: column;
-    justify-content: flex-start;
-  padding:10px;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.231), 0 6px 10px rgba(0, 0, 0, 0.284);
-
+.account-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
-.about-card{
-    height:480px;
-    width:320px;
-    background-color: white;
-    margin-top: 100px;
-    border-radius: 10px;
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
-    display:flex;
-    flex-direction: column;
-    margin-left: 50px;
-    justify-content: flex-start;
-    align-items: center;
-    text-align: center;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.231), 0 6px 10px rgba(0, 0, 0, 0.284);
+.account-container {
+  background-color: whitesmoke;
+  padding: 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  /* align-items: center; */
+  width: 100vw;
+  height: 100vh;
   z-index: 10;
-
+  margin: 0;
+  /* margin-top: 90px; */
 }
 
-.vote-now{
-    height:480px;
-    width:320px;
-    background-color: white;
-    margin-top: 250px;
-    border-radius: 10px;
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
-    display:flex;
-    flex-direction: column;
-    margin-left: 50px;
-    justify-content: flex-start;
-    align-items: center;
-    text-align: center;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.231), 0 6px 10px rgba(0, 0, 0, 0.284);
+.cards-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 50px;
+  padding: 20px;
 }
 
-.profile-pic{
-    height:150px;
-    width:100%;
-    margin:0;
+.card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  overflow: hidden;
+  justify-content: flex-start;
 }
 
-.team-pic{
+.user-card {
+  height: 380px;
+  margin-top: 85px;
+  padding: 10px;
+}
+
+.about-card {
+  height: 480px;
+  margin-top: 170px;
+}
+
+.vote-now {
+  height: 480px;
+  margin-top: 220px;
+}
+
+.profile-pic {
+  height: 150px;
+  width: 100%;
+  margin: 0;
+}
+
+.team-pic {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   border-bottom-left-radius: 0px;
@@ -60,13 +72,99 @@
   height: 250px;
   width: 100%;
   object-fit: cover;
-  margin:0;
+  margin: 0;
   border: none;
 }
-
-.vote-now-pic{
+.vote-now-pic {
   height: 250px;
   width: 100%;
   object-fit: cover;
-  margin:0;
+  margin: 0;
+}
+
+h2 {
+  margin: 20px 0 10px;
+  font-weight: 550;
+  text-align: center;
+}
+
+.user-info {
+  display: flex;
+  justify-content: center;
+  /* gap: 25px; */
+  /* margin-bottom: 20px; */
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  /* gap: 5px; */
+}
+
+.vote-status {
+  display: flex;
+  align-items: center;
+  /* gap: 5px; */
+  font-size: 25px;
+}
+
+.status-dot {
+  font-size: 30px;
+}
+
+.status-dot.voted {
+  color: green;
+}
+.status-dot.not-voted {
+  color: red;
+}
+
+.card p {
+  text-align: center;
+  margin: 10px 0;
+  padding: 0 10px;
+}
+
+.account-buttons {
+  cursor: pointer;
+  color: #fff !important;
+  background: #27003c;
+  padding: 10px 25px;
+  margin: 0 10px;
+  border-radius: 5px;
+  font-family: 'Kumbh Sans', sans-serif;
+  font-size: 20px;
+}
+
+.gradient-bg {
+  background: linear-gradient(to right, #312783, #1c164a, #0b091d, #4a2342);
+}
+
+.background-svg {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 400px;
+  z-index: -1;
+}
+
+@media screen and (max-width: 1007px) {
+  .cards-container {
+    flex-wrap: wrap;
+  }
+
+  .vote-now {
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 690px) {
+  .cards-container {
+    flex-direction: column;
+    /* gap: 20px; */
+  }
+
+  .about-card {
+    margin-top: 20px;
+  }
 }

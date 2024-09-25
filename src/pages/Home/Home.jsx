@@ -28,12 +28,6 @@ function Home() {
 
   return (
     <div className="flex-bg">
-      <Header />
-      <img
-        src={HomepageSVG}
-        className="homepage-svg"
-        alt="Homepage background"
-      />
       <div className="content">
         <img src={Logo} alt="header" className="logo" />
         <h1 className="title">
@@ -45,7 +39,12 @@ function Home() {
           Vote Now
         </button>
       </div>
-      <CookieConsent
+      <img
+        src={HomepageSVG}
+        className="homepage-svg"
+        alt="Homepage background"
+      />
+      {/* <CookieConsent
         location="bottom"
         buttonText="I Accept"
         cookieName="Cookie-consent"
@@ -60,7 +59,7 @@ function Home() {
         expires={10}
       >
         This website uses cookies to enhance the user experience.
-      </CookieConsent>
+      </CookieConsent> */}
     </div>
   );
 }

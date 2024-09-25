@@ -1,45 +1,65 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Carousel } from 'react-bootstrap';
+import Spinner from 'react-bootstrap/Spinner';
 import './MyPolls.css';
-import Header from '../../components/Header/Header.jsx';
 import Poll from '../Polls/Poll/Poll.jsx';
 import PollSVG from '../../assets/Poll.svg';
+import { useNavigate } from 'react-router-dom';
+import Results from '../Results/Results.jsx';
 
 function MyPolls() {
+  const navigate = useNavigate();
   const [copy, setCopy] = useState(true);
   const [signupFirstErr, setSignupFirstErr] = useState(false);
   const [error, setError] = useState('');
-  const [polls, setPolls] = useState();
+  const [polls, setPolls] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0); // Track current carousel index
+  const carouselRef = useRef(null);
+  const [HAR, setHAR] = useState(false); // State for has administrative rights
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
     const myPolls = async () => {
       setIsLoading(true);
-      const res = await fetch(
-        'https://voteable-backend.onrender.com/v1/myPolls',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            Student_ID: localStorage.getItem('Student_ID'),
-            password: localStorage.getItem('password'),
-          }),
-        }
-      );
+      const res = await fetch('https://backend.voteable.live/v1/myPolls', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          Student_ID: localStorage.getItem('Student_ID'),
+          password: localStorage.getItem('password'),
+        }),
+      });
 
       const data = await res.json();
       setIsLoading(false);
 
       if (res.ok) {
-        setPolls(data.data);
+        // Custom sorting by date or any other field
+        const sortedPolls = data.data.sort((a, b) => {
+          const rankA = Number(a.rank); // Replace `a.date` with your actual date field
+          const rankB = Number(b.rank);
+          return rankA - rankB; // Ascending order
+        });
+
+        setPolls(sortedPolls);
+        console.log(sortedPolls);
       }
 
       if (data.error) {
         setError(data.error);
         return;
+      }
+
+      if (data.message === 'You do not have admin access') {
+        setHAR(false);
+      }
+
+      if (data.message === 'You have admin access') {
+        setHAR(true);
       }
     };
 
@@ -49,18 +69,39 @@ function MyPolls() {
     } else {
       setSignupFirstErr(true);
     }
+
+    console.log(HAR);
   }, []);
+
+  const handleNext = () => {
+    if (currentIndex + 1 === polls.length) {
+      navigate('/account');
+    }
+    if (carouselRef.current) {
+      carouselRef.current.next();
+    }
+  };
+
+  const handleNextResults = () => {
+    if (carouselRef.current) {
+      carouselRef.current.next();
+    }
+  };
+
+  const handleBack = () => {
+    if (carouselRef.current) {
+      carouselRef.current.prev();
+    }
+  };
+
+  const handleSelect = (selectedIndex, e) => {
+    console.log('Carousel selected index:', selectedIndex);
+    setCurrentIndex(selectedIndex);
+  };
 
   return (
     <div>
-      <div
-        className="FlexBG"
-        style={{
-          // backgroundImage: 'linear-gradient(180deg,#17005c, #4600b6)',
-          flexDirection: 'row',
-        }}
-      >
-        <Header />
+      <div className="FlexBG" style={{ flexDirection: 'row' }}>
         <img
           src={PollSVG}
           alt="Polls background SVG"
@@ -69,8 +110,8 @@ function MyPolls() {
             left: '50%',
             height: '400px',
             width: '400px',
-            top: '30px',
-            // zIndex: 0,
+            top: '15px',
+            zIndex: 10,
           }}
         />
         {signupFirstErr && (
@@ -83,25 +124,94 @@ function MyPolls() {
             </p>
           </div>
         )}
-
-        {!signupFirstErr && isLoading ? (
+        {isLoading && (
           <div
             style={{
               display: 'flex',
-              flexDirection: 'row',
-              flexWrap: 'wrap',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100vh',
+              width: '100%',
+              backgroundColor: 'whitesmoke',
             }}
           >
-            {/* Loading Animation */}
-            {/* You can add your loading animation here */}
+            <Spinner animation="grow" />
+          </div>
+        )}
+
+        {HAR && polls.length > 0 ? (
+          <div>
+            <Carousel
+              ref={carouselRef}
+              controls={false}
+              touch={true}
+              interval={null}
+              onSelect={handleSelect}
+              indicators={false} // Hide default indicators
+              activeIndex={currentIndex} // Set activeIndex to control the current slide
+            >
+              {polls.map((poll, index) => (
+                <Carousel.Item key={poll._id}>
+                  <Results
+                    pollId={poll._id}
+                    handleNext={handleNextResults}
+                    handleBack={handleBack}
+                  />
+                </Carousel.Item>
+              ))}
+            </Carousel>
+            <div className="carousel-caption">
+              {currentIndex + 1} of {polls.length}
+            </div>
+            <div className="progress-bar-container">
+              <div
+                className="progress-bar"
+                style={{
+                  width: `${((currentIndex + 1) / polls.length) * 100}%`,
+                }}
+              />
+            </div>
           </div>
         ) : (
           ''
         )}
 
-        {polls && !isLoading
-          ? polls.map((poll) => <Poll key={poll._id} pollId={poll._id} />)
-          : ''}
+        {HAR === false && polls.length > 0 ? (
+          <div>
+            <Carousel
+              ref={carouselRef}
+              controls={false}
+              touch={true}
+              interval={null}
+              onSelect={handleSelect}
+              indicators={false} // Hide default indicators
+              activeIndex={currentIndex} // Set activeIndex to control the current slide
+            >
+              {polls.map((poll, index) => (
+                <Carousel.Item key={poll._id}>
+                  <Poll
+                    pollId={poll._id}
+                    handleNext={handleNext}
+                    handleBack={handleBack}
+                  />
+                </Carousel.Item>
+              ))}
+            </Carousel>
+            <div className="carousel-caption">
+              {currentIndex + 1} of {polls.length}
+            </div>
+            <div className="progress-bar-container">
+              <div
+                className="progress-bar"
+                style={{
+                  width: `${((currentIndex + 1) / polls.length) * 100}%`,
+                }}
+              />
+            </div>
+          </div>
+        ) : (
+          ''
+        )}
 
         {!polls && !isLoading ? (
           <div className="pollc">
