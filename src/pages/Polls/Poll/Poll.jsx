@@ -65,12 +65,12 @@ function Poll(props) {
   }, [pollId, props.pollId]);
 
   async function vote() {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+
     if (!selectedOption) {
       setSignupFirstErr('Please select an option to vote.');
       return;
     }
-
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
     setLoading(true); // Start loading
     setButtonDisabled(true); // Disable button immediately

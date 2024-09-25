@@ -19,8 +19,6 @@ function MyPolls() {
   const [HAR, setHAR] = useState(false); // State for has administrative rights
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-
     const myPolls = async () => {
       setIsLoading(true);
       const res = await fetch('https://backend.voteable.live/v1/myPolls', {
