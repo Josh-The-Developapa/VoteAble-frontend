@@ -37,7 +37,11 @@ function MyPolls() {
 
       if (res.ok) {
         // Custom sorting by date or any other field
-        const sortedPolls = data.data;
+        const sortedPolls = data.data.sort((a, b) => {
+          const rankA = Number(a.rank); // Replace `a.date` with your actual date field
+          const rankB = Number(b.rank);
+          return rankA - rankB; // Ascending order
+        });
 
         setPolls(sortedPolls);
         console.log(sortedPolls);
