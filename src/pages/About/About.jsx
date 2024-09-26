@@ -8,6 +8,7 @@ import EmmanuelImage from '../../assets/Emmanuel Asiimwe.jpeg';
 import AkhilImage from '../../assets/Akhil Muni.jpeg';
 import JoshuaImage from '../../assets/JMuks.png';
 import AlbertImage from '../../assets/Albert Jordan Mulumba.jpeg';
+import AlishaanImage from '../../assets/Alishaan.jpeg';
 import KhushImage from '../../assets/Khush Shah.jpg';
 
 function AboutVoteable() {
@@ -115,15 +116,7 @@ function AboutVoteable() {
                   Co-Founder & CFO
                 </p>
               </div>
-              <div className="team-member">
-                <img
-                  src={EmmanuelImage}
-                  alt="Emmanuel's Pic"
-                  className="member-pic"
-                />
-                <p style={{ fontSize: '15px' }}>Emmanuel Asiimwe</p>
-                <p className="role">Tech Lead</p>
-              </div>
+
               <div className="team-member">
                 <img
                   src={AlbertImage}
@@ -132,6 +125,24 @@ function AboutVoteable() {
                 />
                 <p>Albert J. Mulumba</p>
                 <p className="role">Head of Design</p>
+              </div>
+              <div className="team-member">
+                <img
+                  src={AlishaanImage}
+                  alt="Alishaan's Pic"
+                  className="member-pic"
+                />
+                <p>Alishaan</p>
+                <p className="role">Marketing Manager</p>
+              </div>
+              <div className="team-member">
+                <img
+                  src={EmmanuelImage}
+                  alt="Emmanuel's Pic"
+                  className="member-pic"
+                />
+                <p style={{ fontSize: '15px' }}>Emmanuel Asiimwe</p>
+                <p className="role">Asst. Dev</p>
               </div>
             </div>
           </div>
