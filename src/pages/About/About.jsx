@@ -142,7 +142,7 @@ function AboutVoteable() {
                   className="member-pic"
                 />
                 <p style={{ fontSize: '15px' }}>Emmanuel Asiimwe</p>
-                <p className="role">Asst. Dev</p>
+                <p className="role">CTO</p>
               </div>
             </div>
           </div>

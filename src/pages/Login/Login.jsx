@@ -32,7 +32,7 @@ export default function Login() {
       body: JSON.stringify({
         Student_ID: name,
         password: password,
-        // house: selectedHouse,
+        house: selectedHouse,
       }),
     });
     const data = await res.json();
@@ -50,7 +50,7 @@ export default function Login() {
   }
 
   const login = async () => {
-    if (!name || !password || selectedHouse) {
+    if (!name || !password || !selectedHouse) {
       return;
     }
 
