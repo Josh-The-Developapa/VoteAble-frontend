@@ -11,7 +11,7 @@ export default function Login() {
   const [nameErr, setNameErr] = useState('');
   const [passErr, setPassErr] = useState('');
   // const [selectedGender, setSelectedGender] = useState('');
-  // const [selectedHouse, setSelectedHouse] = useState('');
+  const [selectedHouse, setSelectedHouse] = useState('');
 
   const navigate = useNavigate();
 
@@ -19,9 +19,9 @@ export default function Login() {
   //   setSelectedGender(event.target.value);
   // };
 
-  // const handleHouseChange = (event) => {
-  //   setSelectedHouse(event.target.value);
-  // };
+  const handleHouseChange = (event) => {
+    setSelectedHouse(event.target.value);
+  };
 
   async function user() {
     const res = await fetch(`https://backend.voteable.live/v1/user`, {
@@ -50,7 +50,7 @@ export default function Login() {
   }
 
   const login = async () => {
-    if (!name || !password) {
+    if (!name || !password || selectedHouse) {
       return;
     }
 
@@ -65,7 +65,7 @@ export default function Login() {
     localStorage.setItem('password', password);
     // localStorage.setItem('gender', selectedGender);
     localStorage.setItem('class', data2.user.class);
-    // localStorage.setItem('house', selectedHouse);
+    localStorage.setItem('house', selectedHouse);
 
     if (!nameErr || !passErr) {
       navigate('/account');
@@ -162,7 +162,7 @@ export default function Login() {
               Female
             </label>
           </form>
-        </div>
+        </div> */}
         <div
           style={{
             display: 'flex',
@@ -190,7 +190,7 @@ export default function Login() {
             <option value="EAGLES">EAGLES</option>
             <option value="KITES">KITES</option>
           </select>
-        </div> */}
+        </div>
         <button
           className={'button mt-20'}
           onClick={login}
