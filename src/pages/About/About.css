@@ -2,7 +2,7 @@
   display: flex;
   justify-content: flex-start;
   width: 100vw;
-  height: 100vh;
+  /* height: 100vh; */
   align-items: stretch;
   background-color: #f0f0f0;
   padding: 0;
@@ -13,7 +13,7 @@
 .about-left,
 .about-middle,
 .about-right {
-  height: 100vh;
+  /* height: 100vh; */
   display: flex;
   flex-direction: column;
   width: 33.33333%; /* Default width */
@@ -33,7 +33,7 @@
   justify-content: flex-end;
   align-items: center;
   background-color: #f0f0f0;
-  padding: 50px 0 0 0;
+  /* padding: 50px 0 0 0; */
 }
 
 .about-right {

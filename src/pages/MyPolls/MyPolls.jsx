@@ -19,8 +19,6 @@ function MyPolls() {
   const [HAR, setHAR] = useState(false); // State for has administrative rights
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-
     const myPolls = async () => {
       setIsLoading(true);
       const res = await fetch('https://backend.voteable.live/v1/myPolls', {
@@ -39,11 +37,7 @@ function MyPolls() {
 
       if (res.ok) {
         // Custom sorting by date or any other field
-        const sortedPolls = data.data.sort((a, b) => {
-          const rankA = Number(a.rank); // Replace `a.date` with your actual date field
-          const rankB = Number(b.rank);
-          return rankA - rankB; // Ascending order
-        });
+        const sortedPolls = data.data;
 
         setPolls(sortedPolls);
         console.log(sortedPolls);

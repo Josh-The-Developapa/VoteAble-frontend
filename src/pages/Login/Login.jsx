@@ -10,18 +10,18 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [nameErr, setNameErr] = useState('');
   const [passErr, setPassErr] = useState('');
-  const [selectedGender, setSelectedGender] = useState('');
-  const [selectedHouse, setSelectedHouse] = useState('');
+  // const [selectedGender, setSelectedGender] = useState('');
+  // const [selectedHouse, setSelectedHouse] = useState('');
 
   const navigate = useNavigate();
 
-  const handleGenderChange = (event) => {
-    setSelectedGender(event.target.value);
-  };
+  // const handleGenderChange = (event) => {
+  //   setSelectedGender(event.target.value);
+  // };
 
-  const handleHouseChange = (event) => {
-    setSelectedHouse(event.target.value);
-  };
+  // const handleHouseChange = (event) => {
+  //   setSelectedHouse(event.target.value);
+  // };
 
   async function user() {
     const res = await fetch(`https://backend.voteable.live/v1/user`, {
@@ -32,7 +32,7 @@ export default function Login() {
       body: JSON.stringify({
         Student_ID: name,
         password: password,
-        house: selectedHouse,
+        // house: selectedHouse,
       }),
     });
     const data = await res.json();
@@ -50,7 +50,7 @@ export default function Login() {
   }
 
   const login = async () => {
-    if (!name || !password || !selectedGender || !selectedHouse) {
+    if (!name || !password) {
       return;
     }
 
@@ -63,9 +63,9 @@ export default function Login() {
     localStorage.setItem('Student_ID', name);
     localStorage.setItem('name', `${data2.user.name}`);
     localStorage.setItem('password', password);
-    localStorage.setItem('gender', selectedGender);
+    // localStorage.setItem('gender', selectedGender);
     localStorage.setItem('class', data2.user.class);
-    localStorage.setItem('house', selectedHouse);
+    // localStorage.setItem('house', selectedHouse);
 
     if (!nameErr || !passErr) {
       navigate('/account');
@@ -125,7 +125,7 @@ export default function Login() {
             </p>
           )}
         </div>
-        <div
+        {/* <div
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -190,7 +190,7 @@ export default function Login() {
             <option value="EAGLES">EAGLES</option>
             <option value="KITES">KITES</option>
           </select>
-        </div>
+        </div> */}
         <button
           className={'button mt-20'}
           onClick={login}

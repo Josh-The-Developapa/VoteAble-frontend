@@ -8,7 +8,7 @@ import EmmanuelImage from '../../assets/Emmanuel Asiimwe.jpeg';
 import AkhilImage from '../../assets/Akhil Muni.jpeg';
 import JoshuaImage from '../../assets/JMuks.png';
 import AlbertImage from '../../assets/Albert Jordan Mulumba.jpeg';
-import KhushImage from '../../assets/Khush Shah.jpeg';
+import KhushImage from '../../assets/Khush Shah.jpg';
 
 function AboutVoteable() {
   return (
