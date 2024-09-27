@@ -135,7 +135,7 @@ function AboutVoteable() {
                 <p>Alishaan</p>
                 <p className="role">Marketing Manager</p>
               </div>
-              <div className="team-member">
+              {/* <div className="team-member">
                 <img
                   src={EmmanuelImage}
                   alt="Emmanuel's Pic"
@@ -143,7 +143,7 @@ function AboutVoteable() {
                 />
                 <p style={{ fontSize: '15px' }}>Emmanuel Asiimwe</p>
                 <p className="role">CTO</p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
