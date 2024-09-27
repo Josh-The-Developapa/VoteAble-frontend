@@ -20,8 +20,8 @@ const DropDown = () => {
   };
 
   const logout = () => {
-    ['name', 'gender', 'Student_ID', 'password', 'class', 'house'].forEach(
-      (item) => localStorage.removeItem(item)
+    ['name', 'Student_ID', 'password', 'class', 'house'].forEach((item) =>
+      localStorage.removeItem(item)
     );
     navigate('/login');
     window.location.reload();

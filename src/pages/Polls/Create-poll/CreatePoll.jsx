@@ -130,7 +130,7 @@ function CreatePoll() {
           owner: {
             name: localStorage.getItem('name'),
             password: localStorage.getItem('password'),
-            gender: localStorage.getItem('gender'),
+            // gender: localStorage.getItem('gender'),
           },
           class: pollClass,
           house: pollHouse,
