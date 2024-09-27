@@ -5,7 +5,7 @@ import { RiGraduationCapLine } from 'react-icons/ri';
 import { GoDotFill } from 'react-icons/go';
 import { NavLink } from 'react-router-dom';
 import Profile from '../../assets/Profile.svg';
-import TeamPic from '../../assets/team-pic.jpeg';
+import TeamPic from '../../assets/team-pic.png';
 import BallotBox from '../../assets/BallotBox.png';
 import AccountSVG from '../../assets/Account.svg';
 

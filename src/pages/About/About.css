@@ -41,6 +41,7 @@
   align-items: center;
   background-color: #f0f0f0;
   padding: 0px;
+  min-height: 100vh;
 }
 
 .logo2 {
@@ -103,7 +104,7 @@
 }
 
 .group-pic {
-  height: 45%;
+  height: 50%;
   width: 100%;
   object-fit: cover;
   margin-top: 75px;
