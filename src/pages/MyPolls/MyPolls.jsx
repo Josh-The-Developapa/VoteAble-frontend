@@ -179,7 +179,7 @@ function MyPolls() {
             <Carousel
               ref={carouselRef}
               controls={false}
-              touch={true}
+              touch={false}
               interval={null}
               onSelect={handleSelect}
               indicators={false} // Hide default indicators
