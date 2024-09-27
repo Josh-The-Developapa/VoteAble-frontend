@@ -1,15 +1,15 @@
 import React from 'react';
-import './About.css';
-import Header from '../../components/Header/Header.jsx';
-import Logo from '../../assets/Logo.svg';
-import TeamPic from '../../assets/team-pic.jpeg';
-import LaptopPic from '../../assets/Laptop.png';
-import EmmanuelImage from '../../assets/Emmanuel Asiimwe.jpeg';
 import AkhilImage from '../../assets/Akhil Muni.jpeg';
-import JoshuaImage from '../../assets/JMuks.png';
 import AlbertImage from '../../assets/Albert Jordan Mulumba.jpeg';
 import AlishaanImage from '../../assets/Alishaan.jpeg';
+import EmmanuelImage from '../../assets/Emmanuel Asiimwe.jpeg';
+import JoshuaImage from '../../assets/JMuks.png';
 import KhushImage from '../../assets/Khush Shah.jpg';
+import LaptopPic from '../../assets/Laptop.png';
+import Logo from '../../assets/Logo.svg';
+import TeamPic from '../../assets/team-pic.jpeg';
+// import Header from '../../components/Header/Header.jsx';
+import './About.css';
 
 function AboutVoteable() {
   return (
@@ -136,14 +136,16 @@ function AboutVoteable() {
                 <p className="role">Marketing Manager</p>
               </div>
               <div className="team-member">
-                <img
-                  src={EmmanuelImage}
-                  alt="Emmanuel's Pic"
-                  className="member-pic"
-                />
-                <p style={{ fontSize: '15px' }}>Emmanuel Asiimwe</p>
-                <p className="role">Asst. Dev</p>
-              </div>
+								<img
+									src={EmmanuelImage}
+									alt="Emmanuel's Pic"
+									className="member-pic"
+								/>
+								<p style={{ fontSize: "15px" }}>
+									Emmanuel Asiimwe
+								</p>
+								<p className="role">CTO</p>
+							</div>
             </div>
           </div>
         </div>
