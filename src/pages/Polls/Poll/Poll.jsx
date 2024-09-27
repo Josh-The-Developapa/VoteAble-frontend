@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { Spinner } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+// import { Link, useNavigate, useParams } from 'react-router-dom';
 import './Poll.css';
 
 function Poll(props) {
   const pollId = props.pollId;
-  const navigate = useNavigate();
-  const [pollNotFound, setPollNotFound] = useState();
+  // const navigate = useNavigate();
+  // const [pollNotFound, setPollNotFound] = useState();
   const [question, setQuestion] = useState();
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -76,7 +75,7 @@ function Poll(props) {
     setButtonDisabled(true); // Disable button immediately
 
     const res = await fetch(
-      `https://backend.voteable.live/v1/vote/${pollId ? pollId : props.pollId}`,
+      `https://backend.voteable.live/v1/vote/${pollId?pollId:props.pollId}`,
       {
         method: 'POST',
         body: JSON.stringify({

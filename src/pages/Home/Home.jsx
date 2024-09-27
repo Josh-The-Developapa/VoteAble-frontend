@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import Header from '../../components/Header/Header.jsx';
+// import Header from '../../components/Header/Header.jsx';
 import HomepageSVG from '../../assets/Blocks.svg';
 import Logo from '../../assets/Logo.svg';
-import CookieConsent from 'react-cookie-consent';
+// import CookieConsent from 'react-cookie-consent';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
 
@@ -43,22 +43,6 @@ function Home() {
         className="homepage-svg"
         alt="Homepage background"
       />
-      {/* <CookieConsent
-        location="bottom"
-        buttonText="I Accept"
-        cookieName="Cookie-consent"
-        style={{ background: '#2B373B' }}
-        buttonStyle={{
-          color: '#4e503b',
-          fontSize: '13px',
-          borderRadius: '10px',
-        }}
-        declineButtonStyle={{ borderRadius: '10px' }}
-        enableDeclineButton
-        expires={10}
-      >
-        This website uses cookies to enhance the user experience.
-      </CookieConsent> */}
     </div>
   );
 }
