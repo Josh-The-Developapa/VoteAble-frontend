@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Carousel } from 'react-bootstrap';
 import Spinner from 'react-bootstrap/Spinner';
-import './MyPolls.css';
-import Poll from '../Polls/Poll/Poll.jsx';
-import PollSVG from '../../assets/Poll.svg';
 import { useNavigate } from 'react-router-dom';
+import PollSVG from '../../assets/Poll.svg';
+import Poll from '../Polls/Poll/Poll.jsx';
 import Results from '../Results/Results.jsx';
+import './MyPolls.css';
 
 function MyPolls() {
   const navigate = useNavigate();
-  const [copy, setCopy] = useState(true);
+  // const [copy, setCopy] = useState(true);
   const [signupFirstErr, setSignupFirstErr] = useState(false);
   const [error, setError] = useState('');
   const [polls, setPolls] = useState([]);
@@ -142,7 +142,7 @@ function MyPolls() {
             <Carousel
               ref={carouselRef}
               controls={false}
-              touch={true}
+              touch={false} // Disable touch/swipe navigation
               interval={null}
               onSelect={handleSelect}
               indicators={false} // Hide default indicators
