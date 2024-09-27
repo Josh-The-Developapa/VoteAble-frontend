@@ -138,7 +138,7 @@ function MyPolls() {
         )}
 
         {HAR && polls.length > 0 ? (
-          <div>
+          <div data-bs-touch="false">
             <Carousel
               ref={carouselRef}
               controls={false}
