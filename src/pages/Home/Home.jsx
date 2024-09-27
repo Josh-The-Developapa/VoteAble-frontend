@@ -17,8 +17,7 @@ function Home() {
     if (
       localStorage.getItem('Student_ID') &&
       localStorage.getItem('name') &&
-      localStorage.getItem('password') &&
-      localStorage.getItem('gender')
+      localStorage.getItem('password')
     ) {
       navigate('/polls');
     } else {

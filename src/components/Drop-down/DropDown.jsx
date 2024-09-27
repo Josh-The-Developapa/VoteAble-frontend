@@ -4,9 +4,11 @@ import { NavLink } from 'react-router-dom';
 import Context from '../../Context/Context.jsx';
 import { MdOutlineAccountCircle } from 'react-icons/md';
 import Profile from '../../assets/Profile.svg';
+import { useNavigate } from 'react-router-dom';
 
 const DropDown = () => {
   const ctx = useContext(Context);
+  const navigate = useNavigate();
 
   const formatName = (name) => {
     if (!name) return '';
@@ -18,9 +20,10 @@ const DropDown = () => {
   };
 
   const logout = () => {
-    ['name', 'gender', 'Student_ID', 'password', 'class', 'house'].forEach(
-      (item) => localStorage.removeItem(item)
+    ['name', 'Student_ID', 'password', 'class', 'house'].forEach((item) =>
+      localStorage.removeItem(item)
     );
+    navigate('/login');
     window.location.reload();
   };
 
