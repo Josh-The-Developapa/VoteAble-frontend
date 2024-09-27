@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import avatarPic from '../../assets/Logo.svg';
 import LoginSVG from '../../assets/LoginGraphic.svg';
+import avatarPic from '../../assets/Logo.svg';
 
 import './Login.css';
 
@@ -50,25 +50,44 @@ export default function Login() {
   }
 
   const login = async () => {
-    if (!name || !password || !selectedHouse) {
+    if (!name) {
+      console.log('Missing field: Student ID');
+      setNameErr('Please enter a valid ID');
+      return;
+    }
+    if (!password) {
+      console.log('Missing field: Password');
+      setPassErr('Please enter a valid password');
+      return;
+    }
+    if (!selectedHouse) {
+      console.log('Missing field: House');
       return;
     }
 
-    const data2 = await user();
-    console.log(data2);
-    if (data2.error) {
-      return;
-    }
+    try {
+      const data2 = await user();
+      console.log('User data:', data2);
 
-    localStorage.setItem('Student_ID', name);
-    localStorage.setItem('name', `${data2.user.name}`);
-    localStorage.setItem('password', password);
-    // localStorage.setItem('gender', selectedGender);
-    localStorage.setItem('class', data2.user.class);
-    localStorage.setItem('house', selectedHouse);
+      if (data2.error) {
+        console.log('Error from user function:', data2.error);
+        return;
+      }
 
-    if (!nameErr || !passErr) {
-      navigate('/account');
+      localStorage.setItem('Student_ID', name);
+      localStorage.setItem('name', `${data2.user.name}`);
+      localStorage.setItem('password', password);
+      // localStorage.setItem('gender', selectedGender);
+      localStorage.setItem('class', data2.user.class);
+      localStorage.setItem('house', selectedHouse);
+
+      if (!nameErr && !passErr) {
+        navigate('/account');
+      } else {
+        console.log('Errors:', { nameErr, passErr });
+      }
+    } catch (error) {
+      console.error('Login error:', error);
     }
   };
 
