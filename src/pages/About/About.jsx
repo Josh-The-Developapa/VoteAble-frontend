@@ -10,6 +10,7 @@ import JoshuaImage from '../../assets/JMuks.png';
 import AlbertImage from '../../assets/Albert Jordan Mulumba.jpeg';
 import AlishaanImage from '../../assets/Alishaan.jpeg';
 import KhushImage from '../../assets/Khush Shah.jpg';
+import RusheelImage from '../../assets/Rusheel .jpeg';
 
 function AboutVoteable() {
   return (
@@ -116,7 +117,17 @@ function AboutVoteable() {
                   Co-Founder & CFO
                 </p>
               </div>
-
+              <div className="team-member">
+                <img
+                  src={RusheelImage}
+                  alt="Akhil's Pic"
+                  className="member-pic"
+                />
+                <p>Rusheel Savani</p>
+                <p className="role" style={{ fontSize: '15px' }}>
+                  Co-Founder & President
+                </p>
+              </div>
               <div className="team-member">
                 <img
                   src={AlbertImage}
