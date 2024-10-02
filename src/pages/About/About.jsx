@@ -125,7 +125,7 @@ function AboutVoteable() {
                 />
                 <p>Rusheel Savani</p>
                 <p className="role" style={{ fontSize: '15px' }}>
-                  Co-Founder
+                  Co-Founder & President
                 </p>
               </div>
               <div className="team-member">
