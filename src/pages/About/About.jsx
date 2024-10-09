@@ -114,10 +114,10 @@ function AboutVoteable() {
                 />
                 <p>Rusheel Savani</p>
                 <p className="role" style={{ fontSize: '15px' }}>
-                  President & Co-Founder
+                  Co-Founder
                 </p>
               </div>
-              <div className="team-member">
+              {/* <div className="team-member">
                 <img
                   src={AkhilImage}
                   alt="Akhil's Pic"
@@ -127,7 +127,7 @@ function AboutVoteable() {
                 <p className="role" style={{ fontSize: '15px' }}>
                   Finance Manager
                 </p>
-              </div>
+              </div> */}
               <div className="team-member">
                 <img
                   src={AlbertImage}
