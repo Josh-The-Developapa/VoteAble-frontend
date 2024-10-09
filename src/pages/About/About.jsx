@@ -106,7 +106,7 @@ function AboutVoteable() {
                   Co-Founder & COO
                 </p>
               </div>
-              <div className="team-member">
+              {/* <div className="team-member">
                 <img
                   src={RusheelImage}
                   alt="Rusheel's Pic"
@@ -116,7 +116,7 @@ function AboutVoteable() {
                 <p className="role" style={{ fontSize: '15px' }}>
                   Co-Founder
                 </p>
-              </div>
+              </div> */}
               {/* <div className="team-member">
                 <img
                   src={AkhilImage}
