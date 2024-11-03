@@ -59,7 +59,7 @@ function Subscription() {
           <li>Priority support</li>
         </ul>
         <form
-          action={`http://localhost:8000/create-checkout-session/price_1LnSbdFoXys89NW0jPj1S16M`}
+          action={`https://backend.voteable.live/create-checkout-session/price_1LnSbdFoXys89NW0jPj1S16M`}
           method="POST"
           style={{ width: '85%' }}
         >
@@ -87,7 +87,7 @@ function Subscription() {
           <li>Priority support</li>
         </ul>
         <form
-          action={`http://localhost:8000/create-checkout-session/price_1LnSfaFoXys89NW0HR8qqwId`}
+          action={`https://backend.voteable.live/create-checkout-session/price_1LnSfaFoXys89NW0HR8qqwId`}
           method="POST"
           style={{ width: '85%' }}
         >
@@ -115,7 +115,7 @@ function Subscription() {
           <li>Priority support</li>
         </ul>
         <form
-          action={`http://localhost:8000/create-checkout-session/price_1LnSjDFoXys89NW0yado7YFk`}
+          action={`https://backend.voteable.live/create-checkout-session/price_1LnSjDFoXys89NW0yado7YFk`}
           method="POST"
           style={{ width: '85%' }}
         >

@@ -51,15 +51,18 @@ function Results(props) {
     async function poll() {
       setIsLoading(true);
 
-      const res = await fetch(`http://localhost:8000/v1/results/${pollId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          Student_ID: localStorage.getItem('Student_ID'),
-        }),
-      });
+      const res = await fetch(
+        `https://backend.voteable.live/v1/results/${pollId}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            Student_ID: localStorage.getItem('Student_ID'),
+          }),
+        }
+      );
 
       setIsLoading(false);
       const data = await res.json();

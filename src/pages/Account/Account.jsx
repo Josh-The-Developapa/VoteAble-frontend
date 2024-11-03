@@ -16,7 +16,7 @@ function Account() {
   useEffect(() => {
     const hasVoted = (async function checkPolls() {
       try {
-        const res = await fetch('http://localhost:8000/v1/myPolls', {
+        const res = await fetch('https://backend.voteable.live/v1/myPolls', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

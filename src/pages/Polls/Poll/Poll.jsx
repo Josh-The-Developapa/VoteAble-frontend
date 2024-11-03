@@ -22,9 +22,12 @@ function Poll(props) {
     window.addEventListener('resize', handleResize);
 
     async function fetchPoll() {
-      const res = await fetch(`http://localhost:8000/v1/poll/${pollId}`, {
-        method: 'GET',
-      });
+      const res = await fetch(
+        `https://backend.voteable.live/v1/poll/${pollId}`,
+        {
+          method: 'GET',
+        }
+      );
       const data = await res.json();
       if (data.error) {
         setPollNotFound(data.error);
@@ -36,15 +39,18 @@ function Poll(props) {
       console.log(data);
     }
     async function checkResults() {
-      const res = await fetch(`http://localhost:8000/v1/results/${pollId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          Student_ID: localStorage.getItem('Student_ID'),
-        }),
-      });
+      const res = await fetch(
+        `https://backend.voteable.live/v1/results/${pollId}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            Student_ID: localStorage.getItem('Student_ID'),
+          }),
+        }
+      );
 
       const data = await res.json();
       if (data.error) {
@@ -70,7 +76,7 @@ function Poll(props) {
     setButtonDisabled(true); // Disable button immediately
 
     const res = await fetch(
-      `http://localhost:8000/v1/vote/${pollId ? pollId : props.pollId}`,
+      `https://backend.voteable.live/v1/vote/${pollId ? pollId : props.pollId}`,
       {
         method: 'POST',
         body: JSON.stringify({
@@ -151,7 +157,7 @@ function Poll(props) {
               >
                 {option.photo && (
                   <img
-                    src={`http://localhost:8000/uploads/${option.photo}`}
+                    src={`https://backend.voteable.live/uploads/${option.photo}`}
                     alt={option.text}
                   />
                 )}
@@ -219,7 +225,7 @@ function Poll(props) {
               >
                 {option.photo && (
                   <img
-                    src={`http://localhost:8000/uploads/${option.photo}`}
+                    src={`https://backend.voteable.live/uploads/${option.photo}`}
                     alt={option.text}
                   />
                 )}
@@ -280,7 +286,7 @@ function Poll(props) {
               >
                 {option.photo && (
                   <img
-                    src={`http://localhost:8000/uploads/${option.photo}`}
+                    src={`https://backend.voteable.live/uploads/${option.photo}`}
                     alt={option.text}
                   />
                 )}
