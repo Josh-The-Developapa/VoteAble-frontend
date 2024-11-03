@@ -7,7 +7,6 @@ import './Login.css';
 
 export default function Login() {
   const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
   const [nameErr, setNameErr] = useState('');
   const [passErr, setPassErr] = useState('');
   // const [selectedGender, setSelectedGender] = useState('');
@@ -24,7 +23,7 @@ export default function Login() {
   };
 
   async function user() {
-    const res = await fetch(`https://backend.voteable.live/v1/user`, {
+    const res = await fetch(`http://localhost:8000/v1/user`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

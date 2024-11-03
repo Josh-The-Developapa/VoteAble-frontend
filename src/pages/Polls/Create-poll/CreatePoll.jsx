@@ -119,7 +119,7 @@ function CreatePoll() {
     }));
 
     try {
-      const res = await fetch('https://backend.voteable.live/v1/create-poll', {
+      const res = await fetch('http://localhost:8000/v1/create-poll', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
