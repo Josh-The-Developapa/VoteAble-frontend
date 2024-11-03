@@ -75,8 +75,7 @@ function Poll(props) {
         method: 'POST',
         body: JSON.stringify({
           answer: selectedOption.text,
-          Student_ID: localStorage.getItem('Student_ID'),
-          password: localStorage.getItem('password'),
+          name: localStorage.getItem('name'),
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -227,7 +226,6 @@ function Poll(props) {
                 <div className="candidate-info">
                   <div>
                     <h1 className="poll-class">{option.class}</h1>
-                    {/* <h1 className={option.house}>{option.house}</h1> */}
                   </div>
                   <div>
                     <h2
