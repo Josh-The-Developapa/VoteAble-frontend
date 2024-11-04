@@ -109,7 +109,6 @@ function MyPolls() {
             height: '400px',
             width: '400px',
             top: '15px',
-            zIndex: 10,
           }}
         />
         {signupFirstErr && (

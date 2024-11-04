@@ -2,13 +2,14 @@ import React from 'react';
 import AkhilImage from '../../assets/Akhil Muni.jpeg';
 import AlbertImage from '../../assets/Albert Jordan Mulumba.jpeg';
 import AlishaanImage from '../../assets/Alishaan.jpeg';
-import EmmanuelImage from '../../assets/Emmanuel Asiimwe.jpeg';
+import { default as EmmanuelImage, default as EmmanuelImage } from '../../assets/Emmanuel Asiimwe.jpeg';
 import JoshuaImage from '../../assets/JMuks.png';
 import KhushImage from '../../assets/Khush Shah.jpg';
 import LaptopPic from '../../assets/Laptop.png';
 import Logo from '../../assets/Logo.svg';
-import TeamPic from '../../assets/team-pic.jpeg';
-// import Header from '../../components/Header/Header.jsx';
+import RusheelImage from '../../assets/Rusheel .jpeg';
+import TeamPic from '../../assets/team-pic.png';
+import Header from '../../components/Header/Header.jsx';
 import './About.css';
 
 function AboutVoteable() {
@@ -105,7 +106,18 @@ function AboutVoteable() {
                   Co-Founder & COO
                 </p>
               </div>
-              <div className="team-member">
+              {/* <div className="team-member">
+                <img
+                  src={RusheelImage}
+                  alt="Rusheel's Pic"
+                  className="member-pic"
+                />
+                <p>Rusheel Savani</p>
+                <p className="role" style={{ fontSize: '15px' }}>
+                  Co-Founder
+                </p>
+              </div> */}
+              {/* <div className="team-member">
                 <img
                   src={AkhilImage}
                   alt="Akhil's Pic"
@@ -113,10 +125,9 @@ function AboutVoteable() {
                 />
                 <p>Akhil Muni</p>
                 <p className="role" style={{ fontSize: '15px' }}>
-                  Co-Founder & CFO
+                  Finance Manager
                 </p>
-              </div>
-
+              </div> */}
               <div className="team-member">
                 <img
                   src={AlbertImage}
@@ -136,16 +147,14 @@ function AboutVoteable() {
                 <p className="role">Marketing Manager</p>
               </div>
               <div className="team-member">
-								<img
-									src={EmmanuelImage}
-									alt="Emmanuel's Pic"
-									className="member-pic"
-								/>
-								<p style={{ fontSize: "15px" }}>
-									Emmanuel Asiimwe
-								</p>
-								<p className="role">CTO</p>
-							</div>
+                <img
+                  src={EmmanuelImage}
+                  alt="Emmanuel's Pic"
+                  className="member-pic"
+                />
+                <p style={{ fontSize: '15px' }}>Emmanuel Asiimwe</p>
+                <p className="role">Tech Lead</p>
+              </div>
             </div>
           </div>
         </div>
