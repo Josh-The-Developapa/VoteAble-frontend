@@ -1,15 +1,15 @@
 import React from 'react';
-import AkhilImage from '../../assets/Akhil Muni.jpeg';
+// import AkhilImage from '../../assets/Akhil Muni.jpeg';
 import AlbertImage from '../../assets/Albert Jordan Mulumba.jpeg';
 import AlishaanImage from '../../assets/Alishaan.jpeg';
-import { default as EmmanuelImage, default as EmmanuelImage } from '../../assets/Emmanuel Asiimwe.jpeg';
+import { default as EmmanuelImage } from '../../assets/Emmanuel Asiimwe.jpeg';
 import JoshuaImage from '../../assets/JMuks.png';
 import KhushImage from '../../assets/Khush Shah.jpg';
 import LaptopPic from '../../assets/Laptop.png';
 import Logo from '../../assets/Logo.svg';
-import RusheelImage from '../../assets/Rusheel .jpeg';
+// import RusheelImage from '../../assets/Rusheel .jpeg';
 import TeamPic from '../../assets/team-pic.png';
-import Header from '../../components/Header/Header.jsx';
+// import Header from '../../components/Header/Header.jsx';
 import './About.css';
 
 function AboutVoteable() {
@@ -153,7 +153,7 @@ function AboutVoteable() {
                   className="member-pic"
                 />
                 <p style={{ fontSize: '15px' }}>Emmanuel Asiimwe</p>
-                <p className="role">Tech Lead</p>
+                <p className="role">Development Manager</p>
               </div>
             </div>
           </div>
