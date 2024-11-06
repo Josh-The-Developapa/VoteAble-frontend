@@ -58,6 +58,8 @@ h2 {
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+  flex-direction: row;
+  width: 200px;
   padding-left: 5px;
   /* padding-right: 5px; */
   /* width:30%; */
@@ -70,10 +72,9 @@ h2 {
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.231), 0 6px 10px rgba(0, 0, 0, 0.284);
   overflow: hidden;
   /* width: auto; */
-  /* height: 300px; */
   text-align: center;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   z-index: 10;
