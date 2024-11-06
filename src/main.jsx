@@ -2,23 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {
   createBrowserRouter,
-  RouterProvider,
   Navigate,
+  RouterProvider,
 } from 'react-router-dom';
+import ContextProvider from './Context/ContextProvider.jsx';
+import NotFound from './pages/404-page/NotFound.jsx';
+import About from './pages/About/About.jsx';
+import Home from './pages/Home/Home.jsx';
 import Login from './pages/Login/Login.jsx';
 import MyPolls from './pages/MyPolls/MyPolls.jsx';
-import ContextProvider from './Context/ContextProvider.jsx';
 import CreatePoll from './pages/Polls/Create-poll/CreatePoll.jsx';
 import Results from './pages/Results/Results.jsx';
-import NotFound from './pages/404-page/NotFound.jsx';
-import Home from './pages/Home/Home.jsx';
-import About from './pages/About/About.jsx';
 
 // import App from './App'
 import './index.css';
-import Account from './pages/Account/Account.jsx';
 import Layout from './Layout/Layout.jsx';
-import FeedPage from './pages/Feed/Feed.jsx';
+import Account from './pages/Account/Account.jsx';
+// import FeedPage from './pages/Feed/Feed.jsx';
 
 const router = createBrowserRouter([
   {

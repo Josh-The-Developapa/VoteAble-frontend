@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { Spinner } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './Poll.css';
 
 function Poll(props) {
@@ -119,7 +118,7 @@ function Poll(props) {
       <div className="pollContainer">
         <div className="header">
           <div>
-            <h1 className="mainTitle">Select Your</h1>
+            <h1 className="mainTitle">Resolution for</h1>
             <h1 className="mainTitleQuestion">{question}</h1>
           </div>
         </div>

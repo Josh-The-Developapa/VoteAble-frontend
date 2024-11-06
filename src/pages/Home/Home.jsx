@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import Header from '../../components/Header/Header.jsx';
+// import Header from '../../components/Header/Header.jsx';
 import HomepageSVG from '../../assets/Blocks.svg';
 import Logo from '../../assets/Logo.svg';
-import CookieConsent from 'react-cookie-consent';
+// import CookieConsent from 'react-cookie-consent';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
 
