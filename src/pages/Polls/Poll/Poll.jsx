@@ -154,7 +154,23 @@ function Poll(props) {
                     : ''
                 }`}
                 onClick={() => setSelectedOption(option)}
-              ></div>
+              >
+                <div className="candidate-info">
+                  <div>
+                    <h4
+                      style={{
+                        color:
+                          selectedOption && selectedOption.text === option.text
+                            ? '#ffffff'
+                            : '#000000',
+                        fontSize: '18px',
+                      }}
+                    >
+                      {option.text}
+                    </h4>
+                  </div>
+                </div>
+              </div>
             ))}
             <div className="buttonContainer">
               <button
@@ -191,7 +207,22 @@ function Poll(props) {
                     : ''
                 }`}
                 onClick={() => setSelectedOption(option)}
-              ></div>
+              >
+                <div className="candidate-info">
+                  <div>
+                    <h2
+                      style={{
+                        color:
+                          selectedOption && selectedOption.text === option.text
+                            ? '#ffffff'
+                            : '#000000',
+                      }}
+                    >
+                      {option.text}
+                    </h2>
+                  </div>
+                </div>
+              </div>
             ))}
             <div className="buttonContainer">
               <button
@@ -228,7 +259,22 @@ function Poll(props) {
                     : ''
                 }`}
                 onClick={() => setSelectedOption(option)}
-              ></div>
+              >
+                <div className="candidate-info">
+                  <div>
+                    <h2
+                      style={{
+                        color:
+                          selectedOption && selectedOption.text === option.text
+                            ? '#ffffff'
+                            : '#000000',
+                      }}
+                    >
+                      {option.text}
+                    </h2>
+                  </div>
+                </div>
+              </div>
             ))}
             <div className="buttonContainer">
               <button
