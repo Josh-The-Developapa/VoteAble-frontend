@@ -154,22 +154,7 @@ function Poll(props) {
                 }`}
                 onClick={() => setSelectedOption(option)}
               >
-                {option.photo && (
-                  <img
-                    src={`https://backend.voteable.live/uploads/${option.photo}`}
-                    alt={option.text}
-                  />
-                )}
                 <div className="candidate-info">
-                  <div>
-                    <h1
-                      className="poll-class"
-                      style={{ marginBottom: '-15px' }}
-                    >
-                      {option.class}
-                    </h1>
-                    {/* <h1 className={option.house}>{option.house}</h1> */}
-                  </div>
                   <div>
                     <h4
                       style={{
@@ -222,16 +207,7 @@ function Poll(props) {
                 }`}
                 onClick={() => setSelectedOption(option)}
               >
-                {option.photo && (
-                  <img
-                    src={`https://backend.voteable.live/uploads/${option.photo}`}
-                    alt={option.text}
-                  />
-                )}
                 <div className="candidate-info">
-                  <div>
-                    <h1 className="poll-class">{option.class}</h1>
-                  </div>
                   <div>
                     <h2
                       style={{
@@ -283,17 +259,7 @@ function Poll(props) {
                 }`}
                 onClick={() => setSelectedOption(option)}
               >
-                {option.photo && (
-                  <img
-                    src={`https://backend.voteable.live/uploads/${option.photo}`}
-                    alt={option.text}
-                  />
-                )}
                 <div className="candidate-info">
-                  <div style={{ height: '190px' }}>
-                    <h1 className="poll-class">{option.class}</h1>
-                    {/* <h1 className={option.house}>{option.house}</h1> */}
-                  </div>
                   <div>
                     <h2
                       style={{
