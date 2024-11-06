@@ -14,11 +14,12 @@ function Home() {
   }, []);
 
   const handleVoteNowClick = () => {
-    if (
-      localStorage.getItem('Student_ID') &&
-      localStorage.getItem('name') &&
-      localStorage.getItem('password')
-    ) {
+    console.log('Checking local storage values...');
+    console.log('Name:', localStorage.getItem('name'));
+    console.log('Student_ID:', localStorage.getItem('Student_ID'));
+    console.log('Password:', localStorage.getItem('password'));
+
+    if (localStorage.getItem('name')) {
       navigate('/polls');
     } else {
       navigate('/login');

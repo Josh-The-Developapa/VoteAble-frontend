@@ -17,8 +17,10 @@ export default function Login() {
       return;
     }
     localStorage.setItem('name', name);
-    if (name.trim() == 'Admin') {
+    console.log('Name set in localStorage:', name);
+    if (name.trim() === 'Admin') {
       localStorage.setItem('Student_ID', 'Admin-v0t3abl3');
+      console.log('Student_ID set in localStorage: Admin-v0t3abl3');
     }
     if (!nameErr) {
       navigate('/account');
