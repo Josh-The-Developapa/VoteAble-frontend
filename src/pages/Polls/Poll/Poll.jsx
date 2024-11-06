@@ -148,7 +148,7 @@ function Poll(props) {
             {options.map((option) => (
               <div
                 key={option.text}
-                className={`candidate-card-mobile${
+                className={`candidate-card-mobile ${
                   selectedOption && selectedOption.text === option.text
                     ? 'selected'
                     : ''
