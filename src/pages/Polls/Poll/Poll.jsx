@@ -215,6 +215,7 @@ function Poll(props) {
                           selectedOption && selectedOption.text === option.text
                             ? '#ffffff'
                             : '#000000',
+                        fontSize: '18px',
                       }}
                     >
                       {option.text}
@@ -267,6 +268,7 @@ function Poll(props) {
                           selectedOption && selectedOption.text === option.text
                             ? '#ffffff'
                             : '#000000',
+                        fontSize: '18px',
                       }}
                     >
                       {option.text}

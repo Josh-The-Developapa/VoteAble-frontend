@@ -41,7 +41,10 @@ const DropDown = () => {
             <div className="user-info">
               <NavLink to="/account" className="nav-link">
                 <img className="dropDownAvatarImage" src={Profile} />
-                <h2 style={{ textAlign: 'center', fontFamily: 'Kumbh Sans' }}>
+                <h2
+                  style={{ textAlign: 'center', fontFamily: 'Kumbh Sans' }}
+                  onClick={handleClose}
+                >
                   Welcome,
                   <br />
                   <span
