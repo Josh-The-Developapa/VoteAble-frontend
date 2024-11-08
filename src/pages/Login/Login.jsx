@@ -17,7 +17,7 @@ export default function Login() {
       return;
     }
     localStorage.setItem('name', name);
-    if (name.trim() == 'Admin') {
+    if (name.trim() == 'Admin-v0t3abl3') {
       localStorage.setItem('Student_ID', 'Admin-v0t3abl3');
     }
     if (!nameErr) {
