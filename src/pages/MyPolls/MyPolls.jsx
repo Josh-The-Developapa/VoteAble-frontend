@@ -71,10 +71,30 @@ function MyPolls() {
     console.log(HAR);
   }, []);
 
-  const handleNext = () => {
-    if (currentIndex + 1 === polls.length) {
+  const handleNext = async () => {
+    const votes = JSON.parse(localStorage.getItem('votes')) || {};
+    const votes_length = Object.keys(votes).length;
+    if (currentIndex + 1 === polls.length && votes_length === polls.length) {
+      const votes = JSON.parse(localStorage.getItem('votes'));
+      // Here, send `votes` to your backend in a single request
+      const res = await fetch(`https://backend.voteable.live/v1/vote`, {
+        method: 'POST',
+        body: JSON.stringify({
+          votes,
+          name: localStorage.getItem('name'),
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (res.ok) {
+        localStorage.removeItem('votes'); // Clear stored votes after successful submission
+      }
+
       navigate('/account');
     }
+
     if (carouselRef.current) {
       carouselRef.current.next();
     }

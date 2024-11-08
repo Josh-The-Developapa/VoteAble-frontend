@@ -17,6 +17,16 @@ function Poll(props) {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [HAR, setHAR] = useState(false); // State for has administrative rights
 
+  function saveVote(pollId, selectedOption) {
+    const votes = JSON.parse(localStorage.getItem('votes')) || {};
+    votes[pollId] = selectedOption.text;
+    localStorage.setItem('votes', JSON.stringify(votes));
+  }
+
+  async function next() {
+    props.handleNext();
+  }
+
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
@@ -74,45 +84,48 @@ function Poll(props) {
 
     setLoading(true); // Start loading
     setButtonDisabled(true); // Disable button immediately
-
-    const res = await fetch(
-      `https://backend.voteable.live/v1/vote/${pollId ? pollId : props.pollId}`,
-      {
-        method: 'POST',
-        body: JSON.stringify({
-          answer: selectedOption.text,
-          name: localStorage.getItem('name'),
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-
-    const data = await res.json();
-    setLoading(false); // End loading
-
-    if (res.ok) {
-      setSignupFirstErr('Voted');
-      setTimeout(() => {
-        props.handleNext(); // Call the function to go to the next item
-      }, 1500);
-    } else if (data.error) {
-      setSignupFirstErr(data.error);
-      setTimeout(() => {
-        props.handleNext(); // Call the function to go to the next item
-      }, 1500);
-    }
-
-    // Re-enable the button after 2 seconds
+    saveVote(pollId, selectedOption);
+    setSignupFirstErr('Vote Saved');
+    setLoading(false);
+    setButtonDisabled(false);
     setTimeout(() => {
-      setButtonDisabled(false);
-    }, 2000);
-  }
+      next();
+    }, 1500);
 
-  // async function next() {
-  //   props.handleNext();
-  // }
+    // const res = await fetch(
+    //   `https://backend.voteable.live/v1/vote/${pollId ? pollId : props.pollId}`,
+    //   {
+    //     method: 'POST',
+    //     body: JSON.stringify({
+    //       answer: selectedOption.text,
+    //       name: localStorage.getItem('name'),
+    //     }),
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //   }
+    // );
+
+    // const data = await res.json();
+    // setLoading(false); // End loading
+
+    // if (res.ok) {
+    //   setSignupFirstErr('Voted');
+    //   setTimeout(() => {
+    //     props.handleNext(); // Call the function to go to the next item
+    //   }, 1500);
+    // } else if (data.error) {
+    //   setSignupFirstErr(data.error);
+    //   setTimeout(() => {
+    //     props.handleNext(); // Call the function to go to the next item
+    //   }, 1500);
+    // }
+
+    // // Re-enable the button after 2 seconds
+    // setTimeout(() => {
+    //   setButtonDisabled(false);
+    // }, 2000);
+  }
 
   return (
     <div>
@@ -123,12 +136,12 @@ function Poll(props) {
             <h1 className="mainTitleQuestion">{question}</h1>
           </div>
         </div>
-        {signupFirstErr === 'Voted' ? (
+        {signupFirstErr === 'Vote Saved' ? (
           <h1
             className="mainTitleQuestion"
             style={{ fontSize: '25px', padding: '15px', fontWeight: 700 }}
           >
-            Voted
+            Vote Saved
           </h1>
         ) : (
           <p
