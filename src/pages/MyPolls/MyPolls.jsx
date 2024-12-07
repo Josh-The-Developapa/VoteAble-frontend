@@ -27,8 +27,11 @@ function MyPolls() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          Student_ID: localStorage.getItem('Student_ID'),
-          password: localStorage.getItem('password'),
+          Student_ID: localStorage.getItem('Student_ID')
+            ? localStorage.getItem('Student_ID')
+            : '',
+          name: localStorage.getItem('name'),
+          section: localStorage.getItem('section'),
         }),
       });
 

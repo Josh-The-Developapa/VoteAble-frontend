@@ -7,22 +7,34 @@ import './Login.css';
 
 export default function Login() {
   const [name, setName] = useState('');
+  const [section, setSection] = useState('');
   const [nameErr, setNameErr] = useState('');
+  const [sectionErr, setSectionErr] = useState('');
 
   const navigate = useNavigate();
 
   const login = async () => {
-    if (!name) {
+    let hasError = false;
+
+    if (!name.trim()) {
       setNameErr('Please enter a valid name');
-      return;
+      hasError = true;
     }
+    if (!section) {
+      setSectionErr('Please select a section');
+      hasError = true;
+    }
+
+    if (hasError) return;
+
     localStorage.setItem('name', name);
-    if (name.trim() == 'Admin-v0t3abl3') {
+    localStorage.setItem('section', section);
+
+    if (name.trim() === 'Admin-v0t3abl3') {
       localStorage.setItem('Student_ID', 'Admin-v0t3abl3');
     }
-    if (!nameErr) {
-      navigate('/account');
-    }
+
+    navigate('/account');
   };
 
   useEffect(() => {
@@ -53,6 +65,26 @@ export default function Login() {
           {nameErr && (
             <p className="namep" style={{ fontFamily: 'Kumbh Sans' }}>
               {nameErr}
+            </p>
+          )}
+        </div>
+        <div>
+          <select
+            className="joinInput"
+            style={{ fontSize: '17px', marginTop: '10px' }}
+            value={section}
+            onChange={(event) => {
+              setSection(event.target.value);
+              setSectionErr('');
+            }}
+          >
+            <option value="">Select Section</option>
+            <option value="International">International</option>
+            <option value="National">National</option>
+          </select>
+          {sectionErr && (
+            <p className="namep" style={{ fontFamily: 'Kumbh Sans' }}>
+              {sectionErr}
             </p>
           )}
         </div>

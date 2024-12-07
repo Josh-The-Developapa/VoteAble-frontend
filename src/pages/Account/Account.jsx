@@ -24,6 +24,7 @@ function Account() {
           body: JSON.stringify({
             Student_ID: localStorage.getItem('Student_ID'),
             name: localStorage.getItem('name'),
+            section: localStorage.getItem('section'),
           }),
         });
 

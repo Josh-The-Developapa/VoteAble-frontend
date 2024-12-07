@@ -17,6 +17,29 @@ function Poll(props) {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [HAR, setHAR] = useState(false); // State for has administrative rights
 
+  function formatOption(optionText) {
+    const [firstName, secondName] = optionText.split(' and ');
+    // return `${firstName}\n&\n${secondName}`;
+    return (
+      <div
+        style={{
+          // display: 'flex',
+          // backgroundColor: 'green',
+          // justifyContent: 'left',
+          // alignItems: 'left',
+          // flexDirection: 'row',
+          textAlign: 'left',
+          lineHeight: '1.4',
+        }}
+      >
+        <b>{firstName}</b>
+        <br />
+        and
+        <br />
+        <b>{secondName}</b>
+      </div>
+    );
+  }
   function saveVote(pollId, selectedOption) {
     const votes = JSON.parse(localStorage.getItem('votes')) || {};
     votes[pollId] = selectedOption.text;
@@ -132,7 +155,7 @@ function Poll(props) {
       <div className="pollContainer">
         <div className="header">
           <div>
-            <h1 className="mainTitle">Resolution for</h1>
+            <h1 className="mainTitle">Prom King & Queen</h1>
             <h1 className="mainTitleQuestion">{question}</h1>
           </div>
         </div>
@@ -177,9 +200,10 @@ function Poll(props) {
                             ? '#ffffff'
                             : '#000000',
                         fontSize: '18px',
+                        fontWeight: 550,
                       }}
                     >
-                      {option.text}
+                      {formatOption(option.text)}
                     </h4>
                   </div>
                 </div>
@@ -232,7 +256,7 @@ function Poll(props) {
                         fontSize: '18px',
                       }}
                     >
-                      {option.text}
+                      {formatOption(option.text)}
                     </h2>
                   </div>
                 </div>
@@ -285,7 +309,7 @@ function Poll(props) {
                         fontSize: '18px',
                       }}
                     >
-                      {option.text}
+                      {formatOption(option.text)}
                     </h2>
                   </div>
                 </div>
