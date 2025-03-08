@@ -14,32 +14,6 @@ function CreatePoll() {
   const [fileErr, setFileErr] = useState(null);
   const [image, setImage] = useState(null);
   const [images, setImages] = useState([]);
-  const [selectedClass, setSelectedClass] = useState('');
-  const [selectedHouse, setSelectedHouse] = useState('');
-  const [pollClass, setPollClass] = useState('');
-  const [pollHouse, setPollHouse] = useState('');
-  const [optionClass, setOptionClass] = useState('');
-  const [optionHouse, setOptionHouse] = useState('');
-
-  const handleClassChange = (event) => {
-    setPollClass(event.target.value);
-  };
-
-  const handleHouseChange = (event) => {
-    setPollHouse(event.target.value);
-  };
-
-  const handleOptionClassChange = (event, index) => {
-    const newOptions = [...options];
-    newOptions[index].class = event.target.value;
-    setOptions(newOptions);
-  };
-
-  const handleOptionHouseChange = (event, index) => {
-    const newOptions = [...options];
-    newOptions[index].house = event.target.value;
-    setOptions(newOptions);
-  };
 
   const inputRef = useRef();
   const navigate = useNavigate();
@@ -89,13 +63,9 @@ function CreatePoll() {
     updatedOptions.push({
       option,
       image,
-      class: optionClass,
-      house: optionHouse,
     });
     setOptions(updatedOptions);
     setOption('');
-    setOptionClass('');
-    setOptionHouse('');
 
     if (image) {
       const updatedImages = [...images];
@@ -104,18 +74,12 @@ function CreatePoll() {
       setImage(null);
       inputRef.current.value = null;
     }
-
-    // if (updatedOptions.length < 2) {
-    //   setOptionErr('Enter another option');
-    // }
   };
 
   const createPoll = async () => {
     const finalOptions = options.map((opt) => ({
       text: opt.option,
       photo: opt.image ? opt.image.name : undefined,
-      class: opt.class,
-      house: opt.house,
     }));
 
     try {
@@ -130,10 +94,7 @@ function CreatePoll() {
           owner: {
             name: localStorage.getItem('name'),
             password: localStorage.getItem('password'),
-            // gender: localStorage.getItem('gender'),
           },
-          class: pollClass,
-          house: pollHouse,
         }),
       });
 
@@ -208,61 +169,6 @@ function CreatePoll() {
                   <li style={{ marginLeft: '25px', marginBottom: '5px' }}>
                     {option.option}
                   </li>
-                  <select
-                    value={option.class}
-                    onChange={(event) => handleOptionClassChange(event, index)}
-                    className="joinInput mt-10"
-                    style={{
-                      padding: '8px',
-                      border: '1px solid #ccc',
-                      borderRadius: '4px',
-                      fontSize: '16px',
-                      width: '100%',
-                      marginBottom: '5px',
-                    }}
-                  >
-                    <option value="">Select a class</option>
-                    <option value="N/A">N/A</option>
-                    <option value="Y7">Y7</option>
-                    <option value="Y8">Y8</option>
-                    <option value="Y9">Y9</option>
-                    <option value="Y10">Y10</option>
-                    <option value="Y11">Y11</option>
-                    <option value="IB1">IB1</option>
-                    <option value="IB2">IB2</option>
-                    {/* <option value="N/A">N/A</option>
-                    <option value="S1S">S1S</option>
-                    <option value="S1N">S1N</option>
-                    <option value="S2S">S2S</option>
-                    <option value="S2N">S2N</option>
-                    <option value="S3S">S3S</option>
-                    <option value="S3N">S3N</option>
-                    <option value="S4S">S4S</option>
-                    <option value="S4N">S4N</option>
-                    <option value="S5S">S5S</option>
-                    <option value="S5A">S5A</option>
-                    <option value="S6S">S6S</option>
-                    <option value="S6A">S6A</option> */}
-                  </select>
-                  <select
-                    value={option.house}
-                    onChange={(event) => handleOptionHouseChange(event, index)}
-                    className="joinInput"
-                    style={{
-                      padding: '8px',
-                      border: '1px solid #ccc',
-                      borderRadius: '4px',
-                      fontSize: '16px',
-                      width: '100%',
-                    }}
-                  >
-                    <option value="">Select a house</option>
-                    <option value="N/A">N/A</option>
-                    <option value="HAWKS">HAWKS</option>
-                    <option value="FALCONS">FALCONS</option>
-                    <option value="EAGLES">EAGLES</option>
-                    <option value="KITES">KITES</option>
-                  </select>
                 </div>
               ))}
             </ol>
@@ -294,72 +200,6 @@ function CreatePoll() {
             <button className="button mt-20">Add option</button>
           </form>
         ) : null}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            marginTop: '15px',
-          }}
-        >
-          <select
-            id="classDropdown"
-            value={pollClass}
-            onChange={handleClassChange}
-            className="joinInput mt-10"
-            style={{
-              padding: '8px',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
-              fontSize: '16px',
-              width: '100%',
-            }}
-          >
-            <option value="">Select a class</option>
-            <option value="N/A">N/A</option>
-            <option value="Y7">Y7</option>
-            <option value="Y8">Y8</option>
-            <option value="Y9">Y9</option>
-            <option value="Y10">Y10</option>
-            <option value="Y11">Y11</option>
-            <option value="IB1">IB1</option>
-            <option value="IB2">IB2</option>
-            {/* <option value="">Select a class</option>
-            <option value="N/A">N/A</option>
-            <option value="S1S">S1S</option>
-            <option value="S1N">S1N</option>
-            <option value="S2S">S2S</option>
-            <option value="S2N">S2N</option>
-            <option value="S3S">S3S</option>
-            <option value="S3N">S3N</option>
-            <option value="S4S">S4S</option>
-            <option value="S4N">S4N</option>
-            <option value="S5S">S5S</option>
-            <option value="S5A">S5A</option>
-            <option value="S6S">S6S</option>
-            <option value="S6A">S6A</option> */}
-          </select>
-          <select
-            id="houseDropdown"
-            value={pollHouse}
-            onChange={handleHouseChange}
-            className="joinInput mt-10"
-            style={{
-              padding: '8px',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
-              fontSize: '16px',
-              width: '100%',
-            }}
-          >
-            <option value="">Select a house</option>
-            <option value="N/A">N/A</option>
-            <option value="HAWKS">HAWKS</option>
-            <option value="FALCONS">FALCONS</option>
-            <option value="EAGLES">EAGLES</option>
-            <option value="KITES">KITES</option>
-          </select>
-        </div>
         <button
           className="button mt-20"
           onClick={() => {
@@ -369,13 +209,6 @@ function CreatePoll() {
             if (!option && options.length > 0) {
               setOptionErr('');
             }
-
-            // if (options.length < 2) {
-            //   setOptionErr('You need to add more than 1 option');
-            // }
-
-            if (!pollClass) setOptionErr('Please select a class for the poll');
-            if (!pollHouse) setOptionErr('Please select a house for the poll');
 
             createPoll();
           }}

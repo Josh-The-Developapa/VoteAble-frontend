@@ -11,7 +11,7 @@ export default function Login() {
   const [nameErr, setNameErr] = useState('');
   const [passErr, setPassErr] = useState('');
   // const [selectedGender, setSelectedGender] = useState('');
-  const [selectedHouse, setSelectedHouse] = useState('');
+  // const [selectedHouse, setSelectedHouse] = useState('');
 
   const navigate = useNavigate();
 
@@ -19,12 +19,12 @@ export default function Login() {
   //   setSelectedGender(event.target.value);
   // };
 
-  const handleHouseChange = (event) => {
-    setSelectedHouse(event.target.value);
-  };
+  // const handleHouseChange = (event) => {
+  //   setSelectedHouse(event.target.value);
+  // };
 
   async function user() {
-    const res = await fetch(`https://backend.voteable.live/v1/user`, {
+    const res = await fetch(`https://backend.voteable.live/v1/user`, { // TODO might need to change the URL here
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -32,7 +32,6 @@ export default function Login() {
       body: JSON.stringify({
         Student_ID: name,
         password: password,
-        house: selectedHouse,
       }),
     });
     const data = await res.json();
@@ -60,10 +59,10 @@ export default function Login() {
       setPassErr('Please enter a valid password');
       return;
     }
-    if (!selectedHouse) {
-      console.log('Missing field: House');
-      return;
-    }
+    // if (!selectedHouse) {
+    //   console.log('Missing field: House');
+    //   return;
+    // }
 
     try {
       const data2 = await user();
@@ -78,8 +77,8 @@ export default function Login() {
       localStorage.setItem('name', `${data2.user.name}`);
       localStorage.setItem('password', password);
       // localStorage.setItem('gender', selectedGender);
-      localStorage.setItem('class', data2.user.class);
-      localStorage.setItem('house', selectedHouse);
+      // localStorage.setItem('class', data2.user.class);
+      // localStorage.setItem('house', selectedHouse);
 
       if (!nameErr && !passErr) {
         navigate('/account');
@@ -190,7 +189,7 @@ export default function Login() {
             marginTop: '15px',
           }}
         >
-          <select
+          {/* <select
             value={selectedHouse}
             onChange={handleHouseChange}
             style={{
@@ -208,7 +207,7 @@ export default function Login() {
             <option value="FALCONS">FALCONS</option>
             <option value="EAGLES">EAGLES</option>
             <option value="KITES">KITES</option>
-          </select>
+          </select> */}
         </div>
         <button
           className={'button mt-20'}

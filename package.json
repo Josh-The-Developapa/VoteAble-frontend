@@ -32,7 +32,6 @@
     "react-router-dom": "^6.30.0",
     "react-web-share": "^2.0.2",
     "read-excel-file": "^5.8.6",
-    "read-excel-file": "^5.8.6",
     "uuid": "^9.0.1",
     "web-vitals": "^3.5.2"
   },
