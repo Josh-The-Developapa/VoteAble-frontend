@@ -53,14 +53,8 @@ const Header = React.memo(function Header(props) {
   const logout = useCallback(async () => {
     localStorage.clear();
     setIsLoggedOut(true);
+    navigate('/login');
   }, []);
-
-  useEffect(() => {
-    if (isLoggedOut) {
-      navigate('/login');
-    }
-    // eslint-disable-next-line
-  }, [isLoggedOut]);
 
   return (
     <div>
@@ -69,19 +63,20 @@ const Header = React.memo(function Header(props) {
       </Suspense>
       <div className="headerContainer">
         <div className="menuWrapper">
-          <FiMenu
-            className="menuIcon"
-            style={{ fontSize: '30px', marginRight: '-10px' }}
-            onClick={() => {
-              ctx.setIsDropVal(true);
-            }}
-          />
-
           <div className="logoWrapper">
             <NavLink to="/home" className="logoLink">
               <img src={Logo} alt="header" className="logoImage" />
               <img src={HeaderText} alt="header" className="headerTextImage" />
             </NavLink>
+          </div>
+          <div className="menu-icon-div">
+            <FiMenu
+              className="menuIcon"
+              style={{ fontSize: '30px', marginLeft: '40px' }}
+              onClick={() => {
+                ctx.setIsDropVal(true);
+              }}
+            />
           </div>
         </div>
         {!localStorage.getItem('name') ? (
@@ -91,6 +86,15 @@ const Header = React.memo(function Header(props) {
         ) : (
           ''
         )}
+
+        {!localStorage.getItem('name') ? (
+          <NavLink to="/about" className="pollLink">
+            About Us
+          </NavLink>
+        ) : (
+          ''
+        )}
+
         {localStorage.getItem('name') ? (
           <div
             className="profileWrapper"
@@ -114,22 +118,6 @@ const Header = React.memo(function Header(props) {
         ) : (
           ''
         )}
-        {/* {localStorage.getItem('name') ? (
-          <div>
-            <NavLink
-              to="/polls"
-              className="pollLink"
-              onClick={() => {
-                ctx.setIsDropVal(false);
-              }}
-            >
-              Poll Hub
-            </NavLink>
-          </div>
-        ) : (
-          ''
-        )} */}
-
         {localStorage.getItem('name') ? (
           <button
             className="pollLink"

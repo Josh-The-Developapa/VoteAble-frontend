@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import Header from '../../components/Header/Header.jsx';
+// import Header from '../../components/Header/Header.jsx';
 import HomepageSVG from '../../assets/Blocks.svg';
 import Logo from '../../assets/Logo.svg';
-import CookieConsent from 'react-cookie-consent';
+// import CookieConsent from 'react-cookie-consent';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
 
@@ -17,8 +17,7 @@ function Home() {
     if (
       localStorage.getItem('Student_ID') &&
       localStorage.getItem('name') &&
-      localStorage.getItem('password') &&
-      localStorage.getItem('gender')
+      localStorage.getItem('password')
     ) {
       navigate('/polls');
     } else {
@@ -28,12 +27,6 @@ function Home() {
 
   return (
     <div className="flex-bg">
-      <Header />
-      <img
-        src={HomepageSVG}
-        className="homepage-svg"
-        alt="Homepage background"
-      />
       <div className="content">
         <img src={Logo} alt="header" className="logo" />
         <h1 className="title">
@@ -45,22 +38,11 @@ function Home() {
           Vote Now
         </button>
       </div>
-      <CookieConsent
-        location="bottom"
-        buttonText="I Accept"
-        cookieName="Cookie-consent"
-        style={{ background: '#2B373B' }}
-        buttonStyle={{
-          color: '#4e503b',
-          fontSize: '13px',
-          borderRadius: '10px',
-        }}
-        declineButtonStyle={{ borderRadius: '10px' }}
-        enableDeclineButton
-        expires={10}
-      >
-        This website uses cookies to enhance the user experience.
-      </CookieConsent>
+      <img
+        src={HomepageSVG}
+        className="homepage-svg"
+        alt="Homepage background"
+      />
     </div>
   );
 }

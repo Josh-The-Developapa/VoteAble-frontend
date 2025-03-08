@@ -1,47 +1,11 @@
-
-
-
 .flex-bg {
-  padding-top: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #ffffff;
- font-family: "Kumbh Sans", sans-serif;
-}
-
-.homepage-svg {
-  height: 91vh;
-  width: 40vw;
-  position: absolute;
-  top: 78px;
-  left: -15px;
-  padding: 0;
-  object-fit: cover;
-}
-
-.content {
-  position: absolute;
-  top: 150px;
-  right: 25%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
-}
-
-.logo {
-  object-fit: contain;
-  height: 90px;
-  margin-top: 50px;
-}
-
-.title {
-  font-size: 50px;
-  text-align: justify;
-  letter-spacing: 3px;
- font-family: "Kumbh Sans", sans-serif;
+  justify-content: flex-start;
+  height: calc(100vh - 75px);
+  width: 100vw;
+  margin-top: 75px;
 }
 
 .highlight {
@@ -49,16 +13,115 @@
   color: #312783;
 }
 
-.vote-now-btn {
-  color: white;
-  padding-left: 30px;
-  padding-left: 30px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  font-size: 23px;
-   background: linear-gradient(to right, #312783 0%, #1C164A 33%, #0B091D 67%, #4A2342 100%);
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
- font-family: "Kumbh Sans", sans-serif;
+@media screen and (max-width: 700px) {
+  .homepage-svg {
+    position: absolute;
+    bottom: -50px;
+    left: -15px;
+    object-fit: cover;
+    height: 40%;
+    width: 50%;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  .content {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50%;
+    width: 100%;
+  }
+
+  .title {
+    font-size: 45px;
+    font-weight: 600;
+    text-align: justify;
+    letter-spacing: 3px;
+    font-family: 'Kumbh Sans', sans-serif;
+  }
+
+  .vote-now-btn {
+    color: white;
+    margin-left: 10px;
+    margin-right: 10px;
+    /* padding-left: 30px;
+    padding-left: 30px; */
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 20px;
+    font-weight: 300;
+    background: linear-gradient(
+      to right,
+      #312783 0%,
+      #1c164a 33%,
+      #0b091d 67%,
+      #4a2342 100%
+    );
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Kumbh Sans', sans-serif;
+  }
+}
+
+@media screen and (min-width: 701px) {
+  .homepage-svg {
+    height: calc(100vh - 75px);
+    width: 40vw;
+    min-width: 200px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -15px;
+    padding: 0;
+    object-fit: cover;
+    margin-top: 75px;
+  }
+
+  .content {
+    position: absolute;
+    top: 150px;
+    right: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .title {
+    font-size: 50px;
+    text-align: justify;
+    letter-spacing: 3px;
+    font-family: 'Kumbh Sans', sans-serif;
+  }
+  .vote-now-btn {
+    color: white;
+    padding-left: 30px;
+    padding-left: 30px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 23px;
+    background: linear-gradient(
+      to right,
+      #312783 0%,
+      #1c164a 33%,
+      #0b091d 67%,
+      #4a2342 100%
+    );
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Kumbh Sans', sans-serif;
+  }
+  .logo {
+    object-fit: contain;
+    height: 80px;
+    margin-top: 50px;
+  }
 }

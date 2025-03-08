@@ -1,31 +1,36 @@
 import React from 'react';
-import './About.css';
-import Header from '../../components/Header/Header.jsx';
-import Logo from '../../assets/Logo.svg';
-import TeamPic from '../../assets/team-pic.jpg';
-import LaptopPic from '../../assets/Laptop.png';
-import EmmanuelImage from '../../assets/Emmanuel Asiimwe.jpeg';
-import AkhilImage from '../../assets/Akhil Muni.jpeg';
-import JoshuaImage from '../../assets/JMuks.jpeg';
+// import AkhilImage from '../../assets/Akhil Muni.jpeg';
 import AlbertImage from '../../assets/Albert Jordan Mulumba.jpeg';
-import KhushImage from '../../assets/Khush Shah.jpeg';
+import AlishaanImage from '../../assets/Alishaan.jpeg';
+import { default as EmmanuelImage } from '../../assets/Emmanuel Asiimwe.jpeg';
+import JoshuaImage from '../../assets/JMuks.png';
+import KhushImage from '../../assets/Khush Shah.jpg';
+import LaptopPic from '../../assets/Laptop.png';
+import Logo from '../../assets/Logo.svg';
+// import RusheelImage from '../../assets/Rusheel .jpeg';
+import TeamPic from '../../assets/team-pic.png';
+// import Header from '../../components/Header/Header.jsx';
+import './About.css';
 
 function AboutVoteable() {
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <div className="about-container">
         <div className="about-left">
           <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              justifyContent: 'flex-start',
-              width: '100%',
-              padding: 0,
-              textAlign: 'left',
-            }}
+            style={
+              {
+                // display: 'flex',
+                // flexDirection: 'column',
+                // alignItems: 'flex-start',
+                // justifyContent: 'flex-start',
+                // width: '100%',
+                // padding: 0,
+                // // marginTop: '20px',
+                // textAlign: 'left',
+              }
+            }
           >
             <img src={Logo} alt="VoteAble Logo" className="logo2" />
             <h1>
@@ -43,14 +48,7 @@ function AboutVoteable() {
           </p>
         </div>
         <div className="about-middle">
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              padding: '45px',
-              paddingTop: '100px',
-            }}
-          >
+          <div className="middle-top">
             <h2
               style={{
                 fontFamily: 'Kumbh Sans',
@@ -80,7 +78,13 @@ function AboutVoteable() {
         <div className="about-right">
           <img src={TeamPic} alt="Our Team" className="group-pic" />
           <div className="team-intro">
-            <h2 style={{ textAlign: 'center' }}>Our Team</h2>
+            <h2
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              Our Team
+            </h2>
             <div className="team-members">
               <div className="team-member">
                 <img
@@ -102,7 +106,18 @@ function AboutVoteable() {
                   Co-Founder & COO
                 </p>
               </div>
-              <div className="team-member">
+              {/* <div className="team-member">
+                <img
+                  src={RusheelImage}
+                  alt="Rusheel's Pic"
+                  className="member-pic"
+                />
+                <p>Rusheel Savani</p>
+                <p className="role" style={{ fontSize: '15px' }}>
+                  Co-Founder
+                </p>
+              </div> */}
+              {/* <div className="team-member">
                 <img
                   src={AkhilImage}
                   alt="Akhil's Pic"
@@ -110,18 +125,9 @@ function AboutVoteable() {
                 />
                 <p>Akhil Muni</p>
                 <p className="role" style={{ fontSize: '15px' }}>
-                  Co-Founder & CFO
+                  Finance Manager
                 </p>
-              </div>
-              <div className="team-member" style={{ marginLeft: '20px' }}>
-                <img
-                  src={EmmanuelImage}
-                  alt="Emmanuel's Pic"
-                  className="member-pic"
-                />
-                <p style={{ fontSize: '15px' }}>Emmanuel Asiimwe</p>
-                <p className="role">Tech Lead</p>
-              </div>
+              </div> */}
               <div className="team-member">
                 <img
                   src={AlbertImage}
@@ -130,6 +136,24 @@ function AboutVoteable() {
                 />
                 <p>Albert J. Mulumba</p>
                 <p className="role">Head of Design</p>
+              </div>
+              <div className="team-member">
+                <img
+                  src={AlishaanImage}
+                  alt="Alishaan's Pic"
+                  className="member-pic"
+                />
+                <p>Alishaan</p>
+                <p className="role">Marketing Manager</p>
+              </div>
+              <div className="team-member">
+                <img
+                  src={EmmanuelImage}
+                  alt="Emmanuel's Pic"
+                  className="member-pic"
+                />
+                <p style={{ fontSize: '15px' }}>Emmanuel Asiimwe</p>
+                <p className="role">Development Manager</p>
               </div>
             </div>
           </div>

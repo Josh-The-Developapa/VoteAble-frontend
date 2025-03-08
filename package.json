@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -31,6 +31,7 @@
     "react-qr-code": "^2.0.15",
     "react-router-dom": "^6.30.0",
     "react-web-share": "^2.0.2",
+    "read-excel-file": "^5.8.6",
     "read-excel-file": "^5.8.6",
     "uuid": "^9.0.1",
     "web-vitals": "^3.5.2"

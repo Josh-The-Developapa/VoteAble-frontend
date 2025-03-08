@@ -5,23 +5,23 @@
   top: 0;
   background-color: #efefef;
   width: 100%;
+  height: 75px;
+  display: flex;
   justify-content: flex-start;
   align-items: center;
-  text-align: center;
-  display: flex;
+  /* text-align: center; */
   flex-wrap: wrap;
-  padding: 15px; /* Adjusted padding */
-  box-shadow: 0 6px 6px -2px rgba(48, 0, 206, 0.319), 0 4px 6px -2px rgba(85, 0, 222, 0.219);
+  padding: 10px; /*Adjusted padding*/
+  box-shadow: 0 6px 6px -2px rgba(48, 0, 206, 0.319),
+    0 4px 6px -2px rgba(85, 0, 222, 0.219);
 }
-
-
-
 
 .menuWrapper {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   flex: 1;
+  /* width: 100%; */
 }
 
 .menuIcon {
@@ -31,7 +31,7 @@
 
 .logoLink {
   height: 50px;
-  width: 70%;
+  /* width: 70%; */
   display: flex;
   align-items: center;
 }
@@ -40,42 +40,47 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /* width: 50%; */
+  /* padding-left: 10px; */
 }
 
 .logoImage {
   object-fit: contain;
-  height: 28px;
+  height: 25px;
 }
 
 .headerTextImage {
   object-fit: contain;
-  height: 28px;
+  height: 25px;
 }
 
-.loginLink, .pollLink {
+.loginLink,
+.pollLink {
   cursor: pointer;
   color: #fff !important;
   background: #27003c;
   padding: 10px 25px;
   margin: 0 10px;
   border-radius: 5px;
-  font-family: "Kumbh Sans", sans-serif;
+  font-family: 'Kumbh Sans', sans-serif;
   font-size: 20px;
 }
 
-.loginLink:focus, .pollLink:focus {
+.loginLink:focus,
+.pollLink:focus {
   outline: 0;
 }
 
-.loginLink:hover, .pollLink:hover {
+.loginLink:hover,
+.pollLink:hover {
   background: #400063;
 }
 
 .avatarImage {
   border-radius: 25px;
-  height:30px;
-  width:30px;
-  margin:10px;
+  height: 30px;
+  width: 30px;
+  margin: 10px;
 }
 
 .profileWrapper {
@@ -94,20 +99,38 @@ img {
   margin-left: 10px;
 }
 
+.menu-icon-div {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex: 1;
+  margin-right: 20px;
+  margin-left: 0px;
+}
+
 @media screen and (max-width: 651px) {
   .loginLink {
     display: none;
   }
-    .pollLink{
+  .pollLink {
     display: none;
   }
+  .profileWrapper {
+    display: none;
+  }
+  /* .logoWrapper {
+    width: 50%;
+  }
+  .menu-icon-div {
+    width: 50%;
+  } */
 }
 
-@media screen and (max-width: 490px) {
-  .profileWrapper{
-    display:none;
+/* @media screen and (max-width: 490px) {
+  .profileWrapper {
+    display: none;
   }
-}
+} */
 
 @media screen and (min-width: 652px) {
   .menuIcon {

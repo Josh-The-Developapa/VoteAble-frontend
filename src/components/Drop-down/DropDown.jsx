@@ -3,9 +3,12 @@ import './DropDown.css';
 import { NavLink } from 'react-router-dom';
 import Context from '../../Context/Context.jsx';
 import { MdOutlineAccountCircle } from 'react-icons/md';
+import Profile from '../../assets/Profile.svg';
+import { useNavigate } from 'react-router-dom';
 
 const DropDown = () => {
   const ctx = useContext(Context);
+  const navigate = useNavigate();
 
   const formatName = (name) => {
     if (!name) return '';
@@ -17,9 +20,10 @@ const DropDown = () => {
   };
 
   const logout = () => {
-    ['name', 'gender', 'Student_ID', 'password', 'class', 'house'].forEach(
-      (item) => localStorage.removeItem(item)
+    ['name', 'Student_ID', 'password', 'class', 'house'].forEach((item) =>
+      localStorage.removeItem(item)
     );
+    navigate('/login');
     window.location.reload();
   };
 
@@ -32,18 +36,27 @@ const DropDown = () => {
       <div className="tsBG" onClick={handleClose}></div>
       <div className="dropdown">
         {localStorage.getItem('name') ? (
-          <div className="user-info">
-            <NavLink to="/account" className="nav-link">
-              <MdOutlineAccountCircle className="avatarImage" />
-              <h2>
-                <span className="highlight">Welcome,</span> <br />
-                {formatName(localStorage.getItem('name'))}
-              </h2>
-            </NavLink>
+          <div>
+            {' '}
+            <div className="user-info">
+              <NavLink to="/account" className="nav-link">
+                <img className="dropDownAvatarImage" src={Profile} />
+                <h2 style={{ textAlign: 'center', fontFamily: 'Kumbh Sans' }}>
+                  Welcome,
+                  <br />
+                  <span
+                    className="highlight"
+                    style={{ fontFamily: 'Kumbh Sans' }}
+                  >
+                    {formatName(localStorage.getItem('name'))}
+                  </span>
+                </h2>
+              </NavLink>
+            </div>
           </div>
         ) : (
           <NavLink to="/login">
-            <button className="btnn" onClick={handleClose}>
+            <button className="dropDownPollLink" onClick={handleClose}>
               Login
             </button>
           </NavLink>
@@ -51,14 +64,16 @@ const DropDown = () => {
         <NavLink to="/home" className="dropDownPollLink" onClick={handleClose}>
           Home
         </NavLink>
-        {localStorage.getItem('name') && (
+        {localStorage.getItem('name') ? (
           <NavLink
-            to="/polls"
+            to="/account"
             className="dropDownPollLink"
             onClick={handleClose}
           >
-            Poll Hub
+            Account
           </NavLink>
+        ) : (
+          ''
         )}
         <NavLink to="/about" className="dropDownPollLink" onClick={handleClose}>
           About Us

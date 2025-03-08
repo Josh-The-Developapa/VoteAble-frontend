@@ -2,30 +2,31 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {
   createBrowserRouter,
-  RouterProvider,
   Navigate,
+  RouterProvider,
 } from 'react-router-dom';
+import ContextProvider from './Context/ContextProvider.jsx';
+import NotFound from './pages/404-page/NotFound.jsx';
+import About from './pages/About/About.jsx';
+import Home from './pages/Home/Home.jsx';
 import Login from './pages/Login/Login.jsx';
 import MyPolls from './pages/MyPolls/MyPolls.jsx';
-import ContextProvider from './Context/ContextProvider.jsx';
 import CreatePoll from './pages/Polls/Create-poll/CreatePoll.jsx';
 import Results from './pages/Results/Results.jsx';
-import NotFound from './pages/404-page/NotFound.jsx';
-import Home from './pages/Home/Home.jsx';
-import About from './pages/About/About.jsx';
 
 // import App from './App'
 import './index.css';
+import Layout from './Layout/Layout.jsx';
 import Account from './pages/Account/Account.jsx';
 
 const router = createBrowserRouter([
   {
     path: '/home',
-    element: <Home />,
+    element: <Layout page={<Home />} />,
   },
   {
     path: '/*',
-    element: <NotFound />,
+    element: <Layout page={<NotFound />} />,
   },
   {
     path: '/',
@@ -33,27 +34,31 @@ const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <Login />,
+    element: <Layout page={<Login />} />,
   },
   // {
   //   path: '/voted-users/:pollId',
   //   element: <VotedUsers />,
   // },
   {
-    path: '/poll/results/:pollId',
-    element: <Results />,
+    path: '/results/:pollId',
+    element: <Layout page={<Results />} />,
   },
   {
     path: '/create-poll',
-    element: <CreatePoll />,
+    element: <Layout page={<CreatePoll />} />,
   },
+  // {
+  //   path: '/feed',
+  //   element: <Layout page={<FeedPage />} />,
+  // },
   // {
   //   path: '/poll/:pollId',
   //   element: <Poll />,
   // },
   {
     path: '/polls',
-    element: <MyPolls />,
+    element: <Layout page={<MyPolls />} />,
   },
   // {
   //   path: '/subscribe',
@@ -77,11 +82,11 @@ const router = createBrowserRouter([
   // },
   {
     path: '/account',
-    element: <Account />,
+    element: <Layout page={<Account />} />,
   },
   {
     path: '/about',
-    element: <About />,
+    element: <Layout page={<About />} />,
   },
 ]);
 
