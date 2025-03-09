@@ -82,6 +82,15 @@ function CreatePoll() {
       photo: opt.image ? opt.image.name : undefined,
     }));
 
+    console.log('Sending poll data:', {
+      question,
+      options: finalOptions,
+      owner: {
+        name: localStorage.getItem('name'),
+        password: localStorage.getItem('password'),
+      }
+    });
+
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/v1/create-poll`, {
         method: 'POST',
@@ -98,16 +107,22 @@ function CreatePoll() {
         }),
       });
 
+      console.log('Response status:', res.status);
+      const data = await res.json();
+      console.log('Response data:', data);
+
       if (res.ok) {
         navigate('/polls');
       } else {
-        const data = await res.json();
         if (data.error === 'You have to login / signup to create a poll') {
           setOptionErr('You have to login to create a poll');
+        } else {
+          setOptionErr(data.error || 'Failed to create poll');
         }
       }
     } catch (error) {
       console.error('Error creating poll:', error);
+      setOptionErr('Network error - please try again');
     }
   };
 
@@ -205,11 +220,11 @@ function CreatePoll() {
           onClick={() => {
             if (!question) {
               setQuestionErr('Enter a question');
+              return;
             }
             if (!option && options.length > 0) {
               setOptionErr('');
             }
-
             createPoll();
           }}
         >
