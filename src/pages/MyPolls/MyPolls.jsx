@@ -16,12 +16,12 @@ function MyPolls() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0); // Track current carousel index
   const carouselRef = useRef(null);
-  const [HAR, setHAR] = useState(false); // State for has administrative rights
+  const [isAdmin, setIsAdmin] = useState(false); // State for has administrative rights
 
   useEffect(() => {
     const myPolls = async () => {
       setIsLoading(true);
-      const res = await fetch('https://backend.voteable.live/v1/myPolls', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/v1/myPolls`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,11 +53,11 @@ function MyPolls() {
       }
 
       if (data.message === 'You do not have admin access') {
-        setHAR(false);
+        setIsAdmin(false);
       }
 
       if (data.message === 'You have admin access') {
-        setHAR(true);
+        setIsAdmin(true);
       }
     };
 
@@ -68,7 +68,7 @@ function MyPolls() {
       setSignupFirstErr(true);
     }
 
-    console.log(HAR);
+    console.log(isAdmin);
   }, []);
 
   const handleNext = () => {
@@ -136,7 +136,7 @@ function MyPolls() {
           </div>
         )}
 
-        {HAR && polls.length > 0 ? (
+        {isAdmin && polls.length > 0 ? (
           <div data-bs-touch="false">
             <Carousel
               ref={carouselRef}
@@ -173,7 +173,7 @@ function MyPolls() {
           ''
         )}
 
-        {HAR === false && polls.length > 0 ? (
+        {isAdmin === false && polls.length > 0 ? (
           <div>
             <Carousel
               ref={carouselRef}
