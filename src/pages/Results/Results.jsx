@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import Spinner from 'react-bootstrap/Spinner';
-import { Bar } from 'react-chartjs-2';
+import React, { useState, useEffect } from "react";
+import Spinner from "react-bootstrap/Spinner";
+import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,8 +9,8 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
-import './Results.css';
+} from "chart.js";
+import "./Results.css";
 
 ChartJS.register(
   CategoryScale,
@@ -21,25 +21,23 @@ ChartJS.register(
   Legend
 );
 
-ChartJS.defaults.plugins.legend.position = 'bottom';
-ChartJS.defaults.color = 'black';
+ChartJS.defaults.plugins.legend.position = "bottom";
+ChartJS.defaults.color = "black";
 ChartJS.defaults.layout.padding = 10;
 ChartJS.defaults.responsive = true;
 ChartJS.defaults.maintainAspectRatio = false;
-ChartJS.defaults.plugins.legend.maxHeight = 1000;
-ChartJS.defaults.plugins.legend.maxWidth = 100;
-ChartJS.defaults.plugins.tooltip.boxPadding = 5;
 
 function Results(props) {
   const pollId = props.pollId;
-  const [question, setQuestion] = useState();
-  const [options, setOptions] = useState();
-  const [pollNotFound, setPollNotFound] = useState();
+  const [question, setQuestion] = useState("");
+  const [options, setOptions] = useState([]);
+  const [pollNotFound, setPollNotFound] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  // Function to generate random colors for the chart bars
   function getRandomColor() {
-    let letters = '0123456789ABCDEF';
-    let color = '#';
+    let letters = "0123456789ABCDEF";
+    let color = "#";
     for (let i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
     }
@@ -47,53 +45,63 @@ function Results(props) {
   }
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    async function poll() {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+
+    // Define an async function to fetch poll data
+    async function fetchPollData() {
       setIsLoading(true);
+      try {
+        // Fetch poll data from the API
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/v1/results/${pollId}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: localStorage.getItem("name"),
+            }),
+          }
+        );
 
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/v1/results/${pollId}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            Student_ID: localStorage.getItem('Student_ID'),
-          }),
+        const pollData = await res.json();
+
+        if (!pollData.success) {
+          setPollNotFound(pollData.error);
+        } else {
+          setQuestion(pollData.data.question);
+          setOptions(pollData.data.options);
         }
-      );
-
-      setIsLoading(false);
-      const data = await res.json();
-      if (data.error) {
-        setPollNotFound(data.error);
-        return;
-      } else {
-        setQuestion(data.data.question);
-        setOptions(data.data.options);
+      } catch (error) {
+        setPollNotFound("An error occurred while fetching poll data");
+      } finally {
+        setIsLoading(false);
       }
     }
-    poll();
+
+    fetchPollData();
   }, [pollId]);
 
+  // Prepare data for the chart
   const data = {
-    labels: options ? options.map((opt) => opt.text) : [],
+    labels: options.map((opt) => opt.name),
     datasets: [
       {
-        label: 'Votes',
-        data: options ? options.map((opt) => opt.votes) : [],
-        backgroundColor: options ? options.map(() => getRandomColor()) : [],
-        borderColor: 'rgba(0,0,0,0.1)',
+        label: "Votes",
+        data: options.map((opt) => opt.votes),
+        backgroundColor: options.map(() => getRandomColor()),
+        borderColor: "rgba(0,0,0,0.1)",
         borderWidth: 1,
       },
     ],
   };
 
+  // Chart options
   const optionsBar = {
     plugins: {
       legend: {
-        display: false, // Hide legend since we want the labels in tooltips only
+        display: false, // Hide legend
       },
       tooltip: {
         callbacks: {
@@ -107,22 +115,22 @@ function Results(props) {
       y: {
         beginAtZero: true,
         ticks: {
-          color: 'black',
+          color: "black",
           font: {
-            family: 'Kumbh Sans', // Change this to your desired font
-            size: 16, // Change the size for y-axis units
+            family: "Kumbh Sans",
+            size: 16,
           },
         },
         grid: {
-          color: 'rgba(0, 0, 0, 0.1)',
+          color: "rgba(0, 0, 0, 0.1)",
         },
       },
       x: {
         ticks: {
-          color: 'black',
+          color: "black",
           font: {
-            family: 'Kumbh Sans', // Change this to your desired font
-            size: 16, // Change the size for x-axis labels
+            family: "Kumbh Sans",
+            size: 16,
           },
         },
         grid: {
@@ -137,12 +145,12 @@ function Results(props) {
       {isLoading ? (
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100vh',
-            width: '100%',
-            backgroundColor: 'whitesmoke',
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+            width: "100%",
+            backgroundColor: "whitesmoke",
           }}
         >
           <Spinner animation="grow" />
@@ -152,13 +160,13 @@ function Results(props) {
           <h1>{pollNotFound}</h1>
         </div>
       ) : (
-        options && (
+        options.length > 0 && (
           <div className="poll-results">
             <h1 className="poll-question">{question}</h1>
             <p className="poll-info">
               Hover over the bars to see the votes for each candidate
             </p>
-            <p className="poll-info" style={{ marginTop: '-5px' }}>
+            <p className="poll-info" style={{ marginTop: "-5px" }}>
               Refresh the page to change the bar colors
             </p>
             <div className="bar-chart-container">

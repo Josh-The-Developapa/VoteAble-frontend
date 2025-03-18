@@ -11,68 +11,78 @@ import AccountSVG from '../../assets/Account.svg';
 
 function Account() {
   const [voted, setVoted] = useState('Status Pending...');
-  const [HAR, setHAR] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const hasVoted = (async function checkPolls() {
+    const checkPolls = async () => {
       try {
-        const res = await fetch('https://backend.voteable.live/v1/myPolls', {
+        // Fetch polls data from the backend
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/v1/myPolls`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            Student_ID: localStorage.getItem('Student_ID'),
+            name: localStorage.getItem('name'), // Use 'name' instead of 'Student_ID'
             password: localStorage.getItem('password'),
           }),
         });
 
         if (!res.ok) {
-          throw new Error('Failed to fetch');
+          throw new Error('Failed to fetch polls');
         }
 
-        const data = await res.json();
+        const pollData = await res.json();
 
-        if (data.message == 'You have admin access') {
-          setHAR(true);
-        }
+        console.log(pollData);
 
-        const pollsArray = data.data;
+        // Check if the user has admin access
+        setIsAdmin(pollData.message === 'You have admin access');
 
-        const hasVoted = pollsArray.every((poll) =>
+        // Check if the user has voted in all polls
+        const hasVoted = pollData.data.every((poll) =>
           poll.voted.some(
             (name) =>
               localStorage.getItem('name').toLowerCase() === name.toLowerCase()
           )
         );
+
         setVoted(hasVoted);
-        return false;
+
+        // Set the poll ID (e.g., use the first poll's ID)
+        if (pollData.data.length > 0) {
+          setPollId(pollData.data[0]._id); // Use the first poll's ID
+        }
       } catch (error) {
         console.error('Error checking polls:', error);
-        return false; // Return false if there is an error
+        setVoted(false); // Set voted status to false in case of an error
       }
-    })();
+    };
 
-    setVoted(hasVoted);
+    checkPolls();
   }, []);
 
-  function formatName(name) {
+  /**
+   * Formats the user's name for display.
+   * Example: "john doe" -> "John D."
+   */
+  const formatName = (name) => {
     if (!name) return '';
-    let nameParts = name.split(' ');
-    let firstName = nameParts[0].toLowerCase();
-    firstName = firstName.split('');
-    firstName[0] = firstName[0].toUpperCase();
-    firstName = firstName.join('');
-    let lastNamesInitials = nameParts
+
+    const nameParts = name.split(' ');
+    const firstName = nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1).toLowerCase();
+    const lastNamesInitials = nameParts
       .slice(1)
-      .map((n) => n.charAt(0))
+      .map((n) => n.charAt(0).toUpperCase())
       .join('.');
+
     return `${firstName} ${lastNamesInitials}`;
-  }
+  };
 
   return (
     <div className="account-page">
       <div className="cards-container">
+        {/* User Card */}
         <div className="user-card card">
           <img className="profile-pic" src={Profile} alt="Profile" />
           <h2>{formatName(localStorage.getItem('name'))}</h2>
@@ -86,23 +96,16 @@ function Account() {
               <p>{localStorage.getItem('house')}</p>
             </div>
           </div>
-          <div className="vote-status">
-            {!HAR ? (
-              <div className="vote-status">
-                {' '}
-                <GoDotFill
-                  className={`status-dot ${
-                    voted === true ? 'voted' : 'not-voted'
-                  }`}
-                />
-                <p>{voted === true ? 'Voted' : 'Not Voted'}</p>{' '}
-              </div>
-            ) : (
-              ''
-            )}
-          </div>
+          {/* Vote Status */}
+          {!isAdmin && (
+            <div className="vote-status">
+              <GoDotFill className={`status-dot ${voted ? 'voted' : 'not-voted'}`} />
+              <p>{voted ? 'Voted' : 'Not Voted'}</p>
+            </div>
+          )}
         </div>
 
+        {/* About Card */}
         <div className="about-card card">
           <img className="team-pic" src={TeamPic} alt="Team" />
           <h2>
@@ -125,15 +128,16 @@ function Account() {
           </NavLink>
         </div>
 
+        {/* Vote Now / Results Card */}
         <div className="vote-now card">
-          <h2> {HAR ? 'Results' : 'Vote Now'}</h2>
+          <h2>{isAdmin ? 'Results' : 'Vote Now'}</h2>
           <p>
-            {HAR
-              ? 'Keep track of the elections results'
+            {isAdmin
+              ? 'Keep track of the election results'
               : 'Cast your vote now!'}
           </p>
           <NavLink
-            to="/polls"
+            to='/polls'
             className="account-buttons"
             style={{
               backgroundColor: '#000000',
@@ -146,7 +150,7 @@ function Account() {
                 'linear-gradient(to right, #312783 0%, #1C164A 33%, #0B091D 67%, #4A2342 100%)',
             }}
           >
-            {!HAR ? 'Vote Now' : 'Results'}
+            {isAdmin ? 'Results' : 'Vote Now'}
           </NavLink>
           <img className="vote-now-pic" src={BallotBox} alt="Ballot Box" />
         </div>

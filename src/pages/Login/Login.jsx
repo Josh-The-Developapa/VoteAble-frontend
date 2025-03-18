@@ -10,18 +10,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [nameErr, setNameErr] = useState('');
   const [passErr, setPassErr] = useState('');
-  // const [selectedGender, setSelectedGender] = useState('');
-  // const [selectedHouse, setSelectedHouse] = useState('');
-
   const navigate = useNavigate();
-
-  // const handleGenderChange = (event) => {
-  //   setSelectedGender(event.target.value);
-  // };
-
-  // const handleHouseChange = (event) => {
-  //   setSelectedHouse(event.target.value);
-  // };
 
   async function user() {
     const res = await fetch(`${import.meta.env.VITE_API_URL}/v1/user`, {
@@ -30,7 +19,7 @@ export default function Login() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        Student_ID: name,
+        name: name,
         password: password,
       }),
     });
@@ -40,8 +29,7 @@ export default function Login() {
       setPassErr(data.error);
       return;
     }
-
-    if (data.error === 'Invalid student ID, please try again') {
+    if (data.error === 'Invalid name, please try again') {
       setNameErr(data.error);
       return;
     }
@@ -50,8 +38,8 @@ export default function Login() {
 
   const login = async () => {
     if (!name) {
-      console.log('Missing field: Student ID');
-      setNameErr('Please enter a valid ID');
+      console.log('Missing field: Name');
+      setNameErr('Please enter a valid name');
       return;
     }
     if (!password) {
@@ -59,31 +47,23 @@ export default function Login() {
       setPassErr('Please enter a valid password');
       return;
     }
-    // if (!selectedHouse) {
-    //   console.log('Missing field: House');
-    //   return;
-    // }
 
     try {
-      const data2 = await user();
-      console.log('User data:', data2);
+      const user_data = await user();
+      console.log('User data:', user_data);
 
-      if (data2.error) {
-        console.log('Error from user function:', data2.error);
+      if (user_data.error) {
+        console.error('Error from user function:', user_data.error);
         return;
       }
 
-      localStorage.setItem('Student_ID', name);
-      localStorage.setItem('name', `${data2.user.name}`);
+      localStorage.setItem('name', name);
       localStorage.setItem('password', password);
-      // localStorage.setItem('gender', selectedGender);
-      // localStorage.setItem('class', data2.user.class);
-      // localStorage.setItem('house', selectedHouse);
 
       if (!nameErr && !passErr) {
         navigate('/account');
       } else {
-        console.log('Errors:', { nameErr, passErr });
+        console.error('Errors:', { nameErr, passErr });
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -104,7 +84,7 @@ export default function Login() {
             name="username"
             style={{ fontSize: '17px' }}
             value={name}
-            placeholder="Student ID"
+            placeholder="Name" // Updated placeholder
             className="joinInput"
             type="text"
             onChange={(event) => {
@@ -112,7 +92,7 @@ export default function Login() {
               setNameErr('');
             }}
             onBlur={() => {
-              if (!name) setNameErr('Please enter a valid ID');
+              if (!name) setNameErr('Please enter a valid name');
             }}
           />
           {nameErr && (
@@ -142,72 +122,6 @@ export default function Login() {
               {passErr}
             </p>
           )}
-        </div>
-        {/* <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            marginTop: '15px',
-          }}
-        >
-          <form
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: '0px',
-            }}
-          >
-            <label style={{ marginRight: '20px', fontFamily: 'Kumbh Sans' }}>
-              <input
-                type="radio"
-                value="male"
-                checked={selectedGender === 'male'}
-                onChange={handleGenderChange}
-                style={{ accentColor: '#4600b6' }}
-              />
-              Male
-            </label>
-            <label style={{ fontFamily: 'Kumbh Sans' }}>
-              <input
-                type="radio"
-                value="female"
-                checked={selectedGender === 'female'}
-                onChange={handleGenderChange}
-                style={{ accentColor: '#4600b6' }}
-              />
-              Female
-            </label>
-          </form>
-        </div> */}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            marginTop: '15px',
-          }}
-        >
-          {/* <select
-            value={selectedHouse}
-            onChange={handleHouseChange}
-            style={{
-              padding: '8px',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
-              fontSize: '16px',
-              width: '100%',
-              // marginBottom: '5px',
-            }}
-            className="joinInput"
-          >
-            <option value="">Select a house</option>
-            <option value="HAWKS">HAWKS</option>
-            <option value="FALCONS">FALCONS</option>
-            <option value="EAGLES">EAGLES</option>
-            <option value="KITES">KITES</option>
-          </select> */}
         </div>
         <button
           className={'button mt-20'}

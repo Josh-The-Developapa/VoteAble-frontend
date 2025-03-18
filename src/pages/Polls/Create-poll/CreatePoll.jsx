@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import Header from '../../../components/Header/Header.jsx';
+// import Header from '../../../components/Header/Header.jsx';
 import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import './CreatePoll.css';
@@ -78,7 +78,7 @@ function CreatePoll() {
 
   const createPoll = async () => {
     const finalOptions = options.map((opt) => ({
-      text: opt.option,
+      name: opt.option,
       photo: opt.image ? opt.image.name : undefined,
     }));
 

@@ -343,3 +343,30 @@
   background-color: #260063;
   transition: width 0.5s;
 }
+
+
+/* Style for the selected item */
+.poll-container.selected {
+  border: 4px solid #4600b6; /* Thick border for selected item */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Strong shadow */
+  background-color: #ffffff; /* White background */
+  padding: 15px; /* Add padding */
+  transform: scale(1.02); /* Slightly scale up */
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+/* Style for non-selected items */
+.poll-container {
+  border: 2px solid #e0e0e0; /* Light border for non-selected items */
+  border-radius: 10px;
+  background-color: #f8f9fa; /* Light background */
+  padding: 10px;
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+/* Hover effect for items */
+.poll-container:hover {
+  border-color: #4600b6; /* Highlight border on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+}

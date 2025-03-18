@@ -316,3 +316,78 @@ h2 {
     font-size: 35px;
   }
 }
+
+.candidate-card {
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  background-color: #f9f9f9;
+}
+
+.candidate-card.selected {
+  border-color: #312783;
+  background-color: #312783;
+  color: #ffffff;
+}
+
+.candidate-card.selected h2 {
+  color: #ffffff !important;
+}
+
+.candidate-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+/* .candidate-placeholder {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+} */
+
+.candidate-placeholder h2 {
+  font-size: 20px;
+  color: #000000;
+}
+
+.candidate-info {
+  flex: 1;
+}
+
+.poll-class {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.vote-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #312783;
+  color: #ffffff;
+}
+
+.vote-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
