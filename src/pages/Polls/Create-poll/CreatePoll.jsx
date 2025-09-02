@@ -87,7 +87,7 @@ function CreatePoll() {
 
     const updatedOptions = [...options];
     updatedOptions.push({
-      option,
+      text: option,
       image,
       class: optionClass,
       house: optionHouse,
@@ -104,38 +104,67 @@ function CreatePoll() {
       setImage(null);
       inputRef.current.value = null;
     }
-
-    // if (updatedOptions.length < 2) {
-    //   setOptionErr('Enter another option');
-    // }
   };
 
   const createPoll = async () => {
+    if (!question) {
+      setQuestionErr('Enter a question');
+      return;
+    }
+
+    if (options.length === 0) {
+      setOptionErr('Add at least one option');
+      return;
+    }
+
+    if (!pollClass) {
+      setOptionErr('Please select a class for the poll');
+      return;
+    }
+
+    if (!pollHouse) {
+      setOptionErr('Please select a house for the poll');
+      return;
+    }
+
+    // Create FormData for file upload
+    const formData = new FormData();
+
+    // Add basic poll data
+    formData.append('question', question);
+    formData.append('class', pollClass);
+    formData.append('house', pollHouse);
+
+    // Add owner information
+    const owner = {
+      name: localStorage.getItem('name'),
+      password: localStorage.getItem('password'),
+    };
+    formData.append('owner', JSON.stringify(owner));
+
+    // Prepare options data (without images)
     const finalOptions = options.map((opt) => ({
-      text: opt.option,
-      photo: opt.image ? opt.image.name : undefined,
+      text: opt.text,
       class: opt.class,
       house: opt.house,
     }));
+    formData.append('options', JSON.stringify(finalOptions));
+
+    // Add images with specific field names
+    options.forEach((opt, index) => {
+      if (opt.image) {
+        formData.append(`option-${index}-image`, opt.image);
+      }
+    });
 
     try {
-      const res = await fetch('https://backend.voteable.live/v1/create-poll', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          question,
-          options: finalOptions,
-          owner: {
-            name: localStorage.getItem('name'),
-            password: localStorage.getItem('password'),
-            // gender: localStorage.getItem('gender'),
-          },
-          class: pollClass,
-          house: pollHouse,
-        }),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/create-poll`,
+        {
+          method: 'POST',
+          body: formData, // Don't set Content-Type header, let browser set it with boundary
+        }
+      );
 
       if (res.ok) {
         navigate('/polls');
@@ -143,11 +172,25 @@ function CreatePoll() {
         const data = await res.json();
         if (data.error === 'You have to login / signup to create a poll') {
           setOptionErr('You have to login to create a poll');
+        } else {
+          setOptionErr(data.error || 'Failed to create poll');
         }
       }
     } catch (error) {
       console.error('Error creating poll:', error);
+      setOptionErr('Network error. Please try again.');
     }
+  };
+
+  const removeOption = (indexToRemove) => {
+    const updatedOptions = options.filter(
+      (_, index) => index !== indexToRemove
+    );
+    setOptions(updatedOptions);
+
+    // Also remove corresponding image from images array
+    const updatedImages = images.filter((_, index) => index !== indexToRemove);
+    setImages(updatedImages);
   };
 
   return (
@@ -195,6 +238,10 @@ function CreatePoll() {
                     justifyContent: 'flex-start',
                     alignItems: 'flex-start',
                     marginBottom: '15px',
+                    padding: '10px',
+                    border: '1px solid #ccc',
+                    borderRadius: '8px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
                   }}
                 >
                   {option.image && (
@@ -202,67 +249,49 @@ function CreatePoll() {
                       className="optionImg"
                       src={URL.createObjectURL(option.image)}
                       alt="Option Image"
-                      style={{ maxWidth: '100px', marginBottom: '10px' }}
+                      style={{
+                        maxWidth: '100px',
+                        maxHeight: '100px',
+                        marginBottom: '10px',
+                        borderRadius: '4px',
+                      }}
                     />
                   )}
-                  <li style={{ marginLeft: '25px', marginBottom: '5px' }}>
-                    {option.option}
-                  </li>
-                  <select
-                    value={option.class}
-                    onChange={(event) => handleOptionClassChange(event, index)}
-                    className="joinInput mt-10"
+                  <li
                     style={{
-                      padding: '8px',
-                      border: '1px solid #ccc',
-                      borderRadius: '4px',
-                      fontSize: '16px',
-                      width: '100%',
+                      marginLeft: '25px',
+                      marginBottom: '5px',
+                      color: 'white',
+                    }}
+                  >
+                    {option.text}
+                  </li>
+                  <div
+                    style={{
+                      fontSize: '12px',
+                      color: '#ccc',
                       marginBottom: '5px',
                     }}
                   >
-                    <option value="">Select a class</option>
-                    <option value="N/A">N/A</option>
-                    <option value="Y7">Y7</option>
-                    <option value="Y8">Y8</option>
-                    <option value="Y9">Y9</option>
-                    <option value="Y10">Y10</option>
-                    <option value="Y11">Y11</option>
-                    <option value="IB1">IB1</option>
-                    <option value="IB2">IB2</option>
-                    {/* <option value="N/A">N/A</option>
-                    <option value="S1S">S1S</option>
-                    <option value="S1N">S1N</option>
-                    <option value="S2S">S2S</option>
-                    <option value="S2N">S2N</option>
-                    <option value="S3S">S3S</option>
-                    <option value="S3N">S3N</option>
-                    <option value="S4S">S4S</option>
-                    <option value="S4N">S4N</option>
-                    <option value="S5S">S5S</option>
-                    <option value="S5A">S5A</option>
-                    <option value="S6S">S6S</option>
-                    <option value="S6A">S6A</option> */}
-                  </select>
-                  <select
-                    value={option.house}
-                    onChange={(event) => handleOptionHouseChange(event, index)}
-                    className="joinInput"
+                    Class: {option.class || 'Not specified'} | House:{' '}
+                    {option.house || 'Not specified'}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => removeOption(index)}
                     style={{
-                      padding: '8px',
-                      border: '1px solid #ccc',
+                      backgroundColor: '#ff4444',
+                      color: 'white',
+                      border: 'none',
+                      padding: '5px 10px',
                       borderRadius: '4px',
-                      fontSize: '16px',
-                      width: '100%',
+                      fontSize: '12px',
+                      cursor: 'pointer',
+                      marginTop: '5px',
                     }}
                   >
-                    <option value="">Select a house</option>
-                    <option value="N/A">N/A</option>
-                    <option value="HAWKS">HAWKS</option>
-                    <option value="FALCONS">FALCONS</option>
-                    <option value="EAGLES">EAGLES</option>
-                    <option value="KITES">KITES</option>
-                  </select>
+                    Remove Option
+                  </button>
                 </div>
               ))}
             </ol>
@@ -281,14 +310,60 @@ function CreatePoll() {
             />
             <div className="fileUpload">
               <Form.Group controlId="formFile" className="mb-3">
+                <Form.Label style={{ color: 'white' }}>
+                  Upload Image for this option (optional)
+                </Form.Label>
                 <Form.Control
                   type="file"
+                  accept="image/*"
                   onChange={handleImageChange}
                   ref={inputRef}
                   name="my-file"
                 />
               </Form.Group>
             </div>
+            <select
+              value={optionClass}
+              onChange={(e) => setOptionClass(e.target.value)}
+              className="joinInput mt-10"
+              style={{
+                padding: '8px',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                fontSize: '16px',
+                width: '100%',
+                marginBottom: '5px',
+              }}
+            >
+              <option value="">Select a class for this option</option>
+              <option value="N/A">N/A</option>
+              <option value="Y7">Y7</option>
+              <option value="Y8">Y8</option>
+              <option value="Y9">Y9</option>
+              <option value="Y10">Y10</option>
+              <option value="Y11">Y11</option>
+              <option value="IB1">IB1</option>
+              <option value="IB2">IB2</option>
+            </select>
+            <select
+              value={optionHouse}
+              onChange={(e) => setOptionHouse(e.target.value)}
+              className="joinInput"
+              style={{
+                padding: '8px',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                fontSize: '16px',
+                width: '100%',
+              }}
+            >
+              <option value="">Select a house for this option</option>
+              <option value="N/A">N/A</option>
+              <option value="HAWKS">HAWKS</option>
+              <option value="FALCONS">FALCONS</option>
+              <option value="EAGLES">EAGLES</option>
+              <option value="KITES">KITES</option>
+            </select>
             {optionErr && <p className="passp">{optionErr}</p>}
             {fileErr && <p className="passp">{fileErr}</p>}
             <button className="button mt-20">Add option</button>
@@ -315,7 +390,7 @@ function CreatePoll() {
               width: '100%',
             }}
           >
-            <option value="">Select a class</option>
+            <option value="">Select a class for the poll</option>
             <option value="N/A">N/A</option>
             <option value="Y7">Y7</option>
             <option value="Y8">Y8</option>
@@ -324,20 +399,6 @@ function CreatePoll() {
             <option value="Y11">Y11</option>
             <option value="IB1">IB1</option>
             <option value="IB2">IB2</option>
-            {/* <option value="">Select a class</option>
-            <option value="N/A">N/A</option>
-            <option value="S1S">S1S</option>
-            <option value="S1N">S1N</option>
-            <option value="S2S">S2S</option>
-            <option value="S2N">S2N</option>
-            <option value="S3S">S3S</option>
-            <option value="S3N">S3N</option>
-            <option value="S4S">S4S</option>
-            <option value="S4N">S4N</option>
-            <option value="S5S">S5S</option>
-            <option value="S5A">S5A</option>
-            <option value="S6S">S6S</option>
-            <option value="S6A">S6A</option> */}
           </select>
           <select
             id="houseDropdown"
@@ -352,7 +413,7 @@ function CreatePoll() {
               width: '100%',
             }}
           >
-            <option value="">Select a house</option>
+            <option value="">Select a house for the poll</option>
             <option value="N/A">N/A</option>
             <option value="HAWKS">HAWKS</option>
             <option value="FALCONS">FALCONS</option>
@@ -360,26 +421,7 @@ function CreatePoll() {
             <option value="KITES">KITES</option>
           </select>
         </div>
-        <button
-          className="button mt-20"
-          onClick={() => {
-            if (!question) {
-              setQuestionErr('Enter a question');
-            }
-            if (!option && options.length > 0) {
-              setOptionErr('');
-            }
-
-            // if (options.length < 2) {
-            //   setOptionErr('You need to add more than 1 option');
-            // }
-
-            if (!pollClass) setOptionErr('Please select a class for the poll');
-            if (!pollHouse) setOptionErr('Please select a house for the poll');
-
-            createPoll();
-          }}
-        >
+        <button className="button mt-20" onClick={createPoll}>
           Create Poll
         </button>
       </div>

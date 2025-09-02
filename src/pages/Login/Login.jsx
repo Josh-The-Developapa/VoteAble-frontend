@@ -24,7 +24,7 @@ export default function Login() {
   };
 
   async function user() {
-    const res = await fetch(`https://backend.voteable.live/v1/user`, {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/v1/user`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

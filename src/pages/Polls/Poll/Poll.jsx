@@ -23,7 +23,7 @@ function Poll(props) {
 
     async function fetchPoll() {
       const res = await fetch(
-        `https://backend.voteable.live/v1/poll/${pollId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/v1/poll/${pollId}`,
         {
           method: 'GET',
         }
@@ -40,7 +40,7 @@ function Poll(props) {
     }
     async function checkResults() {
       const res = await fetch(
-        `https://backend.voteable.live/v1/results/${pollId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/v1/results/${pollId}`,
         {
           method: 'POST',
           headers: {
@@ -76,7 +76,9 @@ function Poll(props) {
     setButtonDisabled(true); // Disable button immediately
 
     const res = await fetch(
-      `https://backend.voteable.live/v1/vote/${pollId ? pollId : props.pollId}`,
+      `${import.meta.env.VITE_BACKEND_URL}/v1/vote/${
+        pollId ? pollId : props.pollId
+      }`,
       {
         method: 'POST',
         body: JSON.stringify({
@@ -158,7 +160,9 @@ function Poll(props) {
               >
                 {option.photo && (
                   <img
-                    src={`https://backend.voteable.live/uploads/${option.photo}`}
+                    src={`${import.meta.env.VITE_BACKEND_URL}/uploads/${
+                      option.photo
+                    }`}
                     alt={option.text}
                   />
                 )}
@@ -226,7 +230,9 @@ function Poll(props) {
               >
                 {option.photo && (
                   <img
-                    src={`https://backend.voteable.live/uploads/${option.photo}`}
+                    src={`${import.meta.env.VITE_BACKEND_URL}/uploads/${
+                      option.photo
+                    }`}
                     alt={option.text}
                   />
                 )}
@@ -288,7 +294,9 @@ function Poll(props) {
               >
                 {option.photo && (
                   <img
-                    src={`https://backend.voteable.live/uploads/${option.photo}`}
+                    src={`${import.meta.env.VITE_BACKEND_URL}/uploads/${
+                      option.photo
+                    }`}
                     alt={option.text}
                   />
                 )}

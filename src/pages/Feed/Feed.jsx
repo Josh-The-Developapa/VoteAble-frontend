@@ -4,33 +4,33 @@ import './Feed.css';
 const posts = [
   {
     id: 1,
-    image: 'https://backend.voteable.live/uploads/poster-1.png',
+    image: 'http://localhost:8000/uploads/poster-1.png',
   },
   {
     id: 2,
-    image: 'https://backend.voteable.live/uploads/poster-2.jpeg',
+    image: 'http://localhost:8000/uploads/poster-2.jpeg',
   },
   {
     id: 3,
-    image: 'https://backend.voteable.live/uploads/poster-3.jpeg',
+    image: 'http://localhost:8000/uploads/poster-3.jpeg',
   },
   {
     id: 4,
-    image: 'https://backend.voteable.live/uploads/poster-4.jpeg',
+    image: 'http://localhost:8000/uploads/poster-4.jpeg',
   },
   //   {
   //     id: 5,
-  //     image: 'https://backend.voteable.live/uploads/poster-1.png',
+  //     image: 'http://localhost:8000/uploads/poster-1.png',
   //     caption: 'Cast your vote for the best startup idea!',
   //   },
   //   {
   //     id: 6,
-  //     image: 'https://backend.voteable.live/uploads/poster-1.png',
+  //     image: 'http://localhost:8000/uploads/poster-1.png',
   //     caption: 'Cast your vote for the best startup idea!',
   //   },
   //   {
   //     id: 7,
-  //     image: 'https://backend.voteable.live/uploads/poster-1.png',
+  //     image: 'http://localhost:8000/uploads/poster-1.png',
   //     caption: 'Cast your vote for the best startup idea!',
   //   },
   // Add more posts as necessary

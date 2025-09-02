@@ -52,7 +52,7 @@ function Results(props) {
       setIsLoading(true);
 
       const res = await fetch(
-        `https://backend.voteable.live/v1/results/${pollId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/v1/results/${pollId}`,
         {
           method: 'POST',
           headers: {
