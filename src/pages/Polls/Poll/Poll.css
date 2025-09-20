@@ -37,7 +37,7 @@ body {
 .mainTitle {
   font-size: 50px;
   font-family: 'Kumbh Sans', sans-serif;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   margin-left: 20px;
   /* margin-top: 20px; */
 }
@@ -58,7 +58,7 @@ h2 {
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
-  padding-left: 5px;
+  padding-left: 30px;
   /* padding-right: 5px; */
   /* width:30%; */
   gap: 20px;
@@ -69,7 +69,7 @@ h2 {
   border-radius: 8px;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.231), 0 6px 10px rgba(0, 0, 0, 0.284);
   overflow: hidden;
-  /* width: auto; */
+  /* width: 300px; */
   height: 300px;
   text-align: center;
   display: flex;
@@ -84,10 +84,9 @@ h2 {
   border-radius: 8px;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.231), 0 6px 10px rgba(0, 0, 0, 0.284);
   overflow: hidden;
-  /* width: 300px; */
-  height: 260px;
+  width: 300px;
+  height: 230px;
   text-align: center;
-  margin-right: 0px;
   display: flex;
   flex-direction: row;
   cursor: pointer;
@@ -101,12 +100,12 @@ h2 {
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.231), 0 6px 10px rgba(0, 0, 0, 0.284);
   overflow: hidden;
   /* width: 300px; */
-  height: 130px;
+  height: 170px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
   width: 90%;
-  text-align: center;
+  text-align: left;
   margin-right: 10px;
   margin-left: 10px;
   display: flex;
@@ -169,7 +168,7 @@ h2 {
   margin-bottom: 0;
 }
 .candidate-card-many-options img {
-  /* width: 55%; */
+  width: auto;
   height: 100%;
   object-fit: cover;
   margin: 0;
@@ -183,12 +182,13 @@ h2 {
 }
 
 .candidate-info {
-  padding: 15px;
+  padding: 8px;
   /* background-color: #27003c; */
 }
 
 .candidate-info h2 {
   font-size: 15px;
+  text-align: left;
 }
 
 .candidate-info p {
@@ -240,7 +240,7 @@ h2 {
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   z-index: 10;
   /* background-color: whitesmoke; */
 }
@@ -314,5 +314,8 @@ h2 {
   .mainTitleQuestion,
   .mainTitle {
     font-size: 35px;
+  }
+  .candidates {
+    padding-left: 5px;
   }
 }

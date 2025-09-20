@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import PollSkeleton from '../../../components/PollSkeleton/PollSkeleton.jsx';
 import './Poll.css';
 
 function Poll(props) {
@@ -12,7 +13,8 @@ function Poll(props) {
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [signupFirstErr, setSignupFirstErr] = useState();
-  const [loading, setLoading] = useState(false); // State for loading
+  const [loading, setLoading] = useState(false); // State for voting loading
+  const [pollLoading, setPollLoading] = useState(true); // State for poll data loading
   const [buttonDisabled, setButtonDisabled] = useState(false); // State for disabling button
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [HAR, setHAR] = useState(false); // State for has administrative rights
@@ -22,6 +24,8 @@ function Poll(props) {
     window.addEventListener('resize', handleResize);
 
     async function fetchPoll() {
+      setPollLoading(true); // Start skeleton loading
+
       const res = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/v1/poll/${pollId}`,
         {
@@ -29,15 +33,21 @@ function Poll(props) {
         }
       );
       const data = await res.json();
+
+      // Minimum loading time for better UX (optional)
+      await new Promise((resolve) => setTimeout(resolve, 800));
+
       if (data.error) {
         setPollNotFound(data.error);
-        return;
       } else {
         setQuestion(data.data.question);
         setOptions(data.data.options);
       }
+
+      setPollLoading(false); // Stop skeleton loading
       console.log(data);
     }
+
     async function checkResults() {
       const res = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/v1/results/${pollId}`,
@@ -60,8 +70,13 @@ function Poll(props) {
         setHAR(true);
       }
     }
+
     checkResults();
     fetchPoll();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, [pollId, props.pollId]);
 
   async function vote() {
@@ -113,9 +128,27 @@ function Poll(props) {
     }, 2000);
   }
 
-  // async function next() {
-  //   props.handleNext();
-  // }
+  // Show skeleton while loading
+  if (pollLoading) {
+    return <PollSkeleton screenWidth={screenWidth} />;
+  }
+
+  // Show error if poll not found
+  if (pollNotFound) {
+    return (
+      <div className="pollContainer">
+        <div className="header">
+          <h1 className="mainTitle">Poll Not Found</h1>
+          <p
+            className="mainTitleQuestion"
+            style={{ fontSize: '25px', color: 'red' }}
+          >
+            {pollNotFound}
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -170,7 +203,7 @@ function Poll(props) {
                   <div>
                     <h1
                       className="poll-class"
-                      style={{ marginBottom: '-15px' }}
+                      // style={{ marginBottom: '-15px' }}
                     >
                       {option.class}
                     </h1>
@@ -186,7 +219,12 @@ function Poll(props) {
                         fontSize: '18px',
                       }}
                     >
-                      {option.text}
+                      {option.text.split(' ').map((word, i) => (
+                        <React.Fragment key={i}>
+                          {word}
+                          <br />
+                        </React.Fragment>
+                      ))}
                     </h4>
                   </div>
                 </div>
@@ -250,7 +288,12 @@ function Poll(props) {
                             : '#000000',
                       }}
                     >
-                      {option.text}
+                      {option.text.split(' ').map((word, i) => (
+                        <React.Fragment key={i}>
+                          {word}
+                          <br />
+                        </React.Fragment>
+                      ))}
                     </h2>
                   </div>
                 </div>
@@ -314,7 +357,12 @@ function Poll(props) {
                             : '#000000',
                       }}
                     >
-                      {option.text}
+                      {option.text.split(' ').map((word, i) => (
+                        <React.Fragment key={i}>
+                          {word}
+                          <br />
+                        </React.Fragment>
+                      ))}
                     </h2>
                   </div>
                 </div>

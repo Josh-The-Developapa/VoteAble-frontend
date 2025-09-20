@@ -5,12 +5,9 @@ import Logo from '../../assets/Logo.svg';
 import TeamPic from '../../assets/team-pic.png';
 import LaptopPic from '../../assets/Laptop.png';
 import EmmanuelImage from '../../assets/Emmanuel Asiimwe.jpeg';
-import AkhilImage from '../../assets/Akhil Muni.jpeg';
-import JoshuaImage from '../../assets/JMuks.png';
+import JoshuaImage from '../../assets/Joshua.png';
 import AlbertImage from '../../assets/Albert Jordan Mulumba.jpeg';
-import AlishaanImage from '../../assets/Alishaan.jpeg';
 import KhushImage from '../../assets/Khush Shah.jpg';
-import RusheelImage from '../../assets/Rusheel .jpeg';
 
 function AboutVoteable() {
   return (
@@ -117,7 +114,7 @@ function AboutVoteable() {
                   Co-Founder
                 </p>
               </div> */}
-              <div className="team-member">
+              {/* <div className="team-member">
                 <img
                   src={AkhilImage}
                   alt="Akhil's Pic"
@@ -127,7 +124,7 @@ function AboutVoteable() {
                 <p className="role" style={{ fontSize: '15px' }}>
                   CFO
                 </p>
-              </div>
+              </div> */}
               <div className="team-member">
                 <img
                   src={AlbertImage}
@@ -137,7 +134,7 @@ function AboutVoteable() {
                 <p>Albert J. Mulumba</p>
                 <p className="role">Head of Design</p>
               </div>
-              <div className="team-member">
+              {/* <div className="team-member">
                 <img
                   src={AlishaanImage}
                   alt="Alishaan's Pic"
@@ -145,7 +142,7 @@ function AboutVoteable() {
                 />
                 <p>Alishaan</p>
                 <p className="role">Marketing Manager</p>
-              </div>
+              </div> */}
               <div className="team-member">
                 <img
                   src={EmmanuelImage}
@@ -153,7 +150,7 @@ function AboutVoteable() {
                   className="member-pic"
                 />
                 <p style={{ fontSize: '15px' }}>Emmanuel Asiimwe</p>
-                <p className="role">CTO</p>
+                <p className="role">Chief Technology Officer</p>
               </div>
             </div>
           </div>
