@@ -152,22 +152,26 @@ function Account() {
             {!HAR ? 'Vote Now' : 'Results'}
           </NavLink>
 
-          <NavLink
-            to="/create-poll"
-            className="account-buttons"
-            style={{
-              backgroundColor: '#000000',
-              textAlign: 'center',
-              // width: '190px',
-              margin: 'auto',
-              marginTop: '15px',
-              fontWeight: 450,
-              background:
-                'linear-gradient(to right, #312783 0%, #1C164A 33%, #0B091D 67%, #4A2342 100%)',
-            }}
-          >
-            Create Polls
-          </NavLink>
+          {HAR ? (
+            <NavLink
+              to="/create-poll"
+              className="account-buttons"
+              style={{
+                backgroundColor: '#000000',
+                textAlign: 'center',
+                // width: '190px',
+                margin: 'auto',
+                marginTop: '15px',
+                fontWeight: 450,
+                background:
+                  'linear-gradient(to right, #312783 0%, #1C164A 33%, #0B091D 67%, #4A2342 100%)',
+              }}
+            >
+              Create Polls
+            </NavLink>
+          ) : (
+            ''
+          )}
           <img className="vote-now-pic" src={BallotBox} alt="Ballot Box" />
         </div>
       </div>
