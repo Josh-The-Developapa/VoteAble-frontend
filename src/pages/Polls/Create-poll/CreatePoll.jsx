@@ -15,6 +15,7 @@ function CreatePoll() {
   const [pollHouse, setPollHouse] = useState('');
   const [optionClass, setOptionClass] = useState('');
   const [optionHouse, setOptionHouse] = useState('');
+  const [rank, setRank] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const inputRef = useRef();
@@ -32,6 +33,11 @@ function CreatePoll() {
   const handleOptionChange = (e) => {
     setOption(e.target.value);
     setOptionErr(null);
+  };
+
+  const handleRankChange = (e) => {
+    setQuestionErr(null);
+    setRank(e.target.value);
   };
 
   const handleImageChange = (e) => {
@@ -57,6 +63,15 @@ function CreatePoll() {
       }
       if (!pollHouse) {
         setQuestionErr('Please select a house for the poll');
+        return;
+      }
+      if (!rank) {
+        setQuestionErr('Please enter a rank');
+        return;
+      }
+      const rankNumber = parseInt(rank);
+      if (isNaN(rankNumber) || rankNumber < 1) {
+        setQuestionErr('Rank must be a positive number');
         return;
       }
       setCurrentStep(2);
@@ -113,6 +128,7 @@ function CreatePoll() {
       formData.append('question', question);
       formData.append('class', pollClass);
       formData.append('house', pollHouse);
+      formData.append('rank', parseInt(rank));
 
       // Add owner information
       const owner = {
@@ -264,6 +280,19 @@ function CreatePoll() {
                     </div>
                   </div>
 
+                  <div className="form-group">
+                    <label className="form-label">Rank *</label>
+                    <input
+                      type="number"
+                      value={rank}
+                      onChange={handleRankChange}
+                      placeholder="Enter rank number"
+                      className="form-input"
+                      min="1"
+                      step="1"
+                    />
+                  </div>
+
                   {questionErr && (
                     <div className="error-message">
                       <p className="error-text">{questionErr}</p>
@@ -287,7 +316,7 @@ function CreatePoll() {
                   <div className="question-display">
                     <h2 className="question-title">{question}</h2>
                     <p className="question-meta">
-                      {pollClass} • {pollHouse}
+                      {pollClass} • {pollHouse} • Rank {rank}
                     </p>
                   </div>
                   <div className="spacer"></div>

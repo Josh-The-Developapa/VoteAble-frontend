@@ -19,6 +19,7 @@ import './index.css';
 import Account from './pages/Account/Account.jsx';
 import Layout from './Layout/Layout.jsx';
 import FeedPage from './pages/Feed/Feed.jsx';
+import TeamPage from './pages/Team/Team.jsx';
 
 const router = createBrowserRouter([
   {
@@ -46,9 +47,14 @@ const router = createBrowserRouter([
     element: <Layout page={<Results />} />,
   },
   {
+    path: '/team',
+    element: <Layout page={<TeamPage />} />,
+  },
+  {
     path: '/create-poll',
     element: <Layout page={<CreatePoll />} />,
   },
+
   // {
   //   path: '/feed',
   //   element: <Layout page={<FeedPage />} />,

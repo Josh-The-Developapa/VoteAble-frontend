@@ -35,7 +35,8 @@ function Results(props) {
   const [question, setQuestion] = useState();
   const [options, setOptions] = useState();
   const [pollNotFound, setPollNotFound] = useState();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // Start with true
+  const [dataLoaded, setDataLoaded] = useState(false); // New state to track when data is ready
 
   function getRandomColor() {
     let letters = '0123456789ABCDEF';
@@ -50,6 +51,7 @@ function Results(props) {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     async function poll() {
       setIsLoading(true);
+      setDataLoaded(false); // Reset data loaded state
 
       const res = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/v1/results/${pollId}`,
@@ -64,14 +66,20 @@ function Results(props) {
         }
       );
 
-      setIsLoading(false);
       const data = await res.json();
+
       if (data.error) {
         setPollNotFound(data.error);
-        return;
+        setIsLoading(false);
       } else {
         setQuestion(data.data.question);
         setOptions(data.data.options);
+
+        // Small delay to ensure chart renders properly before showing UI
+        setTimeout(() => {
+          setDataLoaded(true);
+          setIsLoading(false);
+        }, 100);
       }
     }
     poll();
@@ -152,7 +160,8 @@ function Results(props) {
           <h1>{pollNotFound}</h1>
         </div>
       ) : (
-        options && (
+        options &&
+        dataLoaded && (
           <div className="poll-results">
             <h1 className="poll-question">{question}</h1>
             <p className="poll-info">
