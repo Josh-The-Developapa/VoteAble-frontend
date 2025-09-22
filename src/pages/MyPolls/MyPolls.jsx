@@ -644,7 +644,6 @@ function MyPolls() {
             top: '15px',
           }}
         />
-
         {signupFirstErr && (
           <div className="pollc">
             <h1>Login First to access polls</h1>
@@ -655,7 +654,6 @@ function MyPolls() {
             </p>
           </div>
         )}
-
         {dataLoaded && HAR === true && polls.length > 0 && (
           <div data-bs-touch="false">
             <Carousel
@@ -710,7 +708,6 @@ function MyPolls() {
             </div>
           </div>
         )}
-
         {dataLoaded && HAR === false && polls.length > 0 && (
           <div>
             <Carousel
@@ -745,20 +742,264 @@ function MyPolls() {
             </div>
           </div>
         )}
+        {dataLoaded && !polls.length && !error && (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: '100px',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '40px 20px',
+                backgroundColor: 'white',
+                borderRadius: '12px',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                margin: '20px',
+                textAlign: 'center',
+                maxWidth: '400px',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+              }}
+            >
+              {/* Icon or illustration */}
+              <div
+                style={{
+                  width: '80px',
+                  height: '80px',
+                  backgroundColor: '#f0f4f8',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: '20px',
+                  border: '2px dashed #cbd5e0',
+                }}
+              >
+                <svg
+                  width="40"
+                  height="40"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#718096"
+                  strokeWidth="2"
+                >
+                  <path d="M9 11H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2h-4" />
+                  <path d="M9 7V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v3" />
+                  <line x1="12" y1="11" x2="12" y2="17" />
+                  <path d="M8 17l4-4 4 4" />
+                </svg>
+              </div>
 
-        {dataLoaded && !polls.length && error && (
-          <div className="pollc">
-            <h1>{error}</h1>
-            {error === 'Student account does not exist' && (
-              <p>
-                The ID that you entered does not belong to a student of Aga Khan
-                High School, Kampala. <br /> <br />
-                Please end the shenanigans and stop gallivanting
+              <h2
+                style={{
+                  color: '#2d3748',
+                  fontSize: '24px',
+                  fontWeight: 'bold',
+                  marginBottom: '12px',
+                  margin: 0,
+                }}
+              >
+                No Polls Available
+              </h2>
+
+              <p
+                style={{
+                  color: '#718096',
+                  fontSize: '16px',
+                  lineHeight: '1.5',
+                  marginBottom: '20px',
+                  margin: 0,
+                }}
+              >
+                There are currently no active polls or elections available for
+                you to participate in.
               </p>
-            )}
+
+              <div
+                style={{
+                  backgroundColor: '#edf2f7',
+                  padding: '16px',
+                  borderRadius: '8px',
+                  marginTop: '20px',
+                  width: '100%',
+                }}
+              >
+                <p
+                  style={{
+                    color: '#4a5568',
+                    fontSize: '14px',
+                    margin: 0,
+                    lineHeight: '1.4',
+                  }}
+                >
+                  📅 Check back later for upcoming Student Council elections and
+                  voting opportunities.
+                </p>
+              </div>
+
+              {/* Optional: Add a button to refresh or go back */}
+              <button
+                onClick={() => window.location.reload()}
+                style={{
+                  marginTop: '20px',
+                  backgroundColor: '#4299e1',
+                  color: 'white',
+                  border: 'none',
+                  padding: '10px 20px',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  transition: 'background-color 0.2s',
+                }}
+                onMouseEnter={(e) =>
+                  (e.target.style.backgroundColor = '#3182ce')
+                }
+                onMouseLeave={(e) =>
+                  (e.target.style.backgroundColor = '#4299e1')
+                }
+              >
+                Refresh Page
+              </button>
+            </div>
           </div>
         )}
+        {dataLoaded && !polls.length && error && (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: '100px',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '40px 20px',
+                backgroundColor: 'white',
+                borderRadius: '12px',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                margin: '20px',
+                textAlign: 'center',
+                maxWidth: '400px',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+              }}
+            >
+              {/* Icon or illustration */}
+              <div
+                style={{
+                  width: '80px',
+                  height: '80px',
+                  backgroundColor: '#f0f4f8',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: '20px',
+                  border: '2px dashed #cbd5e0',
+                }}
+              >
+                <svg
+                  width="40"
+                  height="40"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#718096"
+                  strokeWidth="2"
+                >
+                  <path d="M9 11H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2h-4" />
+                  <path d="M9 7V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v3" />
+                  <line x1="12" y1="11" x2="12" y2="17" />
+                  <path d="M8 17l4-4 4 4" />
+                </svg>
+              </div>
 
+              <h2
+                style={{
+                  color: '#2d3748',
+                  fontSize: '24px',
+                  fontWeight: 'bold',
+                  marginBottom: '12px',
+                  margin: 0,
+                }}
+              >
+                {error && error === 'Student account does not exist'
+                  ? 'Student account does not exist'
+                  : error}
+              </h2>
+
+              <p
+                style={{
+                  color: '#718096',
+                  fontSize: '16px',
+                  lineHeight: '1.5',
+                  marginBottom: '20px',
+                  margin: 0,
+                }}
+              >
+                There are currently no active polls or elections available for
+                you to participate in.
+              </p>
+
+              <div
+                style={{
+                  backgroundColor: '#edf2f7',
+                  padding: '16px',
+                  borderRadius: '8px',
+                  marginTop: '20px',
+                  width: '100%',
+                }}
+              >
+                <p
+                  style={{
+                    color: '#4a5568',
+                    fontSize: '14px',
+                    margin: 0,
+                    lineHeight: '1.4',
+                  }}
+                >
+                  📅 Check back later for upcoming Student Council elections and
+                  voting opportunities.
+                </p>
+              </div>
+
+              {/* Optional: Add a button to refresh or go back */}
+              <button
+                onClick={() => window.location.reload()}
+                style={{
+                  marginTop: '20px',
+                  backgroundColor: '#4299e1',
+                  color: 'white',
+                  border: 'none',
+                  padding: '10px 20px',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  transition: 'background-color 0.2s',
+                }}
+                onMouseEnter={(e) =>
+                  (e.target.style.backgroundColor = '#3182ce')
+                }
+                onMouseLeave={(e) =>
+                  (e.target.style.backgroundColor = '#4299e1')
+                }
+              >
+                Refresh Page
+              </button>
+            </div>
+          </div>
+        )}
         {/* PDF Modal - only show if data is loaded */}
         {dataLoaded && showPDFModal && (
           <ElectionResultsPDF
