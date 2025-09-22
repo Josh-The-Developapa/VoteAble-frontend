@@ -113,8 +113,8 @@ function CreatePoll() {
   };
 
   const createPoll = async () => {
-    if (options.length < 2) {
-      setOptionErr('Please add at least 2 options');
+    if (options.length < 1) {
+      setOptionErr('Please add at least 1 option');
       return;
     }
 
@@ -446,9 +446,9 @@ function CreatePoll() {
                 {/* Create Poll Button */}
                 <button
                   onClick={createPoll}
-                  disabled={isSubmitting || options.length < 2}
+                  disabled={isSubmitting || options.length < 1}
                   className={`btn ${
-                    isSubmitting || options.length < 2
+                    isSubmitting || options.length < 1
                       ? 'btn-disabled'
                       : 'btn-success'
                   }`}
@@ -461,14 +461,15 @@ function CreatePoll() {
                   ) : (
                     <>
                       <Check size={20} />
-                      Create Poll ({options.length} options)
+                      Create Poll ({options.length} option
+                      {options.length !== 1 ? 's' : ''})
                     </>
                   )}
                 </button>
 
-                {options.length < 2 && (
+                {options.length < 1 && (
                   <p className="help-text">
-                    Add at least 2 options to create your poll
+                    Add at least 1 option to create your poll
                   </p>
                 )}
               </div>
