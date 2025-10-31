@@ -129,9 +129,10 @@ const TeamPage = () => {
                 Team operational procedures and successfully managed multiple
                 election cycles before graduation. */}
                 Current International Baccalaureate Diploma Programme students
-                who manage daily operations, election administration, and
-                platform maintenance for the 2025-2026 academic year under the
-                direct supervision and guidance of the founding team.
+                at Aga Khan High School, Kampala, who manage daily operations,
+                election administration, and platform maintenance for the
+                2025-2026 academic year under the direct supervision and
+                guidance of the founding team.
               </p>
             </div>
 
