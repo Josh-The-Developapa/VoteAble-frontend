@@ -128,7 +128,7 @@ function Account() {
           </NavLink>
 
           <NavLink
-            to="/about"
+            to="/team"
             className="account-buttons"
             style={{
               backgroundColor: '#000000',
