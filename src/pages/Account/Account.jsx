@@ -106,7 +106,7 @@ function Account() {
           </div>
         </div>
 
-        <div className="about-card card">
+        <div className="about-card card" style={{ paddingBottom: '20px' }}>
           <img className="team-pic" src={TeamPic} alt="Team" />
           <h2>
             About Vote<span className="highlight">Able.</span>
@@ -135,7 +135,7 @@ function Account() {
               textAlign: 'center',
               width: '180px',
               margin: 'auto',
-              marginTop: '10px',
+              marginTop: '15px',
               fontWeight: 450,
             }}
           >
