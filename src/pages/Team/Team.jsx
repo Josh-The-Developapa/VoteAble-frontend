@@ -153,7 +153,7 @@ const TeamPage = () => {
                 <img className="team-card-image" src={JethroImage} />
                 <h3 className="team-card-name">Jethro Igulle</h3>
                 <p className="team-card-position">
-                  Co Chief Operations Officer (CEO)
+                  Co Chief Operations Officer (COO)
                 </p>
                 <p className="team-card-description">
                   Coordinates platform operations with precision, working
@@ -166,7 +166,7 @@ const TeamPage = () => {
                 <img className="team-card-image" src={HettImage} />
                 <h3 className="team-card-name">Hett Vaya</h3>
                 <p className="team-card-position">
-                  Co Chief Operations Officer (CEO)
+                  Co Chief Operations Officer (COO)
                 </p>
                 <p className="team-card-description">
                   Shares responsibility for daily operations, bringing structure
@@ -189,43 +189,88 @@ const TeamPage = () => {
               <div className="team-card">
                 <img className="team-card-image" src={FrancisImage} />
                 <h3 className="team-card-name">Francis Kigozi</h3>
-                <p className="team-card-position">Legacy Team Member</p>
-                <p className="team-card-description"></p>
+                <p className="team-card-position">
+                  Director of Electoral Communications
+                </p>
+                <p className="team-card-description">
+                  Manages all election-related communications, coordinating
+                  announcements, voter outreach, and ensuring transparent
+                  information flow throughout election cycles.
+                </p>
+              </div>
+
+              <div className="team-card">
+                <div className="team-card-image">ZS</div>
+                <h3 className="team-card-name">Zia Sania</h3>
+                <p className="team-card-position">
+                  Head of Data Analytics & Processing
+                </p>
+                <p className="team-card-description">
+                  Oversees voter data collection, preprocessing, and analysis,
+                  ensuring data integrity and generating insights for election
+                  reporting and platform improvements.
+                </p>
               </div>
 
               <div className="team-card">
                 <img className="team-card-image" src={MalcolmImage} />
                 <h3 className="team-card-name">Malcolm</h3>
-                <p className="team-card-position">Legacy Team Member</p>
-                <p className="team-card-description"></p>
+                <p className="team-card-position">
+                  Election Security Coordinator
+                </p>
+                <p className="team-card-description">
+                  Monitors platform security protocols, manages voter
+                  verification processes, and ensures compliance with electoral
+                  integrity standards throughout each voting period.
+                </p>
               </div>
 
               <div className="team-card">
                 <div className="team-card-image">AB</div>
                 <h3 className="team-card-name">Abraham</h3>
-                <p className="team-card-position">Legacy Team Member</p>
-                <p className="team-card-description"></p>
+                <p className="team-card-position">Data Operations Specialist</p>
+                <p className="team-card-description">
+                  Handles voter registration data collection and preprocessing,
+                  maintaining accurate voter rolls and supporting the data
+                  analytics pipeline for election administration.
+                </p>
               </div>
 
               <div className="team-card">
                 <div className="team-card-image">AR</div>
                 <h3 className="team-card-name">Aretha</h3>
-                <p className="team-card-position">Legacy Team Member</p>
-                <p className="team-card-description"></p>
+                <p className="team-card-position">Voter Experience Manager</p>
+                <p className="team-card-description">
+                  Enhances the voting experience by gathering user feedback,
+                  troubleshooting voter issues, and implementing improvements to
+                  platform accessibility and usability.
+                </p>
               </div>
 
               <div className="team-card">
                 <div className="team-card-image">KW</div>
                 <h3 className="team-card-name">Kwagala</h3>
-                <p className="team-card-position">Legacy Team Member</p>
-                <p className="team-card-description"></p>
+                <p className="team-card-position">
+                  Electoral Compliance Officer
+                </p>
+                <p className="team-card-description">
+                  Ensures all elections adhere to school policies and democratic
+                  principles, maintaining procedural standards and documenting
+                  election processes for institutional records.
+                </p>
               </div>
 
               <div className="team-card">
                 <div className="team-card-image">RA</div>
                 <h3 className="team-card-name">Raiaan Lalani</h3>
-                <p className="team-card-position">Legacy Team Member</p>
-                <p className="team-card-description"></p>
+                <p className="team-card-position">
+                  Platform Support Coordinator
+                </p>
+                <p className="team-card-description">
+                  Provides technical support to voters and candidates, manages
+                  help desk operations, and coordinates with the tech team to
+                  resolve platform issues during election windows.
+                </p>
               </div>
             </div>
           </section>
