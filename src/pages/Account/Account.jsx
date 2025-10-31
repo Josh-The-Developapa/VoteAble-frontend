@@ -133,9 +133,9 @@ function Account() {
             style={{
               backgroundColor: '#000000',
               textAlign: 'center',
-              width: '165px',
+              width: '180px',
               margin: 'auto',
-              marginTop: '15px',
+              marginTop: '10px',
               fontWeight: 450,
             }}
           >
