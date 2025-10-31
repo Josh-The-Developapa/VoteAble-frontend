@@ -133,7 +133,7 @@ function Account() {
             style={{
               backgroundColor: '#000000',
               textAlign: 'center',
-              width: '140px',
+              width: '165px',
               margin: 'auto',
               marginTop: '15px',
               fontWeight: 450,
