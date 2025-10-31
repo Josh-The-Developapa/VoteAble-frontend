@@ -1,183 +1,20 @@
 import React from 'react';
+import './Team.css';
+import JoshuaImage from '../../assets/Joshua.png';
+import KhushImage from '../../assets/Khush Shah.jpg';
+import AlbertImage from '../../assets/Albert Jordan Mulumba.jpeg';
+import EmmanuelImage from '../../assets/Emmanuel Asiimwe.jpeg';
+import AkhilImage from '../../assets/Akhil Muni.jpeg';
+import SahithiImage from '../../assets/Sahithi Beecha.jpeg';
+import JethroImage from '../../assets/Jethro Igulle.jpeg';
+import HettImage from '../../assets/Hett.jpeg';
+import FrancisImage from '../../assets/Francis Kigozi.jpeg';
+import MalcolmImage from '../../assets/Malcolm.jpeg';
 
 const TeamPage = () => {
   return (
     <div>
-      <style>
-        {`
-          .team-container {
-            width: 100vw;
-            margin: 0 auto;
-            padding: 0 24px;
-          }
-
-          .team-header {
-            text-align: center;
-            margin-bottom: 64px;
-            padding: 40px 0;
-            background: #ffffff;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-          }
-
-          .team-header h1 {
-            font-size: 40px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #1a202c;
-          }
-
-          .team-header p {
-            font-size: 18px;
-            color: #64748b;
-            max-width: 600px;
-            margin: 0 auto;
-          }
-
-          .team-block {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 48px 40px;
-            margin-bottom: 32px;
-          }
-
-          .team-section-header {
-            text-align: center;
-            margin-bottom: 48px;
-          }
-
-          .team-section-title {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: #1a202c;
-          }
-
-          .team-section-subtitle {
-            font-size: 16px;
-            color: #64748b;
-            max-width: 700px;
-            margin: 0 auto;
-            line-height: 1.6;
-          }
-
-          .team-legacy-year {
-            display: inline-block;
-            background: #f1f5f9;
-            color: #475569;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            font-size: 14px;
-            border: 1px solid #e2e8f0;
-          }
-
-          .team-members-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 32px;
-          }
-
-          .team-card {
-            text-align: center;
-            padding: 32px 24px;
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-          }
-
-          .team-card-image {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            margin: 0 auto 32px;
-            background: #f1f5f9;
-            border: 3px solid #e2e8f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #64748b;
-            font-size: 28px;
-            font-weight: 700;
-          }
-
-          .team-card-name {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #1a202c;
-          }
-
-          .team-card-position {
-            color: #4c1d95;
-            font-weight: 500;
-            font-size: 14px;
-            margin-bottom: 16px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-          }
-
-          .team-card-description {
-            color: #64748b;
-            font-size: 14px;
-            line-height: 1.6;
-          }
-
-          .team-founders-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-          }
-
-          .team-founders-grid .team-card {
-            border-left: 4px solid #4c1d95;
-          }
-
-          .team-legacy-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-          }
-
-          @media (max-width: 768px) {
-            .team-container {
-              padding: 0 16px;
-            }
-
-            .team-header {
-              padding: 24px 20px;
-              margin-bottom: 40px;
-            }
-
-            .team-header h1 {
-              font-size: 32px;
-            }
-
-            .team-header p {
-              font-size: 16px;
-            }
-
-            .team-block {
-              padding: 32px 20px;
-            }
-
-            .team-section-title {
-              font-size: 28px;
-            }
-
-            .team-members-grid,
-            .team-founders-grid,
-            .team-legacy-grid {
-              grid-template-columns: 1fr;
-              gap: 20px;
-            }
-          }
-        `}
-      </style>
-
-      <main style={{ padding: '48px 0' }}>
+      <main style={{ background: '#f8fafc' }}>
         <div className="team-container">
           <div className="team-header">
             <h1>Our Team</h1>
@@ -203,50 +40,80 @@ const TeamPage = () => {
             </div>
 
             <div className="team-founders-grid">
+              {/* Joshua Mukisa */}
               <div className="team-card">
-                <div className="team-card-image">JD</div>
-                <h3 className="team-card-name">John Doe</h3>
-                <p className="team-card-position">Co-Founder & CEO</p>
+                <img
+                  className="team-card-image"
+                  src={JoshuaImage}
+                  alt="Joshua Mukisa"
+                />
+                <h3 className="team-card-name">Joshua Mukisa</h3>
+                <p className="team-card-position">Founder & CEO</p>
                 <p className="team-card-description">
-                  Led the conceptualization and development of VoteAble's secure
-                  voting infrastructure. Currently pursuing Computer Science at
-                  Stanford University while maintaining strategic oversight of
-                  platform development.
+                  Visionary founder who turned an idea into a fully-fledged
+                  platform, setting the foundation for VoteAble's mission and
+                  growth.
                 </p>
               </div>
 
+              {/* Khush Pratik Shah */}
               <div className="team-card">
-                <div className="team-card-image">JS</div>
-                <h3 className="team-card-name">Jane Smith</h3>
-                <p className="team-card-position">Co-Founder & CTO</p>
+                <img
+                  className="team-card-image"
+                  src={KhushImage}
+                  alt="Khush Pratik Shah"
+                />
+                <h3 className="team-card-name">Khush Pratik Shah</h3>
+                <p className="team-card-position">Co-Founder & COO</p>
                 <p className="team-card-description">
-                  Architected the technical foundation and security protocols
-                  that power our platform. Studying Software Engineering at MIT
-                  while continuing to guide technical development and security
-                  standards.
+                  Brought structure and operational excellence, leading the
+                  platform's UI revamp and driving smooth election management.
                 </p>
               </div>
 
+              {/* Akhil Muni*/}
               <div className="team-card">
-                <div className="team-card-image">MJ</div>
-                <h3 className="team-card-name">Michael Johnson</h3>
-                <p className="team-card-position">Lead Developer</p>
+                <img
+                  className="team-card-image"
+                  src={AkhilImage}
+                  alt="Akhil Muni"
+                />
+                <h3 className="team-card-name">Akhil Muni</h3>
+                <p className="team-card-position">Co-Founder & CFO</p>
                 <p className="team-card-description">
-                  Developed core platform functionality and established
-                  development best practices. Now at UC Berkeley pursuing
-                  Cybersecurity while providing technical mentorship to current
-                  teams.
+                  Early supporter and financial backbone, funding development
+                  and expansion initiatives from the company's very start.
                 </p>
               </div>
 
+              {/* Albert Jordan Mulumba */}
               <div className="team-card">
-                <div className="team-card-image">SW</div>
-                <h3 className="team-card-name">Sarah Wilson</h3>
-                <p className="team-card-position">Head of Operations</p>
+                <img
+                  className="team-card-image"
+                  src={AlbertImage}
+                  alt="Albert Jordan Mulumba"
+                />
+                <h3 className="team-card-name">Albert Jordan Mulumba</h3>
+                <p className="team-card-position">Head of Design</p>
                 <p className="team-card-description">
-                  Established operational procedures, compliance frameworks, and
-                  user experience standards. Studying Business Administration at
-                  Harvard while overseeing operational excellence initiatives.
+                  The creative mind behind VoteAble's sleek interface,
+                  redefining the app's entire design system and visual identity.
+                </p>
+              </div>
+
+              {/* Emmanuel Asiimwe */}
+              <div className="team-card">
+                <img
+                  className="team-card-image"
+                  src={EmmanuelImage}
+                  alt="Emmanuel Asiimwe"
+                />
+                <h3 className="team-card-name">Emmanuel Asiimwe</h3>
+                <p className="team-card-position">Chief Technology Officer</p>
+                <p className="team-card-description">
+                  Core developer and tech lead who brought Albert's designs to
+                  life, ensuring platform stability, scalability, and
+                  performance
                 </p>
               </div>
             </div>
@@ -258,146 +125,168 @@ const TeamPage = () => {
               <h2 className="team-section-title">Legacy Team</h2>
               <div className="team-legacy-year">Academic Year 2025 - 2026</div>
               <p className="team-section-subtitle">
+                {/* Previous academic year's team members who established Legacy
+                Team operational procedures and successfully managed multiple
+                election cycles before graduation. */}
                 Current International Baccalaureate Diploma Programme students
                 who manage daily operations, election administration, and
-                platform maintenance under the direct supervision and guidance
-                of the founding team.
+                platform maintenance for the 2025-2026 academic year under the
+                direct supervision and guidance of the founding team.
               </p>
             </div>
 
             <div className="team-legacy-grid">
+              <div className="team-card">
+                <img className="team-card-image" src={SahithiImage} />
+                <h3 className="team-card-name">Sahithi Beecha</h3>
+                <p className="team-card-position">
+                  Chief Executive Officer (CEO)
+                </p>
+                <p className="team-card-description">
+                  Leads the Legacy Team with vision and authority, ensuring
+                  every election runs seamlessly while carrying forward the
+                  founder's mission.
+                </p>
+              </div>
+
+              <div className="team-card">
+                <img className="team-card-image" src={JethroImage} />
+                <h3 className="team-card-name">Jethro Igulle</h3>
+                <p className="team-card-position">
+                  Co Chief Operations Officer (CEO)
+                </p>
+                <p className="team-card-description">
+                  Coordinates platform operations with precision, working
+                  closely with leadership to keep election logistics running
+                  smoothly.
+                </p>
+              </div>
+
+              <div className="team-card">
+                <img className="team-card-image" src={HettImage} />
+                <h3 className="team-card-name">Hett Vaya</h3>
+                <p className="team-card-position">
+                  Co Chief Operations Officer (CEO)
+                </p>
+                <p className="team-card-description">
+                  Shares responsibility for daily operations, bringing structure
+                  and consistency to the electoral process alongside Jethro.
+                </p>
+              </div>
+
+              <div className="team-card">
+                <div className="team-card-image">JR</div>
+                <h3 className="team-card-name">Jerome Owachi</h3>
+                <p className="team-card-position">
+                  Chief Technology Officer (CTO)
+                </p>
+                <p className="team-card-description">
+                  Key player in poll creation and backend coordination, bridging
+                  communication between the tech and operations teams.
+                </p>
+              </div>
+
+              <div className="team-card">
+                <img className="team-card-image" src={FrancisImage} />
+                <h3 className="team-card-name">Francis Kigozi</h3>
+                <p className="team-card-position">Legacy Team Member</p>
+                <p className="team-card-description"></p>
+              </div>
+
+              <div className="team-card">
+                <img className="team-card-image" src={MalcolmImage} />
+                <h3 className="team-card-name">Malcolm</h3>
+                <p className="team-card-position">Legacy Team Member</p>
+                <p className="team-card-description"></p>
+              </div>
+
+              <div className="team-card">
+                <div className="team-card-image">AB</div>
+                <h3 className="team-card-name">Abraham</h3>
+                <p className="team-card-position">Legacy Team Member</p>
+                <p className="team-card-description"></p>
+              </div>
+
               <div className="team-card">
                 <div className="team-card-image">AR</div>
-                <h3 className="team-card-name">Alex Rodriguez</h3>
-                <p className="team-card-position">Legacy Team Lead</p>
-                <p className="team-card-description">
-                  Coordinates all Legacy Team operations and serves as primary
-                  liaison with founders. IB Year 2 student responsible for
-                  ensuring seamless election administration and team
-                  coordination.
-                </p>
+                <h3 className="team-card-name">Aretha</h3>
+                <p className="team-card-position">Legacy Team Member</p>
+                <p className="team-card-description"></p>
               </div>
 
               <div className="team-card">
-                <div className="team-card-image">EP</div>
-                <h3 className="team-card-name">Emily Parker</h3>
-                <p className="team-card-position">Technical Manager</p>
-                <p className="team-card-description">
-                  Oversees platform maintenance, feature implementation, and
-                  technical documentation. IB Year 2 student with extensive
-                  programming experience in election technology systems.
-                </p>
+                <div className="team-card-image">KW</div>
+                <h3 className="team-card-name">Kwagala</h3>
+                <p className="team-card-position">Legacy Team Member</p>
+                <p className="team-card-description"></p>
               </div>
 
               <div className="team-card">
-                <div className="team-card-image">DL</div>
-                <h3 className="team-card-name">David Lee</h3>
-                <p className="team-card-position">Security Coordinator</p>
-                <p className="team-card-description">
-                  Maintains security protocols, monitors system integrity, and
-                  ensures compliance with election security standards. IB Year 1
-                  student specializing in cybersecurity applications.
-                </p>
-              </div>
-
-              <div className="team-card">
-                <div className="team-card-image">LT</div>
-                <h3 className="team-card-name">Lisa Thompson</h3>
-                <p className="team-card-position">User Experience Lead</p>
-                <p className="team-card-description">
-                  Focuses on accessibility compliance, user interface
-                  optimization, and voter experience enhancement. IB Year 2
-                  student with expertise in human-computer interaction design.
-                </p>
-              </div>
-
-              <div className="team-card">
-                <div className="team-card-image">RC</div>
-                <h3 className="team-card-name">Ryan Chen</h3>
-                <p className="team-card-position">Partnership Coordinator</p>
-                <p className="team-card-description">
-                  Manages institutional partnerships, stakeholder
-                  communications, and voter education initiatives. IB Year 1
-                  student with strong communication and project management
-                  skills.
-                </p>
-              </div>
-
-              <div className="team-card">
-                <div className="team-card-image">MG</div>
-                <h3 className="team-card-name">Maya Gupta</h3>
-                <p className="team-card-position">Data & Analytics Lead</p>
-                <p className="team-card-description">
-                  Conducts election data analysis, generates administrative
-                  reports, and maintains statistical records for transparency
-                  and auditing purposes. IB Year 2 student with advanced
-                  mathematics background.
-                </p>
+                <div className="team-card-image">RA</div>
+                <h3 className="team-card-name">Raiaan Lalani</h3>
+                <p className="team-card-position">Legacy Team Member</p>
+                <p className="team-card-description"></p>
               </div>
             </div>
           </section>
 
-          {/* Legacy Team 2024 - 2025 */}
-          <section className="team-block">
+          {/* Legacy Team 2026 - 2027 */}
+          {/* <section className="team-block">
             <div className="team-section-header">
               <h2 className="team-section-title">Legacy Team</h2>
-              <div className="team-legacy-year">Academic Year 2024 - 2025</div>
+              <div className="team-legacy-year">Academic Year 2026 - 2027</div>
               <p className="team-section-subtitle">
-                Previous academic year's team members who established Legacy
-                Team operational procedures and successfully managed multiple
-                election cycles before graduation.
+                Current International Baccalaureate Diploma Programme students
+                who will manage daily operations, election administration, and
+                platform maintenance for the 2026-2027 academic year under the
+                direct supervision and guidance of the founding team.
               </p>
             </div>
 
             <div className="team-legacy-grid">
               <div className="team-card">
-                <div className="team-card-image">KB</div>
-                <h3 className="team-card-name">Kevin Brown</h3>
-                <p className="team-card-position">Former Team Lead</p>
-                <p className="team-card-description">
-                  Established Legacy Team operational framework and successfully
-                  led multiple election cycles. Graduated with IB Diploma and
-                  now pursuing higher education in Political Science.
-                </p>
+                <div className="team-card-image">AM</div>
+                <h3 className="team-card-name">Akarunga Marie</h3>
+                <p className="team-card-position"></p>
+                <p className="team-card-description"></p>
               </div>
 
               <div className="team-card">
-                <div className="team-card-image">AN</div>
-                <h3 className="team-card-name">Anna Nelson</h3>
-                <p className="team-card-position">Former Technical Manager</p>
-                <p className="team-card-description">
-                  Developed comprehensive training documentation and technical
-                  procedures for Legacy Team succession. Graduated with
-                  distinction in Computer Science IB and now studying Software
-                  Engineering.
-                </p>
+                <div className="team-card-image">AP</div>
+                <h3 className="team-card-name">Alvin Preston</h3>
+                <p className="team-card-position"></p>
+                <p className="team-card-description"></p>
               </div>
 
               <div className="team-card">
-                <div className="team-card-image">JK</div>
-                <h3 className="team-card-name">Jake Kim</h3>
-                <p className="team-card-position">
-                  Former Security Coordinator
-                </p>
-                <p className="team-card-description">
-                  Implemented robust security protocols and incident response
-                  procedures that continue to protect the platform. Now pursuing
-                  Cybersecurity studies at university level.
-                </p>
+                <div className="team-card-image">JA</div>
+                <h3 className="team-card-name">Janice</h3>
+                <p className="team-card-position"></p>
+                <p className="team-card-description"></p>
               </div>
 
               <div className="team-card">
-                <div className="team-card-image">SO</div>
-                <h3 className="team-card-name">Sophie O'Connor</h3>
-                <p className="team-card-position">Former UX Lead</p>
-                <p className="team-card-description">
-                  Enhanced platform accessibility and user interface design to
-                  meet international accessibility standards. Graduated with
-                  High Achievement in Visual Arts IB and now studying UX Design.
-                </p>
+                <div className="team-card-image">JY</div>
+                <h3 className="team-card-name">Jay</h3>
+                <p className="team-card-position"></p>
+                <p className="team-card-description"></p>
+              </div>
+
+              <div className="team-card">
+                <div className="team-card-image">PH</div>
+                <h3 className="team-card-name">Phill</h3>
+                <p className="team-card-position"></p>
+                <p className="team-card-description"></p>
+              </div>
+
+              <div className="team-card">
+                <div className="team-card-image">FZ</div>
+                <h3 className="team-card-name">Faiza</h3>
+                <p className="team-card-position"></p>
+                <p className="team-card-description"></p>
               </div>
             </div>
-          </section>
+          </section> */}
         </div>
       </main>
     </div>

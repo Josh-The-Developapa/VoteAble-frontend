@@ -95,6 +95,14 @@ const Header = React.memo(function Header(props) {
           ''
         )}
 
+        {!localStorage.getItem('name') ? (
+          <NavLink to="/team" className="pollLink">
+            Legacy Team
+          </NavLink>
+        ) : (
+          ''
+        )}
+
         {localStorage.getItem('name') ? (
           <div
             className="profileWrapper"

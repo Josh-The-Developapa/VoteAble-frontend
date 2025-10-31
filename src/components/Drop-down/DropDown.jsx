@@ -78,6 +78,9 @@ const DropDown = () => {
         <NavLink to="/about" className="dropDownPollLink" onClick={handleClose}>
           About Us
         </NavLink>
+        <NavLink to="/team" className="dropDownPollLink" onClick={handleClose}>
+          Legacy Team
+        </NavLink>
         {localStorage.getItem('name') && (
           <button className="dropDownPollLink logout" onClick={logout}>
             Logout

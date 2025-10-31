@@ -126,6 +126,21 @@ function Account() {
           >
             About Us
           </NavLink>
+
+          <NavLink
+            to="/about"
+            className="account-buttons"
+            style={{
+              backgroundColor: '#000000',
+              textAlign: 'center',
+              width: '140px',
+              margin: 'auto',
+              marginTop: '15px',
+              fontWeight: 450,
+            }}
+          >
+            Legacy Team
+          </NavLink>
         </div>
 
         <div className="vote-now card">

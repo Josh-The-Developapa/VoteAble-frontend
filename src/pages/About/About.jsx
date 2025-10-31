@@ -8,6 +8,7 @@ import EmmanuelImage from '../../assets/Emmanuel Asiimwe.jpeg';
 import JoshuaImage from '../../assets/Joshua.png';
 import AlbertImage from '../../assets/Albert Jordan Mulumba.jpeg';
 import KhushImage from '../../assets/Khush Shah.jpg';
+import AkhilImage from '../../assets/Akhil Muni.jpeg';
 
 function AboutVoteable() {
   return (
@@ -114,7 +115,7 @@ function AboutVoteable() {
                   Co-Founder
                 </p>
               </div> */}
-              {/* <div className="team-member">
+              <div className="team-member">
                 <img
                   src={AkhilImage}
                   alt="Akhil's Pic"
@@ -124,7 +125,7 @@ function AboutVoteable() {
                 <p className="role" style={{ fontSize: '15px' }}>
                   CFO
                 </p>
-              </div> */}
+              </div>
               <div className="team-member">
                 <img
                   src={AlbertImage}
