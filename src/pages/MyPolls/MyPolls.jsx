@@ -215,9 +215,9 @@ const ElectionResultsPDF = ({ polls = [], onClose }) => {
           <body>
             <div class="header">
               <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin-bottom: 15px;">
-                <img src="../../../Aga-Khan.png" alt="School Logo" style="height: 80px; object-fit: contain;" />
+                <img src="/frontend/Aga-Khan.png" alt="School Logo" style="height: 80px; object-fit: contain;" />
                 <span style="font-size: 28px; font-weight: bold; color: #2c5282;">|</span>
-                <img src="../../../VoteAble-Logo.png" alt="VoteAble Logo" style="height: 60px; object-fit: contain; opacity: 0.85;" />
+                <img src="/frontend/VoteAble-Logo.png" alt="VoteAble Logo" style="height: 60px; object-fit: contain; opacity: 0.85;" />
               </div>
 
               <div class="school-name">Aga Khan High School, Kampala</div>
