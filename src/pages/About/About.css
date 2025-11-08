@@ -185,6 +185,7 @@
   width: 100px;
   object-fit: cover;
   border-radius: 100px;
+  margin: 0px;
 }
 
 /* Media Queries for Responsive Design */
@@ -214,8 +215,8 @@
     height: auto;
   }
   .team-member {
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
   }
 }
 
