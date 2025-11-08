@@ -8,8 +8,6 @@ body {
   height: 100vh;
 }
 
-/*  */
-
 .pollContainer {
   background-color: whitesmoke;
   padding-top: 60px;
@@ -68,7 +66,7 @@ h2 {
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.231), 0 6px 10px rgba(0, 0, 0, 0.284);
   overflow: hidden;
   width: 400px;
-  height: 100px;
+  /* height: 100px; */
   text-align: center;
   justify-content: flex-start;
   align-items: center;
@@ -98,12 +96,11 @@ h2 {
   border-radius: 8px;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.231), 0 6px 10px rgba(0, 0, 0, 0.284);
   overflow: hidden;
-  /* width: 300px; */
   display: flex;
   justify-content: center;
   align-items: flex-start;
   width: 90%;
-  text-align: left;
+  text-align: center;
   margin-right: 10px;
   margin-left: 10px;
   display: flex;
