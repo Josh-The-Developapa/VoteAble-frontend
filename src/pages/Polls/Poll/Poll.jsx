@@ -99,7 +99,6 @@ function Poll(props) {
         body: JSON.stringify({
           answer: selectedOption.text,
           Student_ID: localStorage.getItem('Student_ID'),
-          password: localStorage.getItem('password'),
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -180,7 +179,7 @@ function Poll(props) {
           </p>
         )}
         {screenWidth < 680 ? (
-          <div className="candidates">
+          <div className="candidates" style={{ paddingLeft: '10px' }}>
             {options.map((option) => (
               <div
                 key={option.text}
@@ -191,14 +190,14 @@ function Poll(props) {
                 }`}
                 onClick={() => setSelectedOption(option)}
               >
-                {option.photo && (
+                {/* {option.photo && (
                   <img
                     src={`${import.meta.env.VITE_BACKEND_URL}/uploads/${
                       option.photo
                     }`}
                     alt={option.text}
                   />
-                )}
+                )} */}
                 <div className="candidate-info">
                   <div>
                     <h1
@@ -266,14 +265,14 @@ function Poll(props) {
                 }`}
                 onClick={() => setSelectedOption(option)}
               >
-                {option.photo && (
+                {/* {option.photo && (
                   <img
                     src={`${import.meta.env.VITE_BACKEND_URL}/uploads/${
                       option.photo
                     }`}
                     alt={option.text}
                   />
-                )}
+                )} */}
                 <div className="candidate-info">
                   <div>
                     <h1 className="poll-class">{option.class}</h1>
@@ -324,7 +323,7 @@ function Poll(props) {
           ''
         )}
         {options.length < 4 && screenWidth >= 680 ? (
-          <div className="candidates">
+          <div className="candidates" style={{ flexDirection: 'column' }}>
             {options.map((option) => (
               <div
                 key={option.text}
@@ -335,19 +334,15 @@ function Poll(props) {
                 }`}
                 onClick={() => setSelectedOption(option)}
               >
-                {option.photo && (
+                {/* {option.photo && (
                   <img
                     src={`${import.meta.env.VITE_BACKEND_URL}/uploads/${
                       option.photo
                     }`}
                     alt={option.text}
                   />
-                )}
+                )} */}
                 <div className="candidate-info">
-                  <div style={{ height: '190px' }}>
-                    <h1 className="poll-class">{option.class}</h1>
-                    {/* <h1 className={option.house}>{option.house}</h1> */}
-                  </div>
                   <div>
                     <h2
                       style={{
@@ -355,6 +350,7 @@ function Poll(props) {
                           selectedOption && selectedOption.text === option.text
                             ? '#ffffff'
                             : '#000000',
+                        fontSize: '18px',
                       }}
                     >
                       {option.text.split(' ').map((word, i) => (

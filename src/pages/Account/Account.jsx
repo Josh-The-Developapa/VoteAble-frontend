@@ -79,16 +79,7 @@ function Account() {
         <div className="user-card card">
           <img className="profile-pic" src={Profile} alt="Profile" />
           <h2>{formatName(localStorage.getItem('name'))}</h2>
-          <div className="user-info">
-            <div className="info-item">
-              <RiGraduationCapLine />
-              <p>{localStorage.getItem('class')}</p>
-            </div>
-            <div className="info-item">
-              <FiHome />
-              <p>{localStorage.getItem('house')}</p>
-            </div>
-          </div>
+
           <div className="vote-status">
             {!HAR ? (
               <div className="vote-status">

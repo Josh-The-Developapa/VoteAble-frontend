@@ -45,6 +45,7 @@
 .skeleton-message {
   height: 25px;
   width: 200px;
+  margin-left: 20px;
   border-radius: 4px;
   margin: 15px 20px;
   background-color: #e0e0e0;

@@ -16,7 +16,7 @@ body {
   text-align: left;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
   /* align-items: center; */
   width: 100vw;
@@ -59,8 +59,6 @@ h2 {
   justify-content: flex-start;
   flex-wrap: wrap;
   padding-left: 30px;
-  /* padding-right: 5px; */
-  /* width:30%; */
   gap: 20px;
 }
 
@@ -69,9 +67,11 @@ h2 {
   border-radius: 8px;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.231), 0 6px 10px rgba(0, 0, 0, 0.284);
   overflow: hidden;
-  /* width: 300px; */
-  height: 300px;
+  width: 400px;
+  height: 80px;
   text-align: center;
+  justify-content: flex-start;
+  align-items: center;
   display: flex;
   flex-direction: row;
   cursor: pointer;
@@ -85,7 +85,6 @@ h2 {
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.231), 0 6px 10px rgba(0, 0, 0, 0.284);
   overflow: hidden;
   width: 300px;
-  height: 230px;
   text-align: center;
   display: flex;
   flex-direction: row;
@@ -100,7 +99,6 @@ h2 {
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.231), 0 6px 10px rgba(0, 0, 0, 0.284);
   overflow: hidden;
   /* width: 300px; */
-  height: 170px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -113,7 +111,7 @@ h2 {
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   z-index: 10;
-  padding-left: 10px;
+  /* padding-left: 10px; */
 }
 
 .candidate-card:hover {
@@ -316,6 +314,6 @@ h2 {
     font-size: 35px;
   }
   .candidates {
-    padding-left: 5px;
+    padding-left: 30px;
   }
 }

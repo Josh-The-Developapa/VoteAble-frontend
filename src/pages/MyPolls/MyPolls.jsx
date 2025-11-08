@@ -532,7 +532,6 @@ function MyPolls() {
             },
             body: JSON.stringify({
               Student_ID: localStorage.getItem('Student_ID'),
-              password: localStorage.getItem('password'),
             }),
           }
         );

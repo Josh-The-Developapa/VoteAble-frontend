@@ -25,7 +25,7 @@ const PollSkeleton = ({ screenWidth }) => {
 
       {/* Mobile Skeleton */}
       {screenWidth < 680 && (
-        <div className="candidates">
+        <div className="candidates" style={{ paddingLeft: '10px' }}>
           {[...Array(skeletonCount)].map((_, index) => (
             <div
               key={index}
@@ -69,7 +69,7 @@ const PollSkeleton = ({ screenWidth }) => {
 
       {/* Desktop Skeleton - Few Options (<4) */}
       {skeletonCount < 4 && screenWidth >= 680 && (
-        <div className="candidates">
+        <div style={{ flexDirection: 'row' }} className="candidates">
           {[...Array(skeletonCount)].map((_, index) => (
             <div
               key={index}
