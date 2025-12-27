@@ -108,7 +108,7 @@ img {
   margin-left: 0px;
 }
 
-@media screen and (max-width: 651px) {
+@media screen and (max-width: 800px) {
   .loginLink {
     display: none;
   }
@@ -132,7 +132,7 @@ img {
   }
 } */
 
-@media screen and (min-width: 652px) {
+@media screen and (min-width: 801px) {
   .menuIcon {
     display: none;
   }

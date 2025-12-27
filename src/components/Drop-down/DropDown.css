@@ -1,20 +1,28 @@
-.dropdown {
+.mobileNavDrawer {
   display: flex;
   flex-direction: column;
-  align-items: center;
   z-index: 900;
   position: fixed;
   top: 0;
   right: 0;
   height: 100%;
+  width: 280px;
   background-color: white;
-  padding-right: 20px;
-  animation: animateleft 0.5s;
+  animation: slideInFromRight 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+  overflow-y: auto;
 }
 
-@keyframes animateleft {
+@media screen and (max-width: 480px) {
+  .mobileNavDrawer {
+    width: 100%;
+    box-shadow: none;
+  }
+}
+
+@keyframes slideInFromRight {
   from {
-    right: -1000px;
+    right: -300px;
     opacity: 0;
   }
   to {
@@ -23,48 +31,182 @@
   }
 }
 
-.btnn,
-.dropDownPollLink {
+/* Close Button */
+.drawerCloseBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.drawerCloseBtn:hover {
+  background: rgba(39, 0, 60, 0.1);
+  transform: rotate(90deg);
+}
+
+.drawerCloseIcon {
+  width: 24px;
+  height: 24px;
+  color: #27003c;
+  stroke-width: 2.5;
+}
+
+/* User Info Section */
+.drawerUserSection {
+  padding: 40px 20px 30px;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 20px;
+}
+
+.drawerUserSectionLoggedOut {
+  padding: 40px 20px 30px;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.drawerProfilePlaceholder {
+  opacity: 0.5;
+}
+
+.drawerProfileLink {
+  text-decoration: none;
+  color: #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.drawerProfileLink:hover {
+  color: #000000;
+  transform: scale(1.02);
+}
+
+.drawerAvatarImg {
+  height: 90px;
+  width: 90px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 12px rgba(39, 0, 60, 0.15);
+  transition: box-shadow 0.3s ease;
+}
+
+.drawerProfileLink:hover .drawerAvatarImg {
+  box-shadow: 0 6px 16px rgba(39, 0, 60, 0.25);
+}
+
+.drawerWelcomeText {
+  text-align: center;
+  font-family: 'Kumbh Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #333;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.drawerUserNameHighlight {
+  color: #27003c;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+/* Navigation Links */
+.drawerNavLinksContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px;
+  flex: 1;
+}
+
+.drawerNavBtn {
   cursor: pointer;
   text-decoration: none;
   text-align: center;
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  border-radius: 10px;
-  margin: 10px;
-  padding: 10px;
-  max-width: 200px;
-}
-
-.btnn {
-  color: #fff !important;
-  background: linear-gradient(
-    to right,
-    #312783 0%,
-    #1c164a 33%,
-    #0b091d 67%,
-    #4a2342 100%
-  );
-  width: 150px;
-  font-size: 16.5px;
-}
-
-.dropDownPollLink {
-  color: #fff !important;
-  background: linear-gradient(
-    to right,
-    #312783 0%,
-    #1c164a 33%,
-    #0b091d 67%,
-    #4a2342 100%
-  );
-  padding: 10px 25px;
   font-family: 'Kumbh Sans', sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  width: 150px;
+  border-radius: 12px;
+  padding: 14px 30px;
+  width: 200px;
+  font-size: 18px;
+  font-weight: 500;
+  border: none;
+  transition: all 0.3s ease;
+  color: #fff !important;
+  background: linear-gradient(
+    to right,
+    #312783 0%,
+    #1c164a 33%,
+    #0b091d 67%,
+    #4a2342 100%
+  );
+  box-shadow: 0 3px 10px rgba(49, 39, 131, 0.3);
 }
 
-.tsBG {
+.drawerNavBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(49, 39, 131, 0.4);
+}
+
+.drawerNavBtn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(49, 39, 131, 0.3);
+}
+
+/* Action Buttons Section */
+.drawerActionSection {
+  padding: 30px 20px;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+}
+
+.drawerLogoutBtn,
+.drawerLoginBtn {
+  background: linear-gradient(
+    135deg,
+    #312783 0%,
+    #1c164a 50%,
+    #4a2342 100%
+  ) !important;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+}
+
+.drawerLogoutBtn::before,
+.drawerLoginBtn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: left 0.4s ease;
+}
+
+.drawerLogoutBtn:hover::before,
+.drawerLoginBtn:hover::before {
+  left: 100%;
+}
+
+/* Background Overlay */
+.mobileNavOverlay {
   opacity: 0.7;
   z-index: 120;
   position: fixed;
@@ -73,43 +215,39 @@
   height: 100%;
   width: 100%;
   background-color: black;
+  animation: overlayFadeIn 0.3s ease;
 }
 
-@media screen and (min-width: 654px) {
-  .dropdown,
-  .tsBG {
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+
+@media screen and (min-width: 801px) {
+  .mobileNavDrawer,
+  .mobileNavOverlay {
     display: none;
   }
 }
 
-.user-info {
-  margin-top: 20px;
-  margin-bottom: 20px;
+/* Scrollbar Styling */
+.mobileNavDrawer::-webkit-scrollbar {
+  width: 6px;
 }
 
-.nav-link {
-  text-decoration: none;
-  color: #000000;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  /* padding: 15px; */
-  /* background-color: #d7d6d6; */
-  border-radius: 10px;
-  width: 100%;
+.mobileNavDrawer::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }
 
-.nav-link:hover {
-  color: #000000;
+.mobileNavDrawer::-webkit-scrollbar-thumb {
+  background: #27003c;
+  border-radius: 3px;
 }
 
-.dropDownAvatarImage {
-  margin-bottom: 0;
-  height: 85px;
-  width: 85px;
-}
-
-.highlight {
-  color: #27003c;
+.mobileNavDrawer::-webkit-scrollbar-thumb:hover {
+  background: #1c0029;
 }
