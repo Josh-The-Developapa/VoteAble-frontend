@@ -18,52 +18,48 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
-
-ChartJS.defaults.plugins.legend.position = 'bottom';
-ChartJS.defaults.color = 'black';
-ChartJS.defaults.layout.padding = 10;
+ChartJS.defaults.plugins.legend.display = false;
 ChartJS.defaults.responsive = true;
 ChartJS.defaults.maintainAspectRatio = false;
-ChartJS.defaults.plugins.legend.maxHeight = 1000;
-ChartJS.defaults.plugins.legend.maxWidth = 100;
-ChartJS.defaults.plugins.tooltip.boxPadding = 5;
+
+// Brand palette — cycles through these instead of random colours
+const BRAND_COLORS = [
+  '#312783',
+  '#4a2342',
+  '#1c164a',
+  '#6b3fa0',
+  '#2c5282',
+  '#27003c',
+  '#7b3f6e',
+  '#1a4a7a',
+];
 
 function Results(props) {
   const pollId = props.pollId;
-  const [question, setQuestion] = useState();
-  const [options, setOptions] = useState();
-  const [pollNotFound, setPollNotFound] = useState();
-  const [isLoading, setIsLoading] = useState(true); // Start with true
-  const [dataLoaded, setDataLoaded] = useState(false); // New state to track when data is ready
-
-  function getRandomColor() {
-    let letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
+  const [question, setQuestion] = useState('');
+  const [options, setOptions] = useState([]);
+  const [pollNotFound, setPollNotFound] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    async function poll() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    async function fetchResults() {
       setIsLoading(true);
-      setDataLoaded(false); // Reset data loaded state
+      setDataLoaded(false);
 
       const res = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/v1/results/${pollId}`,
         {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             Student_ID: localStorage.getItem('Student_ID'),
           }),
-        }
+        },
       );
 
       const data = await res.json();
@@ -74,120 +70,138 @@ function Results(props) {
       } else {
         setQuestion(data.data.question);
         setOptions(data.data.options);
-
-        // Small delay to ensure chart renders properly before showing UI
         setTimeout(() => {
           setDataLoaded(true);
           setIsLoading(false);
         }, 100);
       }
     }
-    poll();
+
+    fetchResults();
   }, [pollId]);
 
-  const data = {
-    labels: options ? options.map((opt) => opt.text) : [],
+  // Derive winner
+  const winner = options.length
+    ? [...options].sort((a, b) => b.votes - a.votes)[0]
+    : null;
+
+  const chartData = {
+    labels: options.map((o) => o.text),
     datasets: [
       {
         label: 'Votes',
-        data: options ? options.map((opt) => opt.votes) : [],
-        backgroundColor: options ? options.map(() => getRandomColor()) : [],
-        borderColor: 'rgba(0,0,0,0.1)',
-        borderWidth: 1,
+        data: options.map((o) => o.votes),
+        backgroundColor: options.map(
+          (_, i) => BRAND_COLORS[i % BRAND_COLORS.length],
+        ),
+        borderRadius: 6,
+        borderSkipped: false,
       },
     ],
   };
 
-  const optionsBar = {
+  const chartOptions = {
     plugins: {
-      legend: {
-        display: false, // Hide legend since we want the labels in tooltips only
-      },
+      legend: { display: false },
       tooltip: {
         callbacks: {
-          label: function (context) {
-            return `${context.raw} votes`;
-          },
+          label: (ctx) => ` ${ctx.raw} vote${ctx.raw !== 1 ? 's' : ''}`,
         },
+        backgroundColor: '#0f0c29',
+        titleFont: { family: 'Kumbh Sans', size: 13 },
+        bodyFont: { family: 'Kumbh Sans', size: 14, weight: '600' },
+        padding: 10,
+        cornerRadius: 8,
       },
     },
     scales: {
       y: {
         beginAtZero: true,
         ticks: {
-          color: 'black',
-          font: {
-            family: 'Kumbh Sans', // Change this to your desired font
-            size: 16, // Change the size for y-axis units
-          },
+          color: '#888',
+          font: { family: 'Kumbh Sans', size: 13 },
+          stepSize: 1,
         },
-        grid: {
-          color: 'rgba(0, 0, 0, 0.1)',
-        },
+        grid: { color: 'rgba(0,0,0,0.06)' },
+        border: { dash: [4, 4] },
       },
       x: {
         ticks: {
-          color: 'black',
-          font: {
-            family: 'Kumbh Sans', // Change this to your desired font
-            size: 16, // Change the size for x-axis labels
-          },
+          color: '#333',
+          font: { family: 'Kumbh Sans', size: 13, weight: '600' },
+          maxRotation: 30,
         },
-        grid: {
-          display: false,
-        },
+        grid: { display: false },
       },
     },
   };
 
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+          width: '100%',
+          background: '#f7f7f9',
+        }}
+      >
+        <Spinner animation="grow" style={{ color: '#312783' }} />
+      </div>
+    );
+  }
+
+  if (pollNotFound) {
+    return (
+      <div className="poll-not-found">
+        <h2>{pollNotFound}</h2>
+      </div>
+    );
+  }
+
   return (
     <div className="results-container">
-      {isLoading ? (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100vh',
-            width: '100%',
-            backgroundColor: 'whitesmoke',
-          }}
-        >
-          <Spinner animation="grow" />
-        </div>
-      ) : pollNotFound ? (
-        <div className="poll-not-found">
-          <h1>{pollNotFound}</h1>
-        </div>
-      ) : (
-        options &&
-        dataLoaded && (
-          <div className="poll-results">
-            <h1 className="poll-question">{question}</h1>
-            <p className="poll-info">
-              Hover over the bars to see the votes for each candidate
-            </p>
-            <p className="poll-info" style={{ marginTop: '-5px' }}>
-              Refresh the page to change the bar colors
-            </p>
-            <div className="bar-chart-container">
-              <Bar data={data} options={optionsBar} />
-            </div>
+      {options && dataLoaded && (
+        <div className="poll-results">
+          <p className="results-eyebrow">Election Results</p>
+          <h1 className="poll-question">{question}</h1>
+          <p className="poll-info">Hover over bars to see vote counts</p>
 
-            <div className="buttonContainer">
-              <button
-                onClick={() => props.handleBack()}
-                className="vote-button"
-              >
-                Back
-              </button>
+          <div className="results-divider" />
 
-              <button className="vote-button" onClick={props.handleNext}>
-                Next
-              </button>
-            </div>
+          <div className="bar-chart-container">
+            <Bar data={chartData} options={chartOptions} />
           </div>
-        )
+
+          {/* {winner && winner.votes > 0 && (
+            <div className="winner-banner">
+              <span className="winner-crown">🏆</span>
+              <div>
+                <p className="winner-label">Winner</p>
+                <p className="winner-name">{winner.text}</p>
+              </div>
+            </div>
+          )} */}
+
+          <div className="buttonContainer">
+            <button
+              onClick={() => props.handleBack()}
+              className="vote-button"
+              style={{
+                background: 'transparent',
+                color: '#312783',
+                border: '1.5px solid rgba(49,39,131,0.3)',
+              }}
+            >
+              ← Back
+            </button>
+            <button className="vote-button" onClick={props.handleNext}>
+              Next →
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );

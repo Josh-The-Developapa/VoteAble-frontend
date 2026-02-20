@@ -2,6 +2,57 @@
   box-sizing: border-box;
 }
 
+/* ─── Scroll-reveal base states ─────────────────────────────────── */
+
+.reveal-fade {
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+.reveal-fade.revealed {
+  opacity: 1;
+}
+
+.reveal-slide-up {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.65s ease,
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-slide-up.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Cards stagger via CSS custom property --stagger */
+.reveal-card {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    /* keep existing hover transitions below */ border-color 0.3s
+      cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-left-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: calc(var(--stagger, 0) * 80ms);
+}
+
+.reveal-card.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Once revealed, drop the stagger delay so hover transform still feels snappy */
+.reveal-card.revealed {
+  transition-delay: 0ms;
+  /* override only the reveal-related properties; keep hover snappy */
+}
+
+/* ─── Layout ───────────────────────────────────────────────────── */
+
 .team-container {
   width: 100vw;
   max-width: 1400px;
@@ -17,7 +68,8 @@
   border-radius: 16px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
@@ -44,6 +96,8 @@
   margin-top: 0;
   letter-spacing: -0.5px;
   position: relative;
+  /* Subtle lift animation for the hero heading */
+  animation: headerTitleIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
 }
 
 .team-header p {
@@ -53,6 +107,18 @@
   margin: 0 auto;
   line-height: 1.7;
   position: relative;
+  animation: headerTitleIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+
+@keyframes headerTitleIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .team-block {
@@ -61,7 +127,9 @@
   border-radius: 12px;
   padding: 30px 15px;
   margin-bottom: 48px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
 .team-section-header {
@@ -112,15 +180,25 @@
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   position: relative;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
+  /* hover transition (reveal-card overrides transition for entrance, then this kicks in) */
+  transition:
+    border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .team-card:hover {
   border-color: #cbd5e1;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+
+/* Make sure hover still fires after reveal is done */
+.reveal-card.revealed:hover {
   transform: translateY(-2px);
 }
 
@@ -190,7 +268,8 @@
 
 .team-founders-grid .team-card:hover {
   border-left-color: #7c3aed;
-  box-shadow: 0 10px 15px -3px rgba(91, 33, 182, 0.1),
+  box-shadow:
+    0 10px 15px -3px rgba(91, 33, 182, 0.1),
     0 4px 6px -2px rgba(91, 33, 182, 0.05);
 }
 
@@ -207,6 +286,26 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 32px;
 }
+
+/* ─── Reduced motion support ────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-fade,
+  .reveal-slide-up,
+  .reveal-card {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .team-header h1,
+  .team-header p {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
   .team-container {
@@ -245,6 +344,11 @@
   .team-legacy-grid {
     grid-template-columns: 1fr;
     gap: 24px;
+  }
+
+  /* On mobile single-column, cap the stagger so later cards don't wait too long */
+  .reveal-card {
+    transition-delay: calc(min(var(--stagger, 0), 3) * 80ms);
   }
 
   .team-card {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import './Team.css';
 import JoshuaImage from '../../assets/Joshua.png';
 import KhushImage from '../../assets/Khush Shah.jpg';
@@ -11,12 +11,39 @@ import HettImage from '../../assets/Hett.jpeg';
 import FrancisImage from '../../assets/Francis Kigozi.jpeg';
 import MalcolmImage from '../../assets/Malcolm.jpeg';
 
+const useScrollReveal = () => {
+  const observerRef = useRef(null);
+
+  useEffect(() => {
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observerRef.current.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' },
+    );
+
+    const targets = document.querySelectorAll(
+      '.reveal-fade, .reveal-slide-up, .reveal-card',
+    );
+    targets.forEach((el) => observerRef.current.observe(el));
+
+    return () => observerRef.current?.disconnect();
+  }, []);
+};
+
 const TeamPage = () => {
+  useScrollReveal();
+
   return (
     <div>
       <main style={{ background: '#f8fafc' }}>
         <div className="team-container">
-          <div className="team-header">
+          <div className="team-header reveal-fade">
             <h1>Our Team</h1>
             <p>
               Meet the dedicated professionals and students who ensure secure,
@@ -26,8 +53,8 @@ const TeamPage = () => {
           </div>
 
           {/* Founders Section */}
-          <section className="team-block">
-            <div className="team-section-header">
+          <section className="team-block reveal-fade">
+            <div className="team-section-header reveal-slide-up">
               <h2 className="team-section-title">
                 Founders & Original Members
               </h2>
@@ -41,7 +68,7 @@ const TeamPage = () => {
 
             <div className="team-founders-grid">
               {/* Joshua Mukisa */}
-              <div className="team-card">
+              <div className="team-card reveal-card" style={{ '--stagger': 0 }}>
                 <img
                   className="team-card-image"
                   src={JoshuaImage}
@@ -57,7 +84,7 @@ const TeamPage = () => {
               </div>
 
               {/* Khush Pratik Shah */}
-              <div className="team-card">
+              <div className="team-card reveal-card" style={{ '--stagger': 1 }}>
                 <img
                   className="team-card-image"
                   src={KhushImage}
@@ -72,7 +99,7 @@ const TeamPage = () => {
               </div>
 
               {/* Akhil Muni*/}
-              <div className="team-card">
+              <div className="team-card reveal-card" style={{ '--stagger': 2 }}>
                 <img
                   className="team-card-image"
                   src={AkhilImage}
@@ -87,7 +114,7 @@ const TeamPage = () => {
               </div>
 
               {/* Albert Jordan Mulumba */}
-              <div className="team-card">
+              <div className="team-card reveal-card" style={{ '--stagger': 3 }}>
                 <img
                   className="team-card-image"
                   src={AlbertImage}
@@ -102,7 +129,7 @@ const TeamPage = () => {
               </div>
 
               {/* Emmanuel Asiimwe */}
-              <div className="team-card">
+              <div className="team-card reveal-card" style={{ '--stagger': 4 }}>
                 <img
                   className="team-card-image"
                   src={EmmanuelImage}
@@ -120,14 +147,11 @@ const TeamPage = () => {
           </section>
 
           {/* Legacy Team 2025 - 2026 */}
-          <section className="team-block">
-            <div className="team-section-header">
+          <section className="team-block reveal-fade">
+            <div className="team-section-header reveal-slide-up">
               <h2 className="team-section-title">Legacy Team</h2>
               <div className="team-legacy-year">Academic Year 2025 - 2026</div>
               <p className="team-section-subtitle">
-                {/* Previous academic year's team members who established Legacy
-                Team operational procedures and successfully managed multiple
-                election cycles before graduation. */}
                 Current International Baccalaureate Diploma Programme students
                 at Aga Khan High School, Kampala, who manage daily operations,
                 election administration, and platform maintenance for the
@@ -137,7 +161,7 @@ const TeamPage = () => {
             </div>
 
             <div className="team-legacy-grid">
-              <div className="team-card">
+              <div className="team-card reveal-card" style={{ '--stagger': 0 }}>
                 <img className="team-card-image" src={SahithiImage} />
                 <h3 className="team-card-name">Sahithi Beecha</h3>
                 <p className="team-card-position">
@@ -150,7 +174,7 @@ const TeamPage = () => {
                 </p>
               </div>
 
-              <div className="team-card">
+              <div className="team-card reveal-card" style={{ '--stagger': 1 }}>
                 <img className="team-card-image" src={JethroImage} />
                 <h3 className="team-card-name">Jethro Igulle</h3>
                 <p className="team-card-position">
@@ -163,7 +187,7 @@ const TeamPage = () => {
                 </p>
               </div>
 
-              <div className="team-card">
+              <div className="team-card reveal-card" style={{ '--stagger': 2 }}>
                 <img className="team-card-image" src={HettImage} />
                 <h3 className="team-card-name">Hett Vaya</h3>
                 <p className="team-card-position">
@@ -175,7 +199,7 @@ const TeamPage = () => {
                 </p>
               </div>
 
-              <div className="team-card">
+              <div className="team-card reveal-card" style={{ '--stagger': 3 }}>
                 <div className="team-card-image">JR</div>
                 <h3 className="team-card-name">Jerome Owachi</h3>
                 <p className="team-card-position">
@@ -187,7 +211,7 @@ const TeamPage = () => {
                 </p>
               </div>
 
-              <div className="team-card">
+              <div className="team-card reveal-card" style={{ '--stagger': 4 }}>
                 <img className="team-card-image" src={FrancisImage} />
                 <h3 className="team-card-name">Francis Kigozi</h3>
                 <p className="team-card-position">
@@ -200,7 +224,7 @@ const TeamPage = () => {
                 </p>
               </div>
 
-              <div className="team-card">
+              <div className="team-card reveal-card" style={{ '--stagger': 5 }}>
                 <div className="team-card-image">ZS</div>
                 <h3 className="team-card-name">Zia Sania</h3>
                 <p className="team-card-position">
@@ -213,7 +237,7 @@ const TeamPage = () => {
                 </p>
               </div>
 
-              <div className="team-card">
+              <div className="team-card reveal-card" style={{ '--stagger': 6 }}>
                 <img className="team-card-image" src={MalcolmImage} />
                 <h3 className="team-card-name">Malcolm</h3>
                 <p className="team-card-position">
@@ -226,7 +250,7 @@ const TeamPage = () => {
                 </p>
               </div>
 
-              <div className="team-card">
+              <div className="team-card reveal-card" style={{ '--stagger': 7 }}>
                 <div className="team-card-image">AB</div>
                 <h3 className="team-card-name">Abraham</h3>
                 <p className="team-card-position">Data Operations Specialist</p>
@@ -237,7 +261,7 @@ const TeamPage = () => {
                 </p>
               </div>
 
-              <div className="team-card">
+              <div className="team-card reveal-card" style={{ '--stagger': 8 }}>
                 <div className="team-card-image">AR</div>
                 <h3 className="team-card-name">Aretha</h3>
                 <p className="team-card-position">Voter Experience Manager</p>
@@ -248,7 +272,7 @@ const TeamPage = () => {
                 </p>
               </div>
 
-              <div className="team-card">
+              <div className="team-card reveal-card" style={{ '--stagger': 9 }}>
                 <div className="team-card-image">KW</div>
                 <h3 className="team-card-name">Kwagala</h3>
                 <p className="team-card-position">
@@ -261,7 +285,10 @@ const TeamPage = () => {
                 </p>
               </div>
 
-              <div className="team-card">
+              <div
+                className="team-card reveal-card"
+                style={{ '--stagger': 10 }}
+              >
                 <div className="team-card-image">RA</div>
                 <h3 className="team-card-name">Raiaan Lalani</h3>
                 <p className="team-card-position">
@@ -275,64 +302,6 @@ const TeamPage = () => {
               </div>
             </div>
           </section>
-
-          {/* Legacy Team 2026 - 2027 */}
-          {/* <section className="team-block">
-            <div className="team-section-header">
-              <h2 className="team-section-title">Legacy Team</h2>
-              <div className="team-legacy-year">Academic Year 2026 - 2027</div>
-              <p className="team-section-subtitle">
-                Current International Baccalaureate Diploma Programme students
-                who will manage daily operations, election administration, and
-                platform maintenance for the 2026-2027 academic year under the
-                direct supervision and guidance of the founding team.
-              </p>
-            </div>
-
-            <div className="team-legacy-grid">
-              <div className="team-card">
-                <div className="team-card-image">AM</div>
-                <h3 className="team-card-name">Akarunga Marie</h3>
-                <p className="team-card-position"></p>
-                <p className="team-card-description"></p>
-              </div>
-
-              <div className="team-card">
-                <div className="team-card-image">AP</div>
-                <h3 className="team-card-name">Alvin Preston</h3>
-                <p className="team-card-position"></p>
-                <p className="team-card-description"></p>
-              </div>
-
-              <div className="team-card">
-                <div className="team-card-image">JA</div>
-                <h3 className="team-card-name">Janice</h3>
-                <p className="team-card-position"></p>
-                <p className="team-card-description"></p>
-              </div>
-
-              <div className="team-card">
-                <div className="team-card-image">JY</div>
-                <h3 className="team-card-name">Jay</h3>
-                <p className="team-card-position"></p>
-                <p className="team-card-description"></p>
-              </div>
-
-              <div className="team-card">
-                <div className="team-card-image">PH</div>
-                <h3 className="team-card-name">Phill</h3>
-                <p className="team-card-position"></p>
-                <p className="team-card-description"></p>
-              </div>
-
-              <div className="team-card">
-                <div className="team-card-image">FZ</div>
-                <h3 className="team-card-name">Faiza</h3>
-                <p className="team-card-position"></p>
-                <p className="team-card-description"></p>
-              </div>
-            </div>
-          </section> */}
         </div>
       </main>
     </div>

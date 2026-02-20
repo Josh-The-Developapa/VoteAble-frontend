@@ -1,22 +1,117 @@
+/* ============================================================
+   ANIMATION KEYFRAMES
+   ============================================================ */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ============================================================
+   ANIMATION BASE STATES
+   Elements start hidden; .is-visible triggers the animation.
+   On wide screens (single-page layout) we skip the hidden state
+   so everything appears immediately without needing to scroll.
+   ============================================================ */
+
+.anim-fade-up,
+.anim-fade-in {
+  /* visible by default — overridden for scrollable layouts below */
+}
+
+/* Stagger delays (used once .is-visible is applied) */
+.anim-delay-1 {
+  animation-delay: 0.08s;
+}
+.anim-delay-2 {
+  animation-delay: 0.22s;
+}
+.anim-delay-3 {
+  animation-delay: 0.38s;
+}
+.anim-delay-4 {
+  animation-delay: 0.54s;
+}
+.anim-delay-5 {
+  animation-delay: 0.7s;
+}
+.anim-delay-6 {
+  animation-delay: 0.86s;
+}
+
+/* On screens where sections stack and require scrolling,
+   hide elements until the observer fires .is-visible */
+@media (max-width: 1200px) {
+  .anim-fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: none; /* animation handles it */
+  }
+
+  .anim-fade-in {
+    opacity: 0;
+  }
+
+  .anim-fade-up.is-visible {
+    animation: fadeUp 0.65s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  }
+
+  .anim-fade-in.is-visible {
+    animation: fadeIn 0.8s ease forwards;
+  }
+}
+
+/* On the wide single-column layout all three panels are side-by-side
+   and visible on load — animate them in immediately via short delays */
+@media (min-width: 1201px) {
+  .anim-fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    animation: fadeUp 0.65s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  }
+
+  .anim-fade-in {
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards;
+  }
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+
 .about-container {
   display: flex;
   justify-content: flex-start;
   width: 100vw;
-  /* height: 100vh; */
   align-items: stretch;
   background-color: #f0f0f0;
   padding: 0;
   flex-direction: row;
-  flex-wrap: wrap; /* Allows wrapping of elements as the screen shrinks */
+  flex-wrap: wrap;
 }
 
 .about-left,
 .about-middle,
 .about-right {
-  /* height: 100vh; */
   display: flex;
   flex-direction: column;
-  width: 33.33333%; /* Default width */
+  width: 33.33333%;
 }
 
 .about-left {
@@ -33,7 +128,6 @@
   justify-content: flex-end;
   align-items: center;
   background-color: #f0f0f0;
-  /* padding: 50px 0 0 0; */
 }
 
 .about-right {
@@ -43,6 +137,10 @@
   padding: 0px;
   min-height: 100vh;
 }
+
+/* ============================================================
+   CONTENT ELEMENTS
+   ============================================================ */
 
 .logo2 {
   width: 60px;
@@ -59,7 +157,7 @@
   font-size: 35px;
   font-weight: 600;
   margin-bottom: 10px;
-  font-family: 'Kumbh Sans', sans-serif;
+  font-family: 'Sora', sans-serif;
   margin-left: 20px;
   margin-right: auto;
 }
@@ -75,10 +173,11 @@
 }
 
 .about-middle h2 {
-  font-family: 'Kumbh Sans', sans-serif;
+  font-family: 'Sora', sans-serif;
   font-size: 30px;
   font-weight: 600;
   margin: 0;
+  margin-top: 100px;
   padding: 10px;
 }
 
@@ -98,7 +197,6 @@
 }
 
 .middle-top {
-  /* padding-top: 80px; */
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -107,7 +205,7 @@
   height: 50%;
   width: 100%;
   object-fit: cover;
-  margin-top: 75px;
+  margin-top: 68px;
   -webkit-mask-image: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0.99),
@@ -129,7 +227,6 @@
   align-items: center;
   padding: 0px;
   margin: 0px;
-  /* background-color: green; */
 }
 
 .team-intro h2 {
@@ -148,7 +245,6 @@
   width: 100%;
   flex-wrap: wrap;
   margin: 0px;
-  /* padding: 5px; */
 }
 
 .team-member {
@@ -161,7 +257,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
 }
 
 .team-member p {
@@ -187,13 +282,16 @@
   border-radius: 100px;
 }
 
-/* Media Queries for Responsive Design */
+/* ============================================================
+   RESPONSIVE — 1200px
+   ============================================================ */
 @media (max-width: 1200px) {
   .about-container {
     flex-direction: row;
     flex-wrap: wrap;
     height: auto;
   }
+
   .group-pic {
     margin-top: 0px;
     height: auto;
@@ -205,20 +303,28 @@
 
   .about-left,
   .about-middle {
-    width: 50%; /* Stack two sections side by side */
+    width: 50%;
     height: auto;
   }
 
   .about-right {
-    width: 100%; /* Move about-right below about-left and about-middle */
+    width: 100%;
     height: auto;
-  }
-  .team-member {
-    /* margin-left: 10px;
-    margin-right: 10px; */
   }
 }
 
+/* ============================================================
+   RESPONSIVE — 938px
+   ============================================================ */
+@media screen and (max-width: 938px) {
+  .about-middle {
+    padding-top: 80px;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — 768px
+   ============================================================ */
 @media (max-width: 768px) {
   .about-container {
     flex-direction: column;
@@ -228,29 +334,24 @@
   .about-left,
   .about-middle,
   .about-right {
-    width: 100%; /* Stack all sections vertically */
+    width: 100%;
     height: auto;
-    /* padding: 100px; */
   }
 
   .about-middle {
     padding: 10px;
   }
 
-  /* .laptop-pic,
-  .group-pic {
-    height: auto;
-    max-height: 30vh;
-    margin-top: 10px;
-  } */
-
   .laptop-pic {
     display: none;
   }
-}
 
-@media screen and (max-width: 938px) {
-  .about-middle {
-    padding-top: 80px;
+  /* Center team members on small screens */
+  .team-members {
+    justify-content: center;
+  }
+
+  .team-intro h2 {
+    text-align: center;
   }
 }

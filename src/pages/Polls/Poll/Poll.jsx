@@ -1,99 +1,59 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import PollSkeleton from '../../../components/PollSkeleton/PollSkeleton.jsx';
 import './Poll.css';
 
 function Poll(props) {
   const pollId = props.pollId;
-  const navigate = useNavigate();
   const [pollNotFound, setPollNotFound] = useState();
   const [question, setQuestion] = useState();
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [signupFirstErr, setSignupFirstErr] = useState();
-  const [loading, setLoading] = useState(false); // State for voting loading
-  const [pollLoading, setPollLoading] = useState(true); // State for poll data loading
-  const [buttonDisabled, setButtonDisabled] = useState(false); // State for disabling button
+  const [statusMsg, setStatusMsg] = useState(null); // { type: 'success'|'error', text: '' }
+  const [loading, setLoading] = useState(false);
+  const [pollLoading, setPollLoading] = useState(true);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  const [HAR, setHAR] = useState(false); // State for has administrative rights
 
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
 
     async function fetchPoll() {
-      setPollLoading(true); // Start skeleton loading
-
+      setPollLoading(true);
       const res = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/v1/poll/${pollId}`,
-        {
-          method: 'GET',
-        }
       );
       const data = await res.json();
-
-      // Minimum loading time for better UX (optional)
-      await new Promise((resolve) => setTimeout(resolve, 800));
-
+      await new Promise((r) => setTimeout(r, 600));
       if (data.error) {
         setPollNotFound(data.error);
       } else {
         setQuestion(data.data.question);
         setOptions(data.data.options);
       }
-
-      setPollLoading(false); // Stop skeleton loading
-      console.log(data);
+      setPollLoading(false);
     }
 
-    async function checkResults() {
-      const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/v1/results/${pollId}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            Student_ID: localStorage.getItem('Student_ID'),
-          }),
-        }
-      );
-
-      const data = await res.json();
-      if (data.error) {
-        setHAR(false);
-        return;
-      } else {
-        setHAR(true);
-      }
-    }
-
-    checkResults();
     fetchPoll();
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [pollId, props.pollId]);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [pollId]);
 
   async function vote() {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     if (!selectedOption) {
-      setSignupFirstErr('Please select an option to vote.');
+      setStatusMsg({
+        type: 'error',
+        text: 'Please select a candidate to vote.',
+      });
       return;
     }
 
-    setLoading(true); // Start loading
-    setButtonDisabled(true); // Disable button immediately
+    setLoading(true);
+    setButtonDisabled(true);
 
     const res = await fetch(
-      `${import.meta.env.VITE_BACKEND_URL}/v1/vote/${
-        pollId ? pollId : props.pollId
-      }`,
+      `${import.meta.env.VITE_BACKEND_URL}/v1/vote/${pollId || props.pollId}`,
       {
         method: 'POST',
         body: JSON.stringify({
@@ -101,305 +61,128 @@ function Poll(props) {
           Student_ID: localStorage.getItem('Student_ID'),
           password: localStorage.getItem('password'),
         }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
+        headers: { 'Content-Type': 'application/json' },
+      },
     );
 
     const data = await res.json();
-    setLoading(false); // End loading
+    setLoading(false);
 
     if (res.ok) {
-      setSignupFirstErr('Voted');
-      setTimeout(() => {
-        props.handleNext(); // Call the function to go to the next item
-      }, 1500);
+      setStatusMsg({ type: 'success', text: '✓ Vote recorded!' });
+      setTimeout(() => props.handleNext(), 1500);
     } else if (data.error) {
-      setSignupFirstErr(data.error);
-      setTimeout(() => {
-        props.handleNext(); // Call the function to go to the next item
-      }, 1500);
+      setStatusMsg({ type: 'error', text: data.error });
+      setTimeout(() => props.handleNext(), 1500);
     }
 
-    // Re-enable the button after 2 seconds
-    setTimeout(() => {
-      setButtonDisabled(false);
-    }, 2000);
+    setTimeout(() => setButtonDisabled(false), 2000);
   }
 
-  // Show skeleton while loading
-  if (pollLoading) {
-    return <PollSkeleton screenWidth={screenWidth} />;
-  }
+  if (pollLoading) return <PollSkeleton screenWidth={screenWidth} />;
 
-  // Show error if poll not found
   if (pollNotFound) {
     return (
       <div className="pollContainer">
-        <div className="header">
-          <h1 className="mainTitle">Poll Not Found</h1>
-          <p
-            className="mainTitleQuestion"
-            style={{ fontSize: '25px', color: 'red' }}
-          >
+        <div className="pollHeader">
+          <p className="pollLabel">Error</p>
+          <h1 className="pollTitle" style={{ color: '#c0392b' }}>
             {pollNotFound}
-          </p>
+          </h1>
         </div>
       </div>
     );
   }
 
+  const isMobile = screenWidth < 680;
+  const isManyOptions = options.length >= 4;
+
+  const cardClass = isMobile
+    ? 'candidate-card-mobile'
+    : isManyOptions
+      ? 'candidate-card-many-options'
+      : 'candidate-card';
+
   return (
-    <div>
-      <div className="pollContainer">
-        <div className="header">
-          <div>
-            <h1 className="mainTitle">Select Your</h1>
-            <h1 className="mainTitleQuestion">{question}</h1>
-          </div>
-        </div>
-        {signupFirstErr === 'Voted' ? (
-          <h1
-            className="mainTitleQuestion"
-            style={{ fontSize: '25px', padding: '15px', fontWeight: 700 }}
-          >
-            Voted
-          </h1>
-        ) : (
-          <p
-            className="mainTitleQuestion"
-            style={{
-              fontSize: '25px',
-              padding: '15px',
-              fontWeight: 700,
-              color: 'red',
-            }}
-          >
-            {signupFirstErr}
-          </p>
-        )}
-        {screenWidth < 680 ? (
-          <div className="candidates">
-            {options.map((option) => (
-              <div
-                key={option.text}
-                className={`candidate-card-mobile ${
-                  selectedOption && selectedOption.text === option.text
-                    ? 'selected'
-                    : ''
-                }`}
-                onClick={() => setSelectedOption(option)}
-              >
-                {option.photo && (
-                  <img
-                    src={`${import.meta.env.VITE_BACKEND_URL}/uploads/${
-                      option.photo
-                    }`}
-                    alt={option.text}
-                  />
-                )}
-                <div className="candidate-info">
-                  <div>
-                    <h1
-                      className="poll-class"
-                      // style={{ marginBottom: '-15px' }}
-                    >
-                      {option.class}
-                    </h1>
-                    {/* <h1 className={option.house}>{option.house}</h1> */}
-                  </div>
-                  <div>
-                    <h4
-                      style={{
-                        color:
-                          selectedOption && selectedOption.text === option.text
-                            ? '#ffffff'
-                            : '#000000',
-                        fontSize: '18px',
-                      }}
-                    >
-                      {option.text.split(' ').map((word, i) => (
+    <div className="pollContainer">
+      <div className="pollHeader">
+        <p className="pollLabel">Cast your vote</p>
+        <h1 className="pollTitle">
+          Select Your <span>{question}</span>
+        </h1>
+      </div>
+
+      {statusMsg && (
+        <div className={`pollStatus ${statusMsg.type}`}>{statusMsg.text}</div>
+      )}
+
+      <div className="candidates">
+        {options.map((option) => {
+          const isSelected = selectedOption?.text === option.text;
+          return (
+            <div
+              key={option.text}
+              className={`${cardClass} ${isSelected ? 'selected' : ''}`}
+              onClick={() => setSelectedOption(option)}
+            >
+              {option.photo && (
+                <img
+                  src={`${import.meta.env.VITE_BACKEND_URL}/uploads/${option.photo}`}
+                  alt={option.text}
+                />
+              )}
+              <div className="candidate-info">
+                <h1 className="poll-class">{option.class}</h1>
+                <div>
+                  {isMobile ? (
+                    <h4 style={{ color: isSelected ? '#fff' : '#0f0c29' }}>
+                      {option.text.split(' ').map((w, i) => (
                         <React.Fragment key={i}>
-                          {word}
+                          {w}
                           <br />
                         </React.Fragment>
                       ))}
                     </h4>
-                  </div>
-                </div>
-              </div>
-            ))}
-            <div className="buttonContainer">
-              <button
-                onClick={() => props.handleBack()}
-                className="vote-button"
-                disabled={buttonDisabled} // Disable button based on state
-              >
-                Back
-              </button>
-              <button
-                className="vote-button"
-                onClick={vote}
-                disabled={buttonDisabled || loading} // Disable button during loading and for 5 seconds after
-              >
-                {loading ? (
-                  <Spinner animation="border" size="sm" /> // Show spinner during loading
-                ) : (
-                  'Vote'
-                )}
-              </button>
-            </div>
-          </div>
-        ) : (
-          ''
-        )}
-        {options.length >= 4 && screenWidth >= 680 ? (
-          <div className="candidates">
-            {options.map((option) => (
-              <div
-                key={option.text}
-                className={`candidate-card-many-options ${
-                  selectedOption && selectedOption.text === option.text
-                    ? 'selected'
-                    : ''
-                }`}
-                onClick={() => setSelectedOption(option)}
-              >
-                {option.photo && (
-                  <img
-                    src={`${import.meta.env.VITE_BACKEND_URL}/uploads/${
-                      option.photo
-                    }`}
-                    alt={option.text}
-                  />
-                )}
-                <div className="candidate-info">
-                  <div>
-                    <h1 className="poll-class">{option.class}</h1>
-                    {/* <h1 className={option.house}>{option.house}</h1> */}
-                  </div>
-                  <div>
-                    <h2
-                      style={{
-                        color:
-                          selectedOption && selectedOption.text === option.text
-                            ? '#ffffff'
-                            : '#000000',
-                      }}
-                    >
-                      {option.text.split(' ').map((word, i) => (
+                  ) : (
+                    <h2 style={{ color: isSelected ? '#fff' : '#0f0c29' }}>
+                      {option.text.split(' ').map((w, i) => (
                         <React.Fragment key={i}>
-                          {word}
+                          {w}
                           <br />
                         </React.Fragment>
                       ))}
                     </h2>
-                  </div>
+                  )}
+                  {option.house && (
+                    <p className={option.house}>{option.house}</p>
+                  )}
                 </div>
               </div>
-            ))}
-            <div className="buttonContainer">
-              <button
-                onClick={() => props.handleBack()}
-                className="vote-button"
-                disabled={buttonDisabled} // Disable button based on state
-              >
-                Back
-              </button>
-              <button
-                className="vote-button"
-                onClick={vote}
-                disabled={buttonDisabled || loading} // Disable button during loading and for 5 seconds after
-              >
-                {loading ? (
-                  <Spinner animation="border" size="sm" /> // Show spinner during loading
-                ) : (
-                  'Vote'
-                )}
-              </button>
             </div>
-          </div>
-        ) : (
-          ''
-        )}
-        {options.length < 4 && screenWidth >= 680 ? (
-          <div className="candidates">
-            {options.map((option) => (
-              <div
-                key={option.text}
-                className={`candidate-card ${
-                  selectedOption && selectedOption.text === option.text
-                    ? 'selected'
-                    : ''
-                }`}
-                onClick={() => setSelectedOption(option)}
-              >
-                {option.photo && (
-                  <img
-                    src={`${import.meta.env.VITE_BACKEND_URL}/uploads/${
-                      option.photo
-                    }`}
-                    alt={option.text}
-                  />
-                )}
-                <div className="candidate-info">
-                  <div style={{ height: '190px' }}>
-                    <h1 className="poll-class">{option.class}</h1>
-                    {/* <h1 className={option.house}>{option.house}</h1> */}
-                  </div>
-                  <div>
-                    <h2
-                      style={{
-                        color:
-                          selectedOption && selectedOption.text === option.text
-                            ? '#ffffff'
-                            : '#000000',
-                      }}
-                    >
-                      {option.text.split(' ').map((word, i) => (
-                        <React.Fragment key={i}>
-                          {word}
-                          <br />
-                        </React.Fragment>
-                      ))}
-                    </h2>
-                  </div>
-                </div>
-              </div>
-            ))}
-            <div className="buttonContainer">
-              <button
-                onClick={() => props.handleBack()}
-                className="vote-button"
-                disabled={buttonDisabled} // Disable button based on state
-              >
-                Back
-              </button>
-              {/* {HAR ? (
-                <Link to={`/results/${pollId}`} className="vote-button">
-                  Results
-                </Link>
-              ) : (
-                ''
-              )} */}
+          );
+        })}
 
-              <button
-                className="vote-button"
-                onClick={!loading ? vote : () => {}}
-                disabled={buttonDisabled || loading} // Disable button during loading and for 5 seconds after
-              >
-                {loading ? (
-                  <Spinner animation="border" size="sm" /> // Show spinner during loading
-                ) : (
-                  'Vote'
-                )}
-              </button>
-            </div>
-          </div>
-        ) : (
-          ''
-        )}
+        <div className="buttonContainer">
+          <button
+            onClick={() => props.handleBack()}
+            className="vote-button"
+            disabled={buttonDisabled}
+            style={{
+              background: 'transparent',
+              color: '#312783',
+              border: '1.5px solid rgba(49,39,131,0.3)',
+            }}
+          >
+            ← Back
+          </button>
+          <button
+            className="vote-button"
+            onClick={vote}
+            disabled={buttonDisabled || loading}
+          >
+            {loading ? <Spinner animation="border" size="sm" /> : 'Vote →'}
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Account.css';
 import { FiHome } from 'react-icons/fi';
 import { RiGraduationCapLine } from 'react-icons/ri';
@@ -7,12 +7,16 @@ import { NavLink } from 'react-router-dom';
 import Profile from '../../assets/Profile.svg';
 import TeamPic from '../../assets/team-pic.png';
 import BallotBox from '../../assets/BallotBox.png';
-import AccountSVG from '../../assets/Account.svg';
+
+// Stagger delays (ms) for each card slot
+const CARD_DELAYS = [0, 120, 240];
 
 function Account() {
   const [voted, setVoted] = useState('Status Pending...');
   const [HAR, setHAR] = useState(false);
+  const cardRefs = useRef([]);
 
+  // ── Fetch poll / admin status ──────────────────────────────
   useEffect(() => {
     const hasVoted = (async function checkPolls() {
       try {
@@ -20,63 +24,91 @@ function Account() {
           `${import.meta.env.VITE_BACKEND_URL}/v1/myPolls`,
           {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               Student_ID: localStorage.getItem('Student_ID'),
               password: localStorage.getItem('password'),
             }),
-          }
+          },
         );
-
-        if (!res.ok) {
-          throw new Error('Failed to fetch');
-        }
-
+        if (!res.ok) throw new Error('Failed to fetch');
         const data = await res.json();
-
-        if (data.message == 'You have admin access') {
-          setHAR(true);
-        }
-
+        if (data.message === 'You have admin access') setHAR(true);
         const pollsArray = data.data;
-
         const hasVoted = pollsArray.every((poll) =>
           poll.voted.some(
             (name) =>
-              localStorage.getItem('name').toLowerCase() === name.toLowerCase()
-          )
+              localStorage.getItem('name').toLowerCase() === name.toLowerCase(),
+          ),
         );
         setVoted(hasVoted);
         return false;
       } catch (error) {
         console.error('Error checking polls:', error);
-        return false; // Return false if there is an error
+        return false;
       }
     })();
-
     setVoted(hasVoted);
+  }, []);
+
+  // ── Entrance animations ────────────────────────────────────
+  useEffect(() => {
+    const cards = cardRefs.current.filter(Boolean);
+    if (!cards.length) return;
+
+    const isMobile = window.innerWidth <= 1007;
+
+    if (!isMobile) {
+      // Desktop: stamp all cards visible immediately with stagger delays
+      cards.forEach((card, i) => {
+        card.style.setProperty('--card-delay', `${CARD_DELAYS[i]}ms`);
+        // Small rAF so browser has painted the invisible state first
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => card.classList.add('card-visible'));
+        });
+      });
+    } else {
+      // Mobile/tablet: reveal each card as it enters the viewport
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.style.setProperty('--card-delay', '0ms');
+              entry.target.classList.add('card-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+      cards.forEach((card) => observer.observe(card));
+      return () => observer.disconnect();
+    }
   }, []);
 
   function formatName(name) {
     if (!name) return '';
-    let nameParts = name.split(' ');
-    let firstName = nameParts[0].toLowerCase();
-    firstName = firstName.split('');
+    const nameParts = name.split(' ');
+    let firstName = nameParts[0].toLowerCase().split('');
     firstName[0] = firstName[0].toUpperCase();
     firstName = firstName.join('');
-    let lastNamesInitials = nameParts
+    const lastNamesInitials = nameParts
       .slice(1)
       .map((n) => n.charAt(0))
       .join('.');
     return `${firstName} ${lastNamesInitials}`;
   }
 
+  // Helper to assign card refs by index
+  const setRef = (i) => (el) => {
+    cardRefs.current[i] = el;
+  };
+
   return (
     <div className="account-page">
       <div className="cards-container">
-        <div className="user-card card">
+        {/* ── User Card ── */}
+        <div className="user-card card" ref={setRef(0)}>
           <img className="profile-pic" src={Profile} alt="Profile" />
           <h2>{formatName(localStorage.getItem('name'))}</h2>
           <div className="user-info">
@@ -89,24 +121,22 @@ function Account() {
               <p>{localStorage.getItem('house')}</p>
             </div>
           </div>
-          <div className="vote-status">
-            {!HAR ? (
-              <div className="vote-status">
-                {' '}
-                <GoDotFill
-                  className={`status-dot ${
-                    voted === true ? 'voted' : 'not-voted'
-                  }`}
-                />
-                <p>{voted === true ? 'Voted' : 'Not Voted'}</p>{' '}
-              </div>
-            ) : (
-              ''
-            )}
-          </div>
+          {!HAR && (
+            <div className="vote-status">
+              <GoDotFill
+                className={`status-dot ${voted === true ? 'voted' : 'not-voted'}`}
+              />
+              <p>{voted === true ? 'Voted' : 'Not Voted'}</p>
+            </div>
+          )}
         </div>
 
-        <div className="about-card card" style={{ paddingBottom: '20px' }}>
+        {/* ── About Card ── */}
+        <div
+          className="about-card card"
+          ref={setRef(1)}
+          style={{ paddingBottom: '20px' }}
+        >
           <img className="team-pic" src={TeamPic} alt="Team" />
           <h2>
             About Vote<span className="highlight">Able.</span>
@@ -116,35 +146,31 @@ function Account() {
             to="/about"
             className="account-buttons"
             style={{
-              backgroundColor: '#000000',
               textAlign: 'center',
               width: '140px',
               margin: 'auto',
               marginTop: '15px',
-              fontWeight: 450,
             }}
           >
             About Us
           </NavLink>
-
           <NavLink
             to="/team"
             className="account-buttons"
             style={{
-              backgroundColor: '#000000',
               textAlign: 'center',
               width: '180px',
               margin: 'auto',
               marginTop: '15px',
-              fontWeight: 450,
             }}
           >
             Legacy Team
           </NavLink>
         </div>
 
-        <div className="vote-now card">
-          <h2> {HAR ? 'Results' : 'Vote Now'}</h2>
+        {/* ── Vote / Results Card ── */}
+        <div className="vote-now card" ref={setRef(2)}>
+          <h2>{HAR ? 'Results' : 'Vote Now'}</h2>
           <p>
             {HAR
               ? 'Keep track of the elections results'
@@ -154,43 +180,26 @@ function Account() {
             to="/polls"
             className="account-buttons"
             style={{
-              backgroundColor: '#000000',
               textAlign: 'center',
               width: '143px',
               margin: 'auto',
               marginTop: '15px',
-              fontWeight: 450,
-              background:
-                'linear-gradient(to right, #312783 0%, #1C164A 33%, #0B091D 67%, #4A2342 100%)',
             }}
           >
-            {!HAR ? 'Vote Now' : 'Results'}
+            {HAR ? 'Results' : 'Vote Now'}
           </NavLink>
-
-          {HAR ? (
+          {HAR && (
             <NavLink
               to="/create-poll"
               className="account-buttons"
-              style={{
-                backgroundColor: '#000000',
-                textAlign: 'center',
-                // width: '190px',
-                margin: 'auto',
-                marginTop: '15px',
-                fontWeight: 450,
-                background:
-                  'linear-gradient(to right, #312783 0%, #1C164A 33%, #0B091D 67%, #4A2342 100%)',
-              }}
+              style={{ textAlign: 'center', margin: 'auto', marginTop: '15px' }}
             >
               Create Polls
             </NavLink>
-          ) : (
-            ''
           )}
           <img className="vote-now-pic" src={BallotBox} alt="Ballot Box" />
         </div>
       </div>
-      <img src={AccountSVG} alt="Background SVG" className="background-svg" />
     </div>
   );
 }

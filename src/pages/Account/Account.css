@@ -1,3 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=DM+Sans:wght@400;500&display=swap');
+
+/* ── ENTRANCE ANIMATIONS ─────────────────────────────────────── */
+@keyframes pulseDot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.4);
+  }
+}
+
+/* ── KEN BURNS ───────────────────────────────────────────────── */
+@keyframes accountDrift {
+  0% {
+    transform: scale(1.15) translate(0%, 0%);
+  }
+  25% {
+    transform: scale(1.5) translate(-3%, 2%);
+  }
+  50% {
+    transform: scale(1.18) translate(-5%, -2%);
+  }
+  75% {
+    transform: scale(1.25) translate(2%, 3%);
+  }
+  100% {
+    transform: scale(1.15) translate(0%, 0%);
+  }
+}
+
+/* ── CARD ENTRANCE ───────────────────────────────────────────── */
+@keyframes cardSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(36px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
+  Cards start invisible. JavaScript adds .card-visible (on load with stagger,
+  or via IntersectionObserver on scroll) to trigger the animation.
+*/
+
+/* JS adds this class — on desktop uses staggered CSS animation;
+   on mobile the IntersectionObserver adds it as cards scroll into view */
+.card.card-visible {
+  animation: cardSlideUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--card-delay, 0ms);
+}
+
+/* ── PAGE SHELL ──────────────────────────────────────────────── */
 .account-page {
   display: flex;
   justify-content: center;
@@ -6,40 +65,66 @@
   position: relative;
   overflow: hidden;
 }
-.account-container {
-  background-color: whitesmoke;
-  padding: 20px;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  /* align-items: center; */
-  width: 100vw;
-  height: 100vh;
-  z-index: 10;
-  margin: 0;
-  /* margin-top: 90px; */
+
+/* Ken-Burns layer — sits behind everything */
+.account-page::before {
+  content: '';
+  position: fixed;
+  inset: -10%;
+  background-image: url(../../assets/home-hero.jpg);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  animation: accountDrift 18s ease-in-out infinite;
+  z-index: 0;
 }
 
+/* Dark overlay so cards stay legible */
+.account-page::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(13, 11, 34, 0.52);
+  z-index: 1;
+}
+
+/* ── CARDS CONTAINER ─────────────────────────────────────────── */
 .cards-container {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   gap: 50px;
   padding: 20px;
+  position: relative;
+  z-index: 2;
+  width: 100vw;
+  min-height: 100vh;
 }
 
+/* ── CARD BASE ───────────────────────────────────────────────── */
 .card {
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.97);
+  border-radius: 14px;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.35),
+    0 2px 8px rgba(0, 0, 0, 0.18);
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 300px;
   overflow: hidden;
   justify-content: flex-start;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+
+  /* ── Entrance state — hidden until JS fires .card-visible ── */
+  opacity: 0;
+  transform: translateY(36px);
+  /* Transition drives the scroll-reveal path on mobile */
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .user-card {
@@ -58,23 +143,25 @@
   margin-top: 220px;
 }
 
+/* ── IMAGES ──────────────────────────────────────────────────── */
 .profile-pic {
   height: 150px;
-  width: 100%;
+  width: auto;
   margin: 0;
 }
 
 .team-pic {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   height: 250px;
   width: 100%;
   object-fit: cover;
   margin: 0;
   border: none;
 }
+
 .vote-now-pic {
   height: 250px;
   width: 100%;
@@ -82,29 +169,43 @@
   margin: 0;
 }
 
+/* ── TYPOGRAPHY ──────────────────────────────────────────────── */
 h2 {
   margin: 20px 0 10px;
   font-weight: 550;
   text-align: center;
+  color: #1a1925;
 }
 
+.card p {
+  text-align: center;
+  margin: 10px 0;
+  padding: 0 10px;
+  color: #4b4a65;
+}
+
+.highlight {
+  background: linear-gradient(135deg, #312783 0%, #6b5ce7 60%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── USER INFO ───────────────────────────────────────────────── */
 .user-info {
   display: flex;
   justify-content: center;
-  /* gap: 25px; */
-  /* margin-bottom: 20px; */
 }
 
 .info-item {
   display: flex;
   align-items: center;
-  /* gap: 5px; */
 }
 
+/* ── VOTE STATUS ─────────────────────────────────────────────── */
 .vote-status {
   display: flex;
   align-items: center;
-  /* gap: 5px; */
   font-size: 25px;
 }
 
@@ -113,41 +214,74 @@ h2 {
 }
 
 .status-dot.voted {
-  color: green;
+  color: #16a34a;
 }
+
 .status-dot.not-voted {
-  color: red;
+  color: #dc2626;
 }
 
-.card p {
-  text-align: center;
-  margin: 10px 0;
-  padding: 0 10px;
-}
-
+/* ── BUTTONS ─────────────────────────────────────────────────── */
 .account-buttons {
   cursor: pointer;
   color: #fff !important;
-  background: #27003c;
+  background: linear-gradient(135deg, #312783 0%, #1c164a 50%, #312783 100%);
+  background-size: 200% auto;
   padding: 10px 25px;
   margin: 0 10px;
-  border-radius: 5px;
-  font-family: 'Kumbh Sans', sans-serif;
-  font-size: 20px;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Shimmer layer */
+  position: relative;
+  overflow: hidden;
+
+  transition:
+    background-position 0.5s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  box-shadow: 0 4px 20px rgba(49, 39, 131, 0.25);
 }
 
-.gradient-bg {
-  background: linear-gradient(to right, #312783, #1c164a, #0b091d, #4a2342);
-}
-
-.background-svg {
+/* Shimmer overlay */
+.account-buttons::before {
+  content: '';
   position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 400px;
-  z-index: -1;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.12) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  background-position: -200% center;
+  transition: background-position 0s;
 }
 
+.account-buttons:hover {
+  background-position: right center;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(49, 39, 131, 0.38);
+}
+
+.account-buttons:hover::before {
+  background-position: 200% center;
+  transition: background-position 0.6s ease;
+}
+
+.account-buttons:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 16px rgba(49, 39, 131, 0.3);
+}
+
+/* ── RESPONSIVE — TABLET ─────────────────────────────────────── */
 @media screen and (max-width: 1007px) {
   .cards-container {
     flex-wrap: wrap;
@@ -158,13 +292,18 @@ h2 {
   }
 }
 
+/* ── RESPONSIVE — MOBILE ─────────────────────────────────────── */
 @media screen and (max-width: 690px) {
   .cards-container {
     flex-direction: column;
-    /* gap: 20px; */
+    align-items: center;
   }
 
   .about-card {
     margin-top: 20px;
+  }
+
+  .user-card {
+    margin-top: 100px;
   }
 }

@@ -1,136 +1,205 @@
+/* ─── Header Container ───────────────────────────────────────────── */
 .headerContainer {
   position: fixed;
   left: 0;
-  z-index: 100;
   top: 0;
-  background-color: #efefef;
+  z-index: 100;
   width: 100%;
-  height: 75px;
+  height: 68px;
+  background-color: #ffffff;
   display: flex;
-  justify-content: flex-start;
   align-items: center;
-  /* text-align: center; */
-  flex-wrap: wrap;
-  padding: 10px; /*Adjusted padding*/
-  box-shadow: 0 6px 6px -2px rgba(48, 0, 206, 0.319),
-    0 4px 6px -2px rgba(85, 0, 222, 0.219);
+  justify-content: space-between;
+  padding: 0 32px;
+  border-bottom: 1px solid rgba(39, 0, 60, 0.08);
+  box-shadow: 0 2px 16px rgba(39, 0, 60, 0.06);
 }
 
+/* ─── Left: Logo ─────────────────────────────────────────────────── */
 .menuWrapper {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   flex: 1;
-  /* width: 100%; */
-}
-
-.menuIcon {
-  cursor: pointer;
-  margin-left: 10px;
-}
-
-.logoLink {
-  height: 50px;
-  /* width: 70%; */
-  display: flex;
-  align-items: center;
 }
 
 .logoWrapper {
   display: flex;
   align-items: center;
-  justify-content: center;
-  /* width: 50%; */
-  /* padding-left: 10px; */
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
 }
 
 .logoImage {
+  height: 28px;
+  width: auto;
   object-fit: contain;
-  height: 25px;
 }
 
 .headerTextImage {
+  height: 22px;
+  width: auto;
   object-fit: contain;
-  height: 25px;
 }
 
-.loginLink,
+/* ─── Right: Nav Links ────────────────────────────────────────────── */
+.headerNav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .pollLink {
   cursor: pointer;
-  color: #fff !important;
-  background: #27003c;
-  padding: 10px 25px;
-  margin: 0 10px;
-  border-radius: 5px;
+  color: #27003c;
+  background: transparent;
+  padding: 8px 20px;
+  border-radius: 6px;
   font-family: 'Kumbh Sans', sans-serif;
-  font-size: 20px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border: 1.5px solid rgba(39, 0, 60, 0.18);
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+  white-space: nowrap;
 }
 
-.loginLink:focus,
-.pollLink:focus {
-  outline: 0;
-}
-
-.loginLink:hover,
 .pollLink:hover {
-  background: #400063;
+  background: #27003c;
+  border-color: #27003c;
+  color: #ffffff;
 }
 
-.avatarImage {
-  border-radius: 25px;
-  height: 30px;
-  width: 30px;
-  margin: 10px;
+.pollLink:focus {
+  outline: none;
 }
 
+/* ─── Primary CTA (Login) ─────────────────────────────────────────── */
+.pollLinkPrimary {
+  cursor: pointer;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #312783 0%, #27003c 100%);
+  padding: 8px 22px;
+  border-radius: 6px;
+  font-family: 'Kumbh Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border: 1.5px solid transparent;
+  transition:
+    opacity 0.18s ease,
+    transform 0.15s ease;
+  white-space: nowrap;
+}
+
+.pollLinkPrimary:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+/* ─── Profile Chip ────────────────────────────────────────────────── */
 .profileWrapper {
   display: flex;
   align-items: center;
-  background-color: #d7d6d6;
-  border-radius: 15px;
-  margin: 5px 10px;
+  gap: 8px;
+  padding: 6px 14px 6px 8px;
+  border-radius: 50px;
+  border: 1.5px solid rgba(39, 0, 60, 0.14);
   cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease;
+  background: transparent;
 }
 
-img {
-  position: relative;
-  height: 40px;
-  object-fit: contain;
-  margin-left: 10px;
+.profileWrapper:hover {
+  background: rgba(39, 0, 60, 0.04);
+  border-color: rgba(39, 0, 60, 0.3);
 }
 
+.avatarImage {
+  height: 26px;
+  width: 26px;
+  color: #27003c;
+  flex-shrink: 0;
+}
+
+.profileName {
+  font-family: 'Kumbh Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #27003c;
+  margin: 0;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ─── Logout Button ───────────────────────────────────────────────── */
+.logoutBtn {
+  cursor: pointer;
+  color: #c0392b;
+  background: transparent;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-family: 'Kumbh Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1.5px solid rgba(192, 57, 43, 0.25);
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+  white-space: nowrap;
+}
+
+.logoutBtn:hover {
+  background: #c0392b;
+  border-color: #c0392b;
+  color: #ffffff;
+}
+
+/* ─── Hamburger ───────────────────────────────────────────────────── */
 .menu-icon-div {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  flex: 1;
-  margin-right: 20px;
-  margin-left: 0px;
+  display: none;
+  align-items: center;
+  margin-left: auto;
 }
 
+.menuIcon {
+  cursor: pointer;
+  color: #27003c;
+  flex-shrink: 0;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────────── */
 @media screen and (max-width: 800px) {
-  .loginLink {
-    display: none;
+  .headerContainer {
+    padding: 0 20px;
   }
-  .pollLink {
-    display: none;
-  }
-  .profileWrapper {
-    display: none;
-  }
-  /* .logoWrapper {
-    width: 50%;
-  }
-  .menu-icon-div {
-    width: 50%;
-  } */
-}
 
-/* @media screen and (max-width: 490px) {
+  .headerNav {
+    display: none;
+  }
+
   .profileWrapper {
     display: none;
   }
-} */
+
+  .menu-icon-div {
+    display: flex;
+  }
+}
 
 @media screen and (min-width: 801px) {
   .menuIcon {

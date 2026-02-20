@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import './DropDown.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Context from '../../Context/Context.jsx';
 import Profile from '../../assets/Profile.svg';
-import { useNavigate } from 'react-router-dom';
-import { IoClose } from 'react-icons/io5'; // Add this import
+import Logo from '../../assets/Logo.svg';
+import HeaderText from '../../assets/Header Text.svg';
+import { IoClose } from 'react-icons/io5';
+import { MdOutlineAccountCircle } from 'react-icons/md';
 
 const DropDown = () => {
   const ctx = useContext(Context);
@@ -12,30 +14,31 @@ const DropDown = () => {
 
   const formatName = (name) => {
     if (!name) return '';
-    const [firstName, ...lastNames] = name.split(' ');
-    const formattedFirstName =
-      firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-    const lastNamesInitials = lastNames.map((n) => n.charAt(0)).join('.');
-    return `${formattedFirstName} ${lastNamesInitials}`;
+    const [first, ...rest] = name.split(' ');
+    const firstName =
+      first.charAt(0).toUpperCase() + first.slice(1).toLowerCase();
+    const initials = rest.map((n) => n.charAt(0)).join('.');
+    return `${firstName}${initials ? ' ' + initials : ''}`;
   };
 
   const logout = () => {
-    ['name', 'Student_ID', 'password', 'class', 'house'].forEach((item) =>
-      localStorage.removeItem(item)
+    ['name', 'Student_ID', 'password', 'class', 'house'].forEach((key) =>
+      localStorage.removeItem(key),
     );
+    ctx.setIsDropVal(false);
     navigate('/login');
     window.location.reload();
   };
 
-  const handleClose = () => {
-    ctx.setIsDropVal(false);
-  };
+  const handleClose = () => ctx.setIsDropVal(false);
+  const isLoggedIn = Boolean(localStorage.getItem('name'));
 
   return (
-    <div>
-      <div className="mobileNavOverlay" onClick={handleClose}></div>
+    <>
+      <div className="mobileNavOverlay" onClick={handleClose} />
+
       <div className="mobileNavDrawer">
-        {/* Close Button */}
+        {/* Close */}
         <button
           className="drawerCloseBtn"
           onClick={handleClose}
@@ -44,43 +47,58 @@ const DropDown = () => {
           <IoClose className="drawerCloseIcon" />
         </button>
 
-        {localStorage.getItem('name') ? (
+        {/* Brand strip */}
+        <div className="drawerBrandStrip">
+          <img src={Logo} alt="VoteAble" className="drawerBrandLogo" />
+          <img src={HeaderText} alt="VoteAble" className="drawerBrandText" />
+        </div>
+
+        {/* User section */}
+        {isLoggedIn ? (
           <div className="drawerUserSection">
             <NavLink
               to="/account"
               className="drawerProfileLink"
               onClick={handleClose}
             >
-              <img className="drawerAvatarImg" src={Profile} alt="Profile" />
-              <h2 className="drawerWelcomeText">
-                Welcome,
-                <br />
-                <span className="drawerUserNameHighlight">
+              <MdOutlineAccountCircle
+                style={{
+                  height: 46,
+                  width: 46,
+                  color: '#27003c',
+                  opacity: 0.7,
+                }}
+              />
+              <div className="drawerUserInfo">
+                <p className="drawerWelcomeLabel">Logged in as</p>
+                <p className="drawerUserNameHighlight">
                   {formatName(localStorage.getItem('name'))}
-                </span>
-              </h2>
+                </p>
+              </div>
             </NavLink>
           </div>
         ) : (
           <div className="drawerUserSectionLoggedOut">
-            <div className="drawerProfilePlaceholder">
-              <img className="drawerAvatarImg" src={Profile} alt="Profile" />
+            <div className="drawerGuestBadge">
+              <img src={Profile} alt="Guest" className="drawerGuestIcon" />
+              <p className="drawerGuestLabel">Not logged in</p>
             </div>
           </div>
         )}
 
+        {/* Navigation */}
         <nav className="drawerNavLinksContainer">
           <NavLink to="/home" className="drawerNavBtn" onClick={handleClose}>
             Home
           </NavLink>
 
-          {localStorage.getItem('name') && (
+          {isLoggedIn && (
             <NavLink
               to="/account"
               className="drawerNavBtn"
               onClick={handleClose}
             >
-              Account
+              My Account
             </NavLink>
           )}
 
@@ -93,24 +111,24 @@ const DropDown = () => {
           </NavLink>
         </nav>
 
+        {/* Action footer */}
         <div className="drawerActionSection">
-          {localStorage.getItem('name') ? (
-            <button className="drawerNavBtn drawerLogoutBtn" onClick={logout}>
-              Logout
+          {isLoggedIn ? (
+            <button className="drawerLogoutBtn" onClick={logout}>
+              Log Out
             </button>
           ) : (
-            <NavLink to="/login">
-              <button
-                className="drawerNavBtn drawerLoginBtn"
-                onClick={handleClose}
-              >
-                Login
-              </button>
+            <NavLink
+              to="/login"
+              className="drawerLoginBtn"
+              onClick={handleClose}
+            >
+              Login
             </NavLink>
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

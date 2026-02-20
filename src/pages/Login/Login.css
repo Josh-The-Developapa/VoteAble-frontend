@@ -1,64 +1,42 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=DM+Sans:wght@400;500&display=swap');
 
-body {
-  padding: 0;
-  margin: 0;
-  font-family: 'Kumbh Sans', sans-serif;
-  background-color: #ffffff;
-  overflow-x: hidden;
-}
-#root {
-  height: 100vh;
-}
-
-.avPic {
-  position: relative;
-  object-fit: contain;
-  top: 15px;
-  height: 50px;
-}
 * {
   box-sizing: border-box;
 }
 
-.joinOuterContainer {
-  padding-top: 0%;
-  display: flex;
-  justify-content: flex-start;
-  text-align: center;
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+#root {
   height: 100vh;
-  width: 100vw;
-  align-items: center;
-  background-color: whitesmoke;
 }
 
-.joinInnerContainer {
-  padding-left: 25px;
-  padding-bottom: 25px;
-  padding-right: 30px;
-  padding-top: 15px;
-  margin-top: 100px;
-  margin-bottom: auto;
-  min-width: 300px;
-  width: 350px;
-  margin-left: auto;
-  margin-right: 200px;
-  background-color: #ffffff;
-  border-radius: 5px;
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  animation: slideIn 0.8s forwards;
-  box-shadow: 5px 10px 10px 10px rgba(0, 0, 0, 0.2);
-  z-index: 10;
-}
-h3 {
-  position: absolute;
-  top: 90%;
-  color: white;
+/* ── ANIMATED BACKGROUND ─────────────────────────────────────── */
+@keyframes heroDrift {
+  0% {
+    transform: scale(1.15) translate(0%, 0%);
+  }
+  25% {
+    transform: scale(1.22) translate(-3%, 2%);
+  }
+  50% {
+    transform: scale(1.18) translate(-5%, -2%);
+  }
+  75% {
+    transform: scale(1.25) translate(2%, 3%);
+  }
+  100% {
+    transform: scale(1.15) translate(0%, 0%);
+  }
 }
 
-@keyframes slideIn {
+@keyframes slideUp {
   from {
-    transform: translateY(10%);
+    transform: translateY(28px);
     opacity: 0;
   }
   to {
@@ -67,99 +45,198 @@ h3 {
   }
 }
 
+/* ── OUTER CONTAINER ─────────────────────────────────────────── */
+.joinOuterContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* Background image layer with Ken Burns */
+.joinOuterContainer::before {
+  content: '';
+  position: absolute;
+  inset: -10%;
+  background-image: url(../../assets/home-hero.jpg);
+  background-size: cover;
+  background-position: center;
+  animation: heroDrift 10s ease-in-out infinite;
+  z-index: 0;
+}
+
+/* Dark overlay so card is readable */
+.joinOuterContainer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 8, 30, 0.52);
+  z-index: 1;
+}
+
+/* ── CARD ────────────────────────────────────────────────────── */
+.joinInnerContainer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+
+  width: 380px;
+  padding: 44px 40px 40px;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 20px;
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.35),
+    0 1px 0 rgba(255, 255, 255, 0.08) inset;
+
+  animation: slideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ── LOGO ────────────────────────────────────────────────────── */
+.avPic {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
+
+/* ── HEADING ─────────────────────────────────────────────────── */
+.heading {
+  margin: 0 0 18px;
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  color: #1a1925;
+  letter-spacing: -0.02em;
+}
+
+/* ── INPUTS ──────────────────────────────────────────────────── */
 .joinInput {
-  border: 2px solid black;
+  width: 100%;
+  padding: 12px 16px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: #1a1925;
+  background: #f7f7fb;
+  border: 1.5px solid #e0dff0;
   border-radius: 10px;
-  padding: 10px 15px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.joinInput:focus {
+  border-color: #312783;
+  box-shadow: 0 0 0 3px rgba(49, 39, 131, 0.1);
+  background: #fff;
+}
+
+.joinInput::placeholder {
+  color: #a0a0b8;
+}
+
+/* ── ICON INPUT WRAPPER ──────────────────────────────────────── */
+.input-wrapper {
+  position: relative;
   width: 100%;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  font-family: 'Kumbh Sans', sans-serif;
-}
-.ALSU {
-  text-decoration: none;
-  color: #4a00aa;
+  display: flex;
+  align-items: center;
 }
 
-.fPL {
-  margin: 0;
-  text-decoration: none;
-  color: #4a00aa;
+.input-icon {
+  position: absolute;
+  left: 14px;
+  width: 17px;
+  height: 17px;
+  color: #a0a0b8;
+  pointer-events: none;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
 }
 
-.namep {
-  margin: 0;
-  color: red;
+/* Indent the text to make room for the icon */
+.input-wrapper .joinInput {
+  padding-left: 42px;
 }
-.passp {
-  margin: 0;
-  color: red;
+
+/* Icon turns brand purple when input is focused */
+.input-wrapper:focus-within .input-icon {
+  color: #312783;
 }
-.button {
+
+/* ── SELECT FIX ──────────────────────────────────────────────── */
+select.joinInput {
+  appearance: none;
   cursor: pointer;
-  color: #fff !important;
-  text-decoration: none;
-  background: #4600b6;
-  padding: 10px;
-  border-radius: 5px;
-  display: inline-block;
-  border: none;
-  width: 100%;
-  font-family: 'Kumbh Sans', sans-serif;
 }
 
-.mt-20 {
-  margin-bottom: 10px;
-  margin-top: 20px;
-  font-family: 'Kumbh Sans', sans-serif;
+/* ── ERROR MESSAGES ──────────────────────────────────────────── */
+.namep,
+.passp {
+  margin: 2px 0 4px;
+  font-size: 12.5px;
+  color: #e03c3c;
+  font-family: 'DM Sans', sans-serif;
+  align-self: flex-start;
+}
+
+/* ── FIELD WRAPPERS ──────────────────────────────────────────── */
+.joinInnerContainer > div {
+  width: 100%;
+}
+
+/* ── LOGIN BUTTON ────────────────────────────────────────────── */
+.button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  letter-spacing: 0.04em;
+  background: linear-gradient(135deg, #312783 0%, #1c164a 50%, #312783 100%);
+  background-size: 200% auto;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    background-position 0.5s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  box-shadow: 0 4px 20px rgba(49, 39, 131, 0.35);
+}
+
+.button:hover {
+  background-position: right center;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(49, 39, 131, 0.45);
+}
+
+.button:active {
+  transform: translateY(0);
 }
 .button:focus {
   outline: 0;
 }
 
-.button:hover {
-  background: #4a00aa;
+/* ── SPACING UTIL ────────────────────────────────────────────── */
+.mt-20 {
+  margin-top: 12px;
 }
 
-.login-svg {
-  height: auto;
-  width: 85vw;
-  /* min-width: 200px; */
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  padding: 0;
-  object-fit: cover;
-  margin-top: 75px;
-  margin-left: 0px;
-  margin-right: 0px;
-  /* background-color: blue; */
-}
-
-/* @media screen and (max-width: 400px) { */
-
-.heading {
-  font-size: 35px;
-  font-weight: 550;
-  color: #000000;
-  font-family: 'Kumbh Sans', sans-serif;
-}
-.avPic {
-  height: 40px;
-}
-
-@media screen and (max-width: 740px) {
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media screen and (max-width: 440px) {
   .joinInnerContainer {
-    margin-right: auto;
-  }
-}
-
-@media screen and (min-width: 701px) {
-}
-
-@media screen and (max-width: 370px) {
-  .joinInnerContainer {
-    margin-right: 10px;
-    margin-left: 10px;
+    width: calc(100vw - 40px);
+    padding: 36px 24px 32px;
   }
 }
