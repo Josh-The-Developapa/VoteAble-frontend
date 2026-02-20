@@ -184,12 +184,12 @@ h2 {
   color: #4b4a65;
 }
 
-.highlight {
+/* .highlight {
   background: linear-gradient(135deg, #312783 0%, #6b5ce7 60%, #a855f7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
+} */
 
 /* ── USER INFO ───────────────────────────────────────────────── */
 .user-info {
