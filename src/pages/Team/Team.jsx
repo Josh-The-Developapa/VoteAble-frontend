@@ -6,10 +6,7 @@ import AlbertImage from '../../assets/Albert Jordan Mulumba.jpeg';
 import EmmanuelImage from '../../assets/Emmanuel Asiimwe.jpeg';
 import AkhilImage from '../../assets/Akhil Muni.jpeg';
 import SahithiImage from '../../assets/Sahithi Beecha.jpeg';
-import JethroImage from '../../assets/Jethro Igulle.jpeg';
 import HettImage from '../../assets/Hett.jpeg';
-import FrancisImage from '../../assets/Francis Kigozi.jpeg';
-import MalcolmImage from '../../assets/Malcolm.jpeg';
 
 const useScrollReveal = () => {
   const observerRef = useRef(null);
@@ -174,19 +171,6 @@ const TeamPage = () => {
                 </p>
               </div>
 
-              <div className="team-card reveal-card" style={{ '--stagger': 1 }}>
-                <img className="team-card-image" src={JethroImage} />
-                <h3 className="team-card-name">Jethro Igulle</h3>
-                <p className="team-card-position">
-                  Co Chief Operations Officer (COO)
-                </p>
-                <p className="team-card-description">
-                  Coordinates platform operations with precision, working
-                  closely with leadership to keep election logistics running
-                  smoothly.
-                </p>
-              </div>
-
               <div className="team-card reveal-card" style={{ '--stagger': 2 }}>
                 <img className="team-card-image" src={HettImage} />
                 <h3 className="team-card-name">Hett Vaya</h3>
@@ -211,19 +195,6 @@ const TeamPage = () => {
                 </p>
               </div>
 
-              <div className="team-card reveal-card" style={{ '--stagger': 4 }}>
-                <img className="team-card-image" src={FrancisImage} />
-                <h3 className="team-card-name">Francis Kigozi</h3>
-                <p className="team-card-position">
-                  Director of Electoral Communications
-                </p>
-                <p className="team-card-description">
-                  Manages all election-related communications, coordinating
-                  announcements, voter outreach, and ensuring transparent
-                  information flow throughout election cycles.
-                </p>
-              </div>
-
               <div className="team-card reveal-card" style={{ '--stagger': 5 }}>
                 <div className="team-card-image">ZS</div>
                 <h3 className="team-card-name">Zia Sania</h3>
@@ -234,19 +205,6 @@ const TeamPage = () => {
                   Oversees voter data collection, preprocessing, and analysis,
                   ensuring data integrity and generating insights for election
                   reporting and platform improvements.
-                </p>
-              </div>
-
-              <div className="team-card reveal-card" style={{ '--stagger': 6 }}>
-                <img className="team-card-image" src={MalcolmImage} />
-                <h3 className="team-card-name">Malcolm</h3>
-                <p className="team-card-position">
-                  Election Security Coordinator
-                </p>
-                <p className="team-card-description">
-                  Monitors platform security protocols, manages voter
-                  verification processes, and ensures compliance with electoral
-                  integrity standards throughout each voting period.
                 </p>
               </div>
 
