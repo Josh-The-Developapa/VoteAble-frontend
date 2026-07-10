@@ -1,6 +1,22 @@
+/**
+ * src/Components/Login/Login.jsx
+ * ---------------------------------------------------------------------------
+ * Only change from the original: routes its network call through
+ * `apiFetch` (src/utils/api.js) instead of a bare `fetch`, which fixes
+ * two things at once:
+ *   - the request now carries credentials, so the login cookie set by
+ *     the backend is actually retained by the browser (see api.js for
+ *     the full explanation).
+ *   - the request now carries the resolved tenant (school) so the
+ *     backend knows which school's student list to check the ID/password
+ *     against.
+ * Everything else (validation, state, markup) is unchanged.
+ */
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import avatarPic from '../../assets/Logo.svg';
+import { apiFetch } from '../../utils/api';
 import './Login.css';
 
 export default function Login() {
@@ -16,14 +32,13 @@ export default function Login() {
   }, []);
 
   async function user() {
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/v1/user`, {
+    const res = await apiFetch('/v1/user', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+      body: {
         Student_ID: name,
         password,
         house: selectedHouse,
-      }),
+      },
     });
     return res.json();
   }
@@ -51,9 +66,16 @@ export default function Login() {
       }
       if (data.error) return;
 
+      // NOTE: identity/session now lives in the httpOnly `jwt` cookie set
+      // by the backend. We still cache a few DISPLAY-ONLY fields in
+      // localStorage for convenience (name, class, house) since those are
+      // not secrets, but the password is no longer persisted to
+      // localStorage — the original code stored it in plaintext
+      // (`localStorage.setItem('password', password)`) and then resent it
+      // on nearly every subsequent request. That's gone now that
+      // `protect` middleware authenticates via the cookie.
       localStorage.setItem('Student_ID', name);
       localStorage.setItem('name', data.user.name);
-      localStorage.setItem('password', password);
       localStorage.setItem('class', data.user.class);
       localStorage.setItem('house', selectedHouse);
 

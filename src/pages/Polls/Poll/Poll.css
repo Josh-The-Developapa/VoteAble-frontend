@@ -274,7 +274,12 @@
     opacity 0.18s ease,
     transform 0.15s ease;
   min-width: 110px;
+  height: 46px;
+  box-sizing: border-box;
   text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .vote-button:hover:not(:disabled) {
@@ -286,6 +291,26 @@
   opacity: 0.45;
   cursor: not-allowed;
   transform: none;
+}
+
+/* ─── Vote Button Spinner ─────────────────────────────────────────── */
+.button-spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: button-spinner-spin 0.7s linear infinite;
+}
+
+@keyframes button-spinner-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ─── Responsive ──────────────────────────────────────────────────── */

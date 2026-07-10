@@ -1,6 +1,21 @@
+/**
+ * src/Components/Polls/Poll/Poll.jsx
+ * ---------------------------------------------------------------------------
+ * Changes from the original:
+ *  - Both fetches (`GET /v1/poll/:pollId`, `POST /v1/vote/:pollId`) now
+ *    go through `apiFetch`, so they carry the tenant header and — for
+ *    the vote — the session cookie.
+ *  - The vote request no longer includes `Student_ID` / `password` in
+ *    its body. Previously the browser resent the student's raw password
+ *    on every single vote; now the backend's `protect` middleware
+ *    identifies the voter from the verified session, and the vote body
+ *    is just `{ answer }`.
+ */
+
 import React, { useState, useEffect } from 'react';
 import { Spinner } from 'react-bootstrap';
 import PollSkeleton from '../../../components/PollSkeleton/PollSkeleton.jsx';
+import { apiFetch } from '../../../utils/api';
 import './Poll.css';
 
 function Poll(props) {
@@ -21,9 +36,7 @@ function Poll(props) {
 
     async function fetchPoll() {
       setPollLoading(true);
-      const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/v1/poll/${pollId}`,
-      );
+      const res = await apiFetch(`/v1/poll/${pollId}`);
       const data = await res.json();
       await new Promise((r) => setTimeout(r, 600));
       if (data.error) {
@@ -52,18 +65,10 @@ function Poll(props) {
     setLoading(true);
     setButtonDisabled(true);
 
-    const res = await fetch(
-      `${import.meta.env.VITE_BACKEND_URL}/v1/vote/${pollId || props.pollId}`,
-      {
-        method: 'POST',
-        body: JSON.stringify({
-          answer: selectedOption.text,
-          Student_ID: localStorage.getItem('Student_ID'),
-          password: localStorage.getItem('password'),
-        }),
-        headers: { 'Content-Type': 'application/json' },
-      },
-    );
+    const res = await apiFetch(`/v1/vote/${pollId || props.pollId}`, {
+      method: 'POST',
+      body: { answer: selectedOption.text },
+    });
 
     const data = await res.json();
     setLoading(false);

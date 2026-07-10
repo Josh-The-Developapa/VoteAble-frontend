@@ -1,6 +1,67 @@
+/**
+ * src/Components/Polls/CreatePoll/CreatePoll.jsx
+ * ---------------------------------------------------------------------------
+ * Three changes from the original, all tied to the multi-tenant rework:
+ *
+ * 1. Network calls go through `apiFetch` (src/utils/api.js) instead of a
+ *    bare `fetch`. That means every request now sends the httpOnly
+ *    session cookie (`credentials: "include"`) and the resolved school
+ *    (`X-School-Slug` header / subdomain), so `POST /create-poll` lands
+ *    on the right tenant and is actually authenticated as this admin's
+ *    session rather than "whatever `owner` object the client happened to
+ *    send".
+ *
+ * 2. The `owner` payload no longer includes the admin's raw password.
+ *    The original built `{ name, password: localStorage.getItem('password') }`
+ *    and sent it as part of the poll-creation form data — meaning the
+ *    admin's plaintext password was being transmitted (and could have
+ *    ended up logged/stored) on every single poll creation. The backend
+ *    now derives the poll owner from the authenticated session
+ *    (`req.user`, set by the `protect` middleware) instead of trusting
+ *    anything the client claims about who it is, so this field is
+ *    removed entirely — nothing is lost, the server already knows.
+ *
+ * 3. `classOptions` / `houseOptions` are no longer hardcoded to one
+ *    school's structure (Y7..IB2, HAWKS/FALCONS/EAGLES/KITES). They're
+ *    fetched once on mount from the new `GET /v1/school-config` route,
+ *    which returns whatever the CURRENT tenant configured
+ *    (`School.classOptions` / `School.houseOptions` in models/school.js).
+ *    A sensible fallback is kept in case that fetch fails, so the form
+ *    still works during local dev against an un-seeded school.
+ */
+
 import React, { useEffect, useState, useRef } from 'react';
 import { ChevronRight, Plus, X, Upload, Check, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { apiFetch } from '../../../utils/api';
+
+const FALLBACK_CLASS_OPTIONS = [
+  { value: 'N/A', label: 'N/A' },
+  { value: 'Y7', label: 'Year 7' },
+  { value: 'Y8', label: 'Year 8' },
+  { value: 'Y9', label: 'Year 9' },
+  { value: 'Y10', label: 'Year 10' },
+  { value: 'Y11', label: 'Year 11' },
+  { value: 'IB1', label: 'IB Year 1' },
+  { value: 'IB2', label: 'IB Year 2' },
+];
+
+const FALLBACK_HOUSE_OPTIONS = [
+  { value: 'N/A', label: 'N/A' },
+  { value: 'HAWKS', label: 'Hawks' },
+  { value: 'FALCONS', label: 'Falcons' },
+  { value: 'EAGLES', label: 'Eagles' },
+  { value: 'KITES', label: 'Kites' },
+];
+
+// The backend stores these as plain strings (School.classOptions /
+// houseOptions), e.g. ["N/A", "Y7", "Y8", ...]. Turn them into the
+// {value, label} shape the <select> markup below expects, without
+// having to touch the markup itself.
+const toOptionShape = (values) =>
+  Array.isArray(values) && values.length
+    ? values.map((v) => ({ value: v, label: v === 'N/A' ? 'N/A' : v }))
+    : null;
 
 function CreatePoll() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -17,12 +78,36 @@ function CreatePoll() {
   const [optionHouse, setOptionHouse] = useState('');
   const [rank, setRank] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [classOptions, setClassOptions] = useState(FALLBACK_CLASS_OPTIONS);
+  const [houseOptions, setHouseOptions] = useState(FALLBACK_HOUSE_OPTIONS);
 
   const inputRef = useRef();
   const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, []);
+
+  // Pull this tenant's class/house structure once on mount. Falls back
+  // silently to the defaults above if the request fails (e.g. offline,
+  // or a dev environment without a seeded school) so the form is never
+  // left unusable.
+  useEffect(() => {
+    async function loadSchoolConfig() {
+      try {
+        const res = await apiFetch('/v1/school-config');
+        const data = await res.json();
+        if (res.ok && data.data) {
+          const classes = toOptionShape(data.data.classOptions);
+          const houses = toOptionShape(data.data.houseOptions);
+          if (classes) setClassOptions(classes);
+          if (houses) setHouseOptions(houses);
+        }
+      } catch (err) {
+        console.error('Could not load school config, using defaults:', err);
+      }
+    }
+    loadSchoolConfig();
   }, []);
 
   const handleQuestionChange = (e) => {
@@ -121,23 +206,20 @@ function CreatePoll() {
     setIsSubmitting(true);
 
     try {
-      // Create FormData for file upload
+      // FormData for file upload — unchanged shape, minus `owner`.
       const formData = new FormData();
 
-      // Add basic poll data
       formData.append('question', question);
       formData.append('class', pollClass);
       formData.append('house', pollHouse);
       formData.append('rank', parseInt(rank));
 
-      // Add owner information
-      const owner = {
-        name: localStorage.getItem('name'),
-        password: localStorage.getItem('password'),
-      };
-      formData.append('owner', JSON.stringify(owner));
+      // NOTE: no `owner` field anymore. The backend now sets the poll's
+      // owner from the authenticated session (req.user), derived from
+      // the jwt cookie that `apiFetch` sends automatically — sending the
+      // admin's password here was never necessary and was a real
+      // exposure (see file header).
 
-      // Prepare options data (without images)
       const finalOptions = options.map((opt) => ({
         text: opt.text,
         class: opt.class,
@@ -145,27 +227,26 @@ function CreatePoll() {
       }));
       formData.append('options', JSON.stringify(finalOptions));
 
-      // Add images with specific field names
       options.forEach((opt, index) => {
         if (opt.image) {
           formData.append(`option-${index}-image`, opt.image);
         }
       });
 
-      const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/create-poll`,
-        {
-          method: 'POST',
-          body: formData, // Don't set Content-Type header, let browser set it with boundary
-        }
-      );
+      const res = await apiFetch('/create-poll', {
+        method: 'POST',
+        body: formData, // apiFetch skips the JSON content-type for FormData bodies
+      });
 
       if (res.ok) {
         navigate('/polls');
       } else {
         const data = await res.json();
-        if (data.error === 'You have to login / signup to create a poll') {
-          setOptionErr('You have to login to create a poll');
+        if (
+          data.error === 'You have to login / signup to create a poll' ||
+          data.error === 'You have to login to create a poll'
+        ) {
+          setOptionErr('You have to login as an admin to create a poll');
         } else {
           setOptionErr(data.error || 'Failed to create poll');
         }
@@ -177,25 +258,6 @@ function CreatePoll() {
       setIsSubmitting(false);
     }
   };
-
-  const classOptions = [
-    { value: 'N/A', label: 'N/A' },
-    { value: 'Y7', label: 'Year 7' },
-    { value: 'Y8', label: 'Year 8' },
-    { value: 'Y9', label: 'Year 9' },
-    { value: 'Y10', label: 'Year 10' },
-    { value: 'Y11', label: 'Year 11' },
-    { value: 'IB1', label: 'IB Year 1' },
-    { value: 'IB2', label: 'IB Year 2' },
-  ];
-
-  const houseOptions = [
-    { value: 'N/A', label: 'N/A' },
-    { value: 'HAWKS', label: 'Hawks' },
-    { value: 'FALCONS', label: 'Falcons' },
-    { value: 'EAGLES', label: 'Eagles' },
-    { value: 'KITES', label: 'Kites' },
-  ];
 
   return (
     <>
@@ -325,9 +387,6 @@ function CreatePoll() {
                 {/* Current Options */}
                 {options.length > 0 && (
                   <div className="options-section">
-                    {/* <h3 className="section-title">
-                      Poll Options ({options.length})
-                    </h3> */}
                     <div className="options-list">
                       {options.map((opt, index) => (
                         <div key={index} className="option-item">
@@ -359,8 +418,6 @@ function CreatePoll() {
 
                 {/* Add New Option Form */}
                 <div className="add-option-section">
-                  {/* <h3 className="section-title">Add New Option</h3> */}
-
                   <div className="option-form">
                     <div className="form-group">
                       <input
@@ -478,7 +535,7 @@ function CreatePoll() {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .create-poll-container {
           min-height: 100vh;
           background: linear-gradient(

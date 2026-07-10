@@ -1,3 +1,16 @@
+/**
+ * src/Components/Results/Results.jsx
+ * ---------------------------------------------------------------------------
+ * Only change from the original: `/v1/results/:pollId` is fetched via
+ * `apiFetch` instead of a bare `fetch`. This is an admin-only backend
+ * route (`protect` + `requireAdmin`), so it needs the session cookie —
+ * previously the raw `fetch` call had no `credentials` option and would
+ * not have sent it, meaning this call was likely failing/misbehaving in
+ * production for exactly the reason described in `frontend/api.js`.
+ * `Student_ID` is no longer sent in the body; the admin's identity comes
+ * from their session.
+ */
+
 import React, { useState, useEffect } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import { Bar } from 'react-chartjs-2';
@@ -10,6 +23,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { apiFetch } from '../../utils/api';
 import './Results.css';
 
 ChartJS.register(
@@ -51,17 +65,7 @@ function Results(props) {
       setIsLoading(true);
       setDataLoaded(false);
 
-      const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/v1/results/${pollId}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            Student_ID: localStorage.getItem('Student_ID'),
-          }),
-        },
-      );
-
+      const res = await apiFetch(`/v1/results/${pollId}`, { method: 'POST' });
       const data = await res.json();
 
       if (data.error) {
@@ -174,16 +178,6 @@ function Results(props) {
           <div className="bar-chart-container">
             <Bar data={chartData} options={chartOptions} />
           </div>
-
-          {/* {winner && winner.votes > 0 && (
-            <div className="winner-banner">
-              <span className="winner-crown">🏆</span>
-              <div>
-                <p className="winner-label">Winner</p>
-                <p className="winner-name">{winner.text}</p>
-              </div>
-            </div>
-          )} */}
 
           <div className="buttonContainer">
             <button

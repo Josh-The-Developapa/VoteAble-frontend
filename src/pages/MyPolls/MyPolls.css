@@ -30,7 +30,7 @@
   transform: translateX(-50%);
   height: 400px;
   width: 400px;
-  top: 15px;
+  top: 0px;
   pointer-events: none;
   z-index: 0;
 }
@@ -143,9 +143,10 @@
 .mypolls-empty-wrapper {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   padding: 100px 20px 40px;
-  min-height: 100vh;
+  height: 100vh;
+  width: 100vw;
   box-sizing: border-box;
 }
 

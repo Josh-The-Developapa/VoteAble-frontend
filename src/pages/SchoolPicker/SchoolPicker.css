@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;500;600;700;900&display=swap');
+
+.schoolPickerContainer {
+  background-color: #f7f7f9;
+  padding-top: 88px;
+  padding-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 100vw;
+  min-height: 90vh;
+  font-family: 'Kumbh Sans', sans-serif;
+}
+
+.schoolPickerHeader {
+  padding: 20px 32px 12px;
+  width: 100%;
+}
+
+.schoolPickerLabel {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #999;
+  margin: 0 0 6px;
+}
+
+.schoolPickerTitle {
+  font-size: 42px;
+  font-weight: 700;
+  color: #0f0c29;
+  margin: 0;
+  line-height: 1.15;
+}
+
+.schoolPickerStatus {
+  margin: 0 32px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #555;
+}
+
+.schoolPickerStatus.error {
+  color: #c0392b;
+}
+
+.schoolGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 0 28px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.schoolCard {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(15, 12, 41, 0.08);
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 24px 20px;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  font-family: 'Kumbh Sans', sans-serif;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.schoolCard:hover {
+  box-shadow: 0 6px 22px rgba(49, 39, 131, 0.16);
+  transform: translateY(-2px);
+}
+
+.schoolCardLogo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+.schoolCardName {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0f0c29;
+  text-align: center;
+}
+
+@media screen and (max-width: 700px) {
+  .schoolPickerTitle {
+    font-size: 30px;
+  }
+
+  .schoolPickerHeader {
+    padding: 16px 20px 10px;
+  }
+
+  .schoolGrid {
+    padding: 0 12px;
+    gap: 12px;
+  }
+}

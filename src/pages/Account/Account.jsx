@@ -1,3 +1,25 @@
+/**
+ * src/Components/Account/Account.jsx
+ * ---------------------------------------------------------------------------
+ * Two changes from the original:
+ *
+ * 1. `/v1/myPolls` is now fetched via `apiFetch` (session cookie + tenant
+ *    header), with no body — the backend identifies the caller from the
+ *    session, exactly as in MyPolls.jsx.
+ *
+ * 2. The "have I voted on everything" check is fixed. The original did:
+ *      poll.voted.some(name => myName.toLowerCase() === name.toLowerCase())
+ *    which compared the logged-in student's NAME against a list of
+ *    lowercased name strings. That breaks the moment two students share
+ *    a name (a real risk once schools of a few hundred students are
+ *    involved), and it's now structurally impossible anyway since
+ *    `poll.voted` no longer contains name strings at all — it contains
+ *    other students' ObjectIds, and the backend deliberately no longer
+ *    sends that array to student clients (see controllers/controller.js
+ *    `myPolls`). Instead, each poll in the response now carries a
+ *    server-computed `votedByMe` boolean, which is what we check here.
+ */
+
 import React, { useState, useEffect, useRef } from 'react';
 import './Account.css';
 import { FiHome } from 'react-icons/fi';
@@ -7,6 +29,7 @@ import { NavLink } from 'react-router-dom';
 import Profile from '../../assets/Profile.svg';
 import TeamPic from '../../assets/team-pic.png';
 import BallotBox from '../../assets/BallotBox.png';
+import { apiFetch } from '../../utils/api';
 
 // Stagger delays (ms) for each card slot
 const CARD_DELAYS = [0, 120, 240];
@@ -18,37 +41,24 @@ function Account() {
 
   // ── Fetch poll / admin status ──────────────────────────────
   useEffect(() => {
-    const hasVoted = (async function checkPolls() {
+    async function checkPolls() {
       try {
-        const res = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/v1/myPolls`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              Student_ID: localStorage.getItem('Student_ID'),
-              password: localStorage.getItem('password'),
-            }),
-          },
-        );
+        const res = await apiFetch('/v1/myPolls', { method: 'POST' });
         if (!res.ok) throw new Error('Failed to fetch');
         const data = await res.json();
+
         if (data.message === 'You have admin access') setHAR(true);
-        const pollsArray = data.data;
-        const hasVoted = pollsArray.every((poll) =>
-          poll.voted.some(
-            (name) =>
-              localStorage.getItem('name').toLowerCase() === name.toLowerCase(),
-          ),
-        );
+
+        const pollsArray = data.data || [];
+        const hasVoted = pollsArray.length > 0 && pollsArray.every((poll) => poll.votedByMe);
         setVoted(hasVoted);
-        return false;
       } catch (error) {
         console.error('Error checking polls:', error);
-        return false;
+        setVoted(false);
       }
-    })();
-    setVoted(hasVoted);
+    }
+
+    checkPolls();
   }, []);
 
   // ── Entrance animations ────────────────────────────────────
