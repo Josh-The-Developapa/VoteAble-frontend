@@ -51,6 +51,7 @@ export function setSchoolSlug(slug) {
     localStorage.setItem("schoolSlug", slug);
 }
 
+
 export async function apiFetch(path, { method = "GET", body, headers = {} } = {}) {
     const isFormData = body instanceof FormData;
 
