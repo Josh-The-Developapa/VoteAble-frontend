@@ -159,7 +159,9 @@ function Poll(props) {
                     </h2>
                   )}
                   {option.house && (
-                    <p className={option.house}>{option.house}</p>
+                    <p className={option.house}>
+                      {option.house == 'N/A' ? '' : option.house}
+                    </p>
                   )}
                 </div>
               </div>
