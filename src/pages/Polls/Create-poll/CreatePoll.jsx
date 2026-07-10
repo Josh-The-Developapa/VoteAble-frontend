@@ -545,7 +545,7 @@ function CreatePoll() {
             #1e40af 100%
           );
           width: 100vw;
-          padding: 32px 16px;
+          padding: 100px 16px;
           font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
         }
 
