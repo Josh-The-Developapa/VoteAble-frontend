@@ -1,23 +1,20 @@
 /**
  * src/Components/Login/Login.jsx
  * ---------------------------------------------------------------------------
- * Only change from the original: routes its network call through
- * `apiFetch` (src/utils/api.js) instead of a bare `fetch`, which fixes
- * two things at once:
- *   - the request now carries credentials, so the login cookie set by
- *     the backend is actually retained by the browser (see api.js for
- *     the full explanation).
- *   - the request now carries the resolved tenant (school) so the
- *     backend knows which school's student list to check the ID/password
- *     against.
- * Everything else (validation, state, markup) is unchanged.
+ * School selection now lives directly on this page as a dropdown, rather
+ * than a separate picker route. The chosen slug is persisted via
+ * setSchoolSlug (utils/api.js) BEFORE the login request fires, so
+ * apiFetch's X-School-Slug header is always in sync with what the user
+ * just selected — no separate navigation step, no stale localStorage.
  */
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import avatarPic from '../../assets/Logo.svg';
-import { apiFetch } from '../../utils/api';
+import { apiFetch, getSchoolSlug, setSchoolSlug } from '../../utils/api';
 import './Login.css';
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function Login() {
   const [name, setName] = useState('');
@@ -25,10 +22,28 @@ export default function Login() {
   const [nameErr, setNameErr] = useState('');
   const [passErr, setPassErr] = useState('');
   const [selectedHouse, setSelectedHouse] = useState('');
+
+  const [schools, setSchools] = useState([]);
+  const [schoolsLoading, setSchoolsLoading] = useState(true);
+  const [schoolsErr, setSchoolsErr] = useState('');
+  const [selectedSlug, setSelectedSlug] = useState(getSchoolSlug() || '');
+  const [schoolErr, setSchoolErr] = useState('');
+
   const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, []);
+
+  useEffect(() => {
+    fetch(`${BACKEND_URL}/v1/schools`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) setSchools(data.data || []);
+        else setSchoolsErr('Could not load schools.');
+      })
+      .catch(() => setSchoolsErr('Could not load schools.'))
+      .finally(() => setSchoolsLoading(false));
   }, []);
 
   async function user() {
@@ -44,6 +59,10 @@ export default function Login() {
   }
 
   const login = async () => {
+    if (!selectedSlug) {
+      setSchoolErr('Please select your school');
+      return;
+    }
     if (!name) {
       setNameErr('Please enter a valid ID');
       return;
@@ -54,8 +73,13 @@ export default function Login() {
     }
     if (!selectedHouse) return;
 
+    // Persist BEFORE the request — apiFetch reads getSchoolSlug()
+    // synchronously off localStorage, so this must happen first.
+    setSchoolSlug(selectedSlug);
+
     try {
       const data = await user();
+
       if (data.error === 'Invalid password') {
         setPassErr(data.error);
         return;
@@ -64,16 +88,12 @@ export default function Login() {
         setNameErr(data.error);
         return;
       }
+      if (data.error === 'No school found for this address') {
+        setSchoolErr('That school could not be found. Please try again.');
+        return;
+      }
       if (data.error) return;
 
-      // NOTE: identity/session now lives in the httpOnly `jwt` cookie set
-      // by the backend. We still cache a few DISPLAY-ONLY fields in
-      // localStorage for convenience (name, class, house) since those are
-      // not secrets, but the password is no longer persisted to
-      // localStorage — the original code stored it in plaintext
-      // (`localStorage.setItem('password', password)`) and then resent it
-      // on nearly every subsequent request. That's gone now that
-      // `protect` middleware authenticates via the cookie.
       localStorage.setItem('Student_ID', name);
       localStorage.setItem('name', data.user.name);
       localStorage.setItem('class', data.user.class);
@@ -91,8 +111,32 @@ export default function Login() {
         <img src={avatarPic} className="avPic" alt="Voteable" />
         <h2 className="heading">Welcome Back</h2>
 
+        {/* School selector */}
+        <div className="input-wrapper" style={{ marginTop: '12px' }}>
+          <select
+            value={selectedSlug}
+            onChange={(e) => {
+              setSelectedSlug(e.target.value);
+              setSchoolErr('');
+            }}
+            className="joinInput"
+            disabled={schoolsLoading || !!schoolsErr}
+          >
+            <option value="">
+              {schoolsLoading ? 'Loading schools...' : 'Select your school'}
+            </option>
+            {schools.map((s) => (
+              <option key={s.slug} value={s.slug}>
+                {s.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        {schoolsErr && <p className="namep">{schoolsErr}</p>}
+        {schoolErr && <p className="namep">{schoolErr}</p>}
+
         {/* Student ID field */}
-        <div className="input-wrapper">
+        <div className="input-wrapper" style={{ marginTop: '12px' }}>
           <svg
             className="input-icon"
             viewBox="0 0 24 24"

@@ -13,7 +13,6 @@ import Results from './pages/Results/Results.jsx';
 import NotFound from './pages/404-page/NotFound.jsx';
 import Home from './pages/Home/Home.jsx';
 import About from './pages/About/About.jsx';
-import SchoolPicker from './pages/SchoolPicker/SchoolPicker.jsx';
 import { getSchoolSlug } from './utils/api';
 
 // import App from './App'
@@ -45,10 +44,7 @@ const router = createBrowserRouter([
     path: '/*',
     element: <Layout page={<NotFound />} />,
   },
-  {
-    path: '/',
-    element: <RootRoute />,
-  },
+
   {
     path: '/login',
     element: <Layout page={<Login />} />,

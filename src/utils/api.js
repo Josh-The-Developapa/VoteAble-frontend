@@ -44,36 +44,24 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
  * schools.
  */
 export function getSchoolSlug() {
-    const host = window.location.hostname;
-    const parts = host.split(".");
-    const looksLikeSubdomain = parts.length > 2 || (parts.length === 2 && parts[1] !== "localhost");
+    return localStorage.getItem("schoolSlug") || "";
+}
 
-    if (looksLikeSubdomain) return parts[0];
-
-    const fallback = import.meta.env.VITE_SCHOOL_SLUG || "";
-    if (!fallback) {
-        // This is almost always a local-dev misconfiguration, not a real
-        // production scenario (production is expected to resolve the
-        // tenant from the subdomain instead). Surface it loudly so it
-        // doesn't look like a mysterious 400 from the backend.
-        console.warn(
-            "[VoteAble] No school slug could be resolved for this request. " +
-            "On localhost, set VITE_SCHOOL_SLUG in your frontend .env (e.g. VITE_SCHOOL_SLUG=akesu) " +
-            "and restart the dev server — Vite only reads env vars at startup."
-        );
-    }
-    return fallback;
+export function setSchoolSlug(slug) {
+    localStorage.setItem("schoolSlug", slug);
 }
 
 export async function apiFetch(path, { method = "GET", body, headers = {} } = {}) {
-    return fetch(`${BACKEND_URL}${path}`, {
+    const isFormData = body instanceof FormData;
+
+    return fetch(`${ BACKEND_URL }${ path }`, {
         method,
-        credentials: "include", // send/receive the httpOnly jwt cookie
+        credentials: "include",
         headers: {
-            "Content-Type": body instanceof FormData ? undefined : "application/json",
+            ...(isFormData ? {} : { "Content-Type": "application/json" }),
             "X-School-Slug": getSchoolSlug(),
             ...headers,
         },
-        body: body instanceof FormData ? body : body ? JSON.stringify(body) : undefined,
+        body: isFormData ? body : body ? JSON.stringify(body) : undefined,
     });
 }
