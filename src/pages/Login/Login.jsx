@@ -200,10 +200,15 @@ export default function Login() {
             className="joinInput"
           >
             <option value="">Select a house</option>
-            <option value="HAWKS">HAWKS</option>
+            {/* <option value="HAWKS">HAWKS</option>
             <option value="FALCONS">FALCONS</option>
             <option value="EAGLES">EAGLES</option>
-            <option value="KITES">KITES</option>
+            <option value="KITES">KITES</option> */}
+
+            <option value="LIONS">LIONS</option>
+            <option value="ELEPHANTS">ELEPHANTS</option>
+            <option value="ZEBRA">ZEBRA</option>
+            <option value="RHINO">RHINO</option>
           </select>
         </div>
 
