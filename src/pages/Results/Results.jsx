@@ -1,14 +1,17 @@
 /**
  * src/Components/Results/Results.jsx
  * ---------------------------------------------------------------------------
- * Only change from the original: `/v1/results/:pollId` is fetched via
- * `apiFetch` instead of a bare `fetch`. This is an admin-only backend
- * route (`protect` + `requireAdmin`), so it needs the session cookie —
- * previously the raw `fetch` call had no `credentials` option and would
- * not have sent it, meaning this call was likely failing/misbehaving in
- * production for exactly the reason described in `frontend/api.js`.
- * `Student_ID` is no longer sent in the body; the admin's identity comes
- * from their session.
+ * `/v1/results/:pollId` is fetched via `apiFetch` instead of a bare `fetch`.
+ * This is an admin-only backend route (`protect` + `requireAdmin`), so it
+ * needs the session cookie — a raw `fetch` call with no `credentials`
+ * option would not have sent it. `Student_ID` is no longer sent in the
+ * body; the admin's identity comes from their session.
+ *
+ * Bar colors: replaced the fixed brand palette with a randomized,
+ * vibrant palette generated fresh on every mount (i.e. every refresh).
+ * Hues are evenly spaced around the color wheel with random jitter so
+ * bars stay distinct from each other but the overall look changes
+ * each time.
  */
 
 import React, { useState, useEffect } from 'react';
@@ -38,17 +41,26 @@ ChartJS.defaults.plugins.legend.display = false;
 ChartJS.defaults.responsive = true;
 ChartJS.defaults.maintainAspectRatio = false;
 
-// Brand palette — cycles through these instead of random colours
-const BRAND_COLORS = [
-  '#312783',
-  '#4a2342',
-  '#1c164a',
-  '#6b3fa0',
-  '#2c5282',
-  '#27003c',
-  '#7b3f6e',
-  '#1a4a7a',
-];
+/**
+ * Generates `count` vibrant, visually distinct HSL colors.
+ * Hues are evenly spaced around the wheel (360 / count) with a random
+ * offset + per-slot jitter so the palette differs on every call, while
+ * saturation/lightness stay in a "vibrant but readable on white" band.
+ */
+function generateVibrantPalette(count) {
+  if (count <= 0) return [];
+
+  const hueStep = 360 / count;
+  const hueOffset = Math.random() * 360;
+
+  return Array.from({ length: count }, (_, i) => {
+    const jitter = (Math.random() - 0.5) * hueStep * 0.6;
+    const hue = (hueOffset + i * hueStep + jitter + 360) % 360;
+    const saturation = 65 + Math.random() * 25; // 65–90%
+    const lightness = 45 + Math.random() * 12; // 45–57%
+    return `hsl(${hue.toFixed(1)}, ${saturation.toFixed(0)}%, ${lightness.toFixed(0)}%)`;
+  });
+}
 
 function Results(props) {
   const pollId = props.pollId;
@@ -57,6 +69,8 @@ function Results(props) {
   const [pollNotFound, setPollNotFound] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [dataLoaded, setDataLoaded] = useState(false);
+  // One palette per mount — regenerated on every refresh/page load.
+  const [barColors, setBarColors] = useState([]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -74,6 +88,7 @@ function Results(props) {
       } else {
         setQuestion(data.data.question);
         setOptions(data.data.options);
+        setBarColors(generateVibrantPalette(data.data.options.length));
         setTimeout(() => {
           setDataLoaded(true);
           setIsLoading(false);
@@ -96,9 +111,9 @@ function Results(props) {
         label: 'Votes',
         data: options.map((o) => o.votes),
         backgroundColor: options.map(
-          (_, i) => BRAND_COLORS[i % BRAND_COLORS.length],
+          (_, i) => barColors[i] || barColors[i % (barColors.length || 1)],
         ),
-        borderRadius: 6,
+        borderRadius: 0,
         borderSkipped: false,
       },
     ],

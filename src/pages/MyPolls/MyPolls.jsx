@@ -45,7 +45,9 @@ const ElectionResultsPDF = ({ polls = [], onClose, schoolName, logoUrl }) => {
     try {
       const pollsWithResults = await Promise.all(
         polls.map(async (poll) => {
-          const res = await apiFetch(`/v1/results/${poll._id}`, { method: 'POST' });
+          const res = await apiFetch(`/v1/results/${poll._id}`, {
+            method: 'POST',
+          });
           const data = await res.json();
           return {
             _id: poll._id,
@@ -88,8 +90,12 @@ const ElectionResultsPDF = ({ polls = [], onClose, schoolName, logoUrl }) => {
           <body>
             <div class="header">
               <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin-bottom: 15px;">
-                ${logoUrl ? `<img src="${logoUrl}" alt="School Logo" style="height: 80px; object-fit: contain;" />
-                <span style="font-size: 28px; font-weight: bold; color: #2c5282;">|</span>` : ''}
+                ${
+                  logoUrl
+                    ? `<img src="${logoUrl}" alt="School Logo" style="height: 80px; object-fit: contain;" />
+                <span style="font-size: 28px; font-weight: bold; color: #2c5282;">|</span>`
+                    : ''
+                }
                 <img src="/VoteAble-Logo.png" alt="VoteAble Logo" style="height: 60px; object-fit: contain; opacity: 0.85;" />
               </div>
               <div class="school-name">${displayName}</div>
