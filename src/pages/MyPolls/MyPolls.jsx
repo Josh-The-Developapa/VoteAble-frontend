@@ -155,7 +155,6 @@ const ElectionResultsPDF = ({ polls = [], onClose, schoolName, logoUrl }) => {
             <div class="summary-section">
               <div class="summary-title">Election Summary</div>
               <p><strong>Total Positions:</strong> ${pollsWithResults.length}</p>
-              ${showVoteCounts ? `<p><strong>Overall Voter Participation:</strong> ${pollsWithResults.reduce((sum, poll) => sum + poll.options.reduce((s, o) => s + o.votes, 0), 0)} total votes across all positions</p>` : ''}
               <p><strong>Election Status:</strong> Completed</p>
             </div>
             <div class="footer">
