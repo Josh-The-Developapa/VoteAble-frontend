@@ -205,10 +205,10 @@ export default function Login() {
             <option value="EAGLES">EAGLES</option>
             <option value="KITES">KITES</option> */}
 
-            <option value="LIONS">LIONS</option>
-            <option value="ELEPHANTS">ELEPHANTS</option>
-            <option value="ZEBRA">ZEBRA</option>
-            <option value="RHINO">RHINO</option>
+            <option value="HAWKS">HAWKS</option>
+            <option value="EAGLES">EAGLES</option>
+            <option value="FALCONS">FALCONS</option>
+            <option value="KITES">KITES</option>
           </select>
         </div>
 

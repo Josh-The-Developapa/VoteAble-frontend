@@ -22,19 +22,30 @@
   }
 }
 
-/* ============================================================
-   ANIMATION BASE STATES
-   Elements start hidden; .is-visible triggers the animation.
-   On wide screens (single-page layout) we skip the hidden state
-   so everything appears immediately without needing to scroll.
-   ============================================================ */
-
-.anim-fade-up,
-.anim-fade-in {
-  /* visible by default — overridden for scrollable layouts below */
+@keyframes overlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-/* Stagger delays (used once .is-visible is applied) */
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================================
+   ANIMATION BASE STATES
+   ============================================================ */
+
 .anim-delay-1 {
   animation-delay: 0.08s;
 }
@@ -54,13 +65,11 @@
   animation-delay: 0.86s;
 }
 
-/* On screens where sections stack and require scrolling,
-   hide elements until the observer fires .is-visible */
+/* Stacked layouts: hide until the observer adds .is-visible */
 @media (max-width: 1200px) {
   .anim-fade-up {
     opacity: 0;
     transform: translateY(28px);
-    transition: none; /* animation handles it */
   }
 
   .anim-fade-in {
@@ -76,8 +85,7 @@
   }
 }
 
-/* On the wide single-column layout all three panels are side-by-side
-   and visible on load — animate them in immediately via short delays */
+/* Wide layout: all panels are visible on load, animate immediately */
 @media (min-width: 1201px) {
   .anim-fade-up {
     opacity: 0;
@@ -238,6 +246,14 @@
   width: 100%;
 }
 
+.team-hint {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 300;
+  color: #555;
+  text-align: center;
+}
+
 .team-members {
   display: flex;
   justify-content: flex-start;
@@ -247,7 +263,18 @@
   margin: 0px;
 }
 
+/* .team-member is a <button>: reset native styling.
+   The box outline is removed on purpose. Hover and keyboard focus
+   are shown as a single clean ring on the photo only (below). */
 .team-member {
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: 0;
+  outline: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
   text-align: center;
   padding: 0px;
   margin-bottom: 10px;
@@ -257,6 +284,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-radius: 16px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.team-member:focus {
+  outline: none;
 }
 
 .team-member p {
@@ -264,6 +298,7 @@
   font-size: 15px;
   margin-top: 5px;
   width: 150px;
+  transition: color 0.25s ease;
 }
 
 .team-member .role {
@@ -279,11 +314,202 @@
   height: 100px;
   width: 100px;
   object-fit: cover;
-  border-radius: 100px;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 0 #f0f0f0,
+    0 0 0 0 rgba(49, 39, 131, 0);
+  transition:
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* One slim offset ring: 3px gap, 2px purple line */
+.team-member:hover .member-pic,
+.team-member:focus-visible .member-pic {
+  box-shadow:
+    0 0 0 3px #f0f0f0,
+    0 0 0 5px #312783;
+  transform: scale(1.03);
+}
+
+.team-member:hover p:not(.role),
+.team-member:focus-visible p:not(.role) {
+  color: #312783;
+}
+
+/* Pressed feedback on touch */
+.team-member:active .member-pic {
+  transform: scale(0.97);
 }
 
 /* ============================================================
-   RESPONSIVE — 1200px
+   PROFILE MODAL
+   ============================================================ */
+
+.profile-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(24, 20, 58, 0.55);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  animation: overlayIn 0.2s ease both;
+}
+
+.profile-card {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 40px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: #f0f0f0;
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgba(24, 20, 58, 0.35);
+  outline: none; /* card is focused programmatically; no ring needed */
+  animation: cardIn 0.28s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.profile-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #555;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.profile-close:hover {
+  background: #d5d5d5;
+  color: #000;
+}
+
+.profile-close:focus {
+  outline: none;
+}
+
+.profile-close:focus-visible,
+.profile-link:focus-visible {
+  outline: 2px solid #312783;
+  outline-offset: 2px;
+}
+
+.profile-pic {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 3px #f0f0f0,
+    0 0 0 5px #312783;
+}
+
+.profile-name {
+  margin: 22px 0 0;
+  font-family: 'Sora', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #1c1a33;
+}
+
+.profile-role {
+  margin: 4px 0 0;
+  font-size: 15px;
+  font-weight: 300;
+  color: #555;
+}
+
+.profile-bio {
+  margin: 14px 0 0;
+  max-width: 300px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #222;
+}
+
+.profile-links {
+  list-style: none;
+  margin: 22px 0 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profile-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid #d5d5d5;
+  border-radius: 12px;
+  background: #f8f8f8;
+  color: #1c1a33;
+  font-size: 15px;
+  text-decoration: none;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.profile-link svg {
+  flex-shrink: 0;
+  color: #312783;
+  transition: color 0.2s ease;
+}
+
+.profile-link span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-link:hover {
+  background: #312783;
+  border-color: #312783;
+  color: #fff;
+}
+
+.profile-link:hover svg {
+  color: #fff;
+}
+
+.profile-empty {
+  margin: 22px 0 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* ============================================================
+   RESPONSIVE: 1200px
    ============================================================ */
 @media (max-width: 1200px) {
   .about-container {
@@ -314,7 +540,7 @@
 }
 
 /* ============================================================
-   RESPONSIVE — 938px
+   RESPONSIVE: 938px
    ============================================================ */
 @media screen and (max-width: 938px) {
   .about-middle {
@@ -323,7 +549,7 @@
 }
 
 /* ============================================================
-   RESPONSIVE — 768px
+   RESPONSIVE: 768px
    ============================================================ */
 @media (max-width: 768px) {
   .about-container {
@@ -346,12 +572,51 @@
     display: none;
   }
 
-  /* Center team members on small screens */
   .team-members {
     justify-content: center;
   }
 
   .team-intro h2 {
     text-align: center;
+  }
+
+  /* Profile opens as a bottom sheet on phones */
+  .profile-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .profile-card {
+    max-width: none;
+    border-radius: 20px 20px 0 0;
+    padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-up,
+  .anim-fade-in {
+    opacity: 1;
+    transform: none;
+    animation: none !important;
+  }
+
+  .profile-overlay,
+  .profile-card {
+    animation: none;
+  }
+
+  .member-pic,
+  .team-member p {
+    transition: none;
+  }
+
+  .team-member:hover .member-pic,
+  .team-member:focus-visible .member-pic,
+  .team-member:active .member-pic {
+    transform: none;
   }
 }
