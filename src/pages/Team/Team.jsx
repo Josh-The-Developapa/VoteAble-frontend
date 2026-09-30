@@ -503,11 +503,11 @@ const TeamPage = () => {
             </div>
           )}
 
-          <h3 key={gen.id} className="tm-gen-title tm-fade">
+          <h3 key={`title-${gen.id}`} className="tm-gen-title tm-fade">
             Academic Year {gen.label}
           </h3>
 
-          <div className="tm-founders" key={gen.id}>
+          <div className="tm-founders" key={`grid-${gen.id}`}>
             {gen.members.map((m, i) => (
               <PortraitCard
                 key={m.id}
