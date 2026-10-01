@@ -3,13 +3,16 @@
  * ---------------------------------------------------------------------------
  * Changes from the original:
  *  - Both fetches (`GET /v1/poll/:pollId`, `POST /v1/vote/:pollId`) now
- *    go through `apiFetch`, so they carry the tenant header and — for
- *    the vote — the session cookie.
+ *    go through `apiFetch`, so they carry the tenant header and, for
+ *    the vote, the session cookie.
  *  - The vote request no longer includes `Student_ID` / `password` in
  *    its body. Previously the browser resent the student's raw password
  *    on every single vote; now the backend's `protect` middleware
  *    identifies the voter from the verified session, and the vote body
  *    is just `{ answer }`.
+ *  - The house label turns white when its option is selected, matching
+ *    the candidate name. When not selected, no inline color is applied,
+ *    so each house keeps the color defined by its CSS class.
  */
 
 import React, { useState, useEffect } from 'react';
@@ -159,8 +162,11 @@ function Poll(props) {
                     </h2>
                   )}
                   {option.house && (
-                    <p className={option.house}>
-                      {option.house == 'N/A' ? '' : option.house}
+                    <p
+                      className={option.house}
+                      style={isSelected ? { color: '#fff' } : undefined}
+                    >
+                      {option.house === 'N/A' ? '' : option.house}
                     </p>
                   )}
                 </div>
