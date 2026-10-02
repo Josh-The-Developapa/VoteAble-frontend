@@ -9,6 +9,8 @@ import SahithiImage from '../../assets/Sahithi Beecha.jpeg';
 import JayImage from '../../assets/Jay.jpeg';
 import MarieImage from '../../assets/Marie.jpeg';
 import JaniceImage from '../../assets/Janice.png';
+import PhilipImage from '../../assets/Philip.jpeg';
+import PrestonImage from '../../assets/Preston.jpeg';
 import FaizaImage from '../../assets/Faiza.jpeg';
 import HettImage from '../../assets/Hett.jpeg';
 
@@ -122,7 +124,7 @@ const GENERATIONS = [
         id: 'alvin',
         name: 'Alvin Preston Nantajja',
         role: 'Director of Field Operations',
-        image: '',
+        image: PrestonImage,
         bio: 'Coordinates the team’s work on the ground, mobilizing students and helping turn Legacy Team initiatives into action across the school.',
         links: { instagram: 'preston_nantajja' },
       },
@@ -147,7 +149,7 @@ const GENERATIONS = [
         id: 'phill',
         name: 'Phillip Ssebombo',
         role: 'Director of Governance & Administration',
-        image: '',
+        image: PhilipImage,
         bio: 'Supports the Legacy Team’s governance and institutional continuity, helping maintain the systems, processes and standards that allow its work to continue across student cohorts.',
       },
     ],
