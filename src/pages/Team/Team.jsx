@@ -8,6 +8,8 @@ import AkhilImage from '../../assets/Akhil Muni.jpeg';
 import SahithiImage from '../../assets/Sahithi Beecha.jpeg';
 import JayImage from '../../assets/Jay.jpeg';
 import MarieImage from '../../assets/Marie.jpeg';
+import JaniceImage from '../../assets/Janice.png';
+import FaizaImage from '../../assets/Faiza.jpeg';
 import HettImage from '../../assets/Hett.jpeg';
 
 /* ============================================================
@@ -129,7 +131,7 @@ const GENERATIONS = [
         id: 'janice',
         name: 'Janice',
         role: 'Director of Electoral Affairs',
-        image: '',
+        image: JaniceImage,
         bio: 'Oversees electoral affairs within the Legacy Team, supporting the organization, coordination and administration of student elections and ensuring electoral activities are carried out effectively.',
       },
 
@@ -137,7 +139,7 @@ const GENERATIONS = [
         id: 'faiza',
         name: 'Faiza',
         role: 'Director of Election Operations',
-        image: '',
+        image: FaizaImage,
         bio: 'Coordinates the operational execution of student elections, helping organize personnel, timelines and logistical requirements to ensure electoral activities run smoothly.',
       },
 
