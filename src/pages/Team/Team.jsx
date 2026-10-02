@@ -6,6 +6,8 @@ import AlbertImage from '../../assets/Albert.png';
 import EmmanuelImage from '../../assets/Emmanuel.jpg';
 import AkhilImage from '../../assets/Akhil Muni.jpeg';
 import SahithiImage from '../../assets/Sahithi Beecha.jpeg';
+import JayImage from '../../assets/Jay.jpeg';
+import MarieImage from '../../assets/Marie.jpeg';
 import HettImage from '../../assets/Hett.jpeg';
 
 /* ============================================================
@@ -77,15 +79,83 @@ const FOUNDERS = [
   },
 ];
 
-/* Newest generation FIRST. To add a new year, paste a new object at the
-   top and set current: true on it (and remove it from the old one). */
+/* One object per academic year. Years show in the order listed, and the one
+   marked current: true is selected when the page opens. To add a year, add a
+   new object and move current: true to it. */
 const GENERATIONS = [
+  {
+    id: '2026-2027',
+    label: '2026 – 2027',
+    current: true,
+    blurb:
+      'International Baccalaureate Diploma Programme students at Aga Khan High School, Kampala, leading election administration, school-wide coordination and the continued development of the Legacy Team under the guidance of its founding team.',
+
+    members: [
+      {
+        id: 'jay',
+        name: 'Jay Patel',
+        role: 'Chief Executive Officer',
+        image: JayImage,
+        bio: 'Leads the Legacy Team, coordinating its members, organizing election operations and ensuring the team continues the work established by its founders.',
+      },
+
+      {
+        id: 'marie',
+        name: 'Akarunga Marie',
+        role: 'Chief Operating Officer',
+        image: MarieImage,
+        bio: 'Oversees the day-to-day operations of the Legacy Team, coordinating members, logistics and collaboration with the Student Council.',
+        links: { instagram: 'mammdd_tttt' },
+      },
+
+      {
+        id: 'zoey',
+        name: 'Zoey Langariti',
+        role: 'Chief Strategy Officer',
+        image: '',
+        bio: 'Drives forward planning and strategic coordination, helping the team anticipate key dates, prepare initiatives and maintain continuity between student cohorts.',
+      },
+
+      {
+        id: 'alvin',
+        name: 'Alvin Preston Nantajja',
+        role: 'Director of Field Operations',
+        image: '',
+        bio: 'Coordinates the team’s work on the ground, mobilizing students and helping turn Legacy Team initiatives into action across the school.',
+        links: { instagram: 'preston_nantajja' },
+      },
+
+      {
+        id: 'janice',
+        name: 'Janice',
+        role: 'Director of Electoral Affairs',
+        image: '',
+        bio: 'Oversees electoral affairs within the Legacy Team, supporting the organization, coordination and administration of student elections and ensuring electoral activities are carried out effectively.',
+      },
+
+      {
+        id: 'faiza',
+        name: 'Faiza',
+        role: 'Director of Election Operations',
+        image: '',
+        bio: 'Coordinates the operational execution of student elections, helping organize personnel, timelines and logistical requirements to ensure electoral activities run smoothly.',
+      },
+
+      {
+        id: 'phill',
+        name: 'Phillip Ssebombo',
+        role: 'Director of Governance & Administration',
+        image: '',
+        bio: 'Supports the Legacy Team’s governance and institutional continuity, helping maintain the systems, processes and standards that allow its work to continue across student cohorts.',
+      },
+    ],
+  },
   {
     id: '2025-2026',
     label: '2025 – 2026',
-    current: true,
+    current: false,
     blurb:
-      'International Baccalaureate Diploma Programme students at Aga Khan High School, Kampala, running daily operations, election administration and platform maintenance under the guidance of the founding team.',
+      'Former International Baccalaureate Diploma Programme students at Aga Khan High School, Kampala, who ran daily operations, election administration and platform maintenance under the guidance of the founding team.',
     members: [
       {
         id: 'sahithi',
@@ -413,7 +483,9 @@ function ProfileModal({ entry, onClose }) {
    ============================================================ */
 const TeamPage = () => {
   useReveal();
-  const [genId, setGenId] = useState(GENERATIONS[0].id);
+  const [genId, setGenId] = useState(
+    (GENERATIONS.find((g) => g.current) || GENERATIONS[0]).id,
+  );
   const [active, setActive] = useState(null);
   const triggerRef = useRef(null);
   const gen = GENERATIONS.find((g) => g.id === genId) || GENERATIONS[0];
@@ -480,32 +552,30 @@ const TeamPage = () => {
             </p>
           </div>
 
-          {GENERATIONS.length > 1 && (
+          {GENERATIONS.length > 1 ? (
             <div
-              className="tm-tabs"
+              className="tm-years"
               role="group"
-              aria-label="Choose a generation"
+              aria-label="Choose an academic year"
             >
-              {GENERATIONS.map((g) => (
-                <button
-                  key={g.id}
-                  type="button"
-                  className={`tm-tab${g.id === genId ? ' is-active' : ''}`}
-                  aria-pressed={g.id === genId}
-                  onClick={() => setGenId(g.id)}
-                >
-                  {g.label}
-                  {g.current && (
-                    <span className="tm-tab-dot" title="Current team" />
-                  )}
-                </button>
-              ))}
+              <span className="tm-years-label">Academic year</span>
+              <div className="tm-years-list">
+                {GENERATIONS.map((g) => (
+                  <button
+                    key={g.id}
+                    type="button"
+                    className={`tm-year${g.id === genId ? ' is-active' : ''}`}
+                    aria-pressed={g.id === genId}
+                    onClick={() => setGenId(g.id)}
+                  >
+                    {g.label}
+                  </button>
+                ))}
+              </div>
             </div>
+          ) : (
+            <h3 className="tm-gen-title">Academic Year {gen.label}</h3>
           )}
-
-          <h3 key={`title-${gen.id}`} className="tm-gen-title tm-fade">
-            Academic Year {gen.label}
-          </h3>
 
           <div className="tm-founders" key={`grid-${gen.id}`}>
             {gen.members.map((m, i) => (
