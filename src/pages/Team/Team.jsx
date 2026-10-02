@@ -102,7 +102,7 @@ const GENERATIONS = [
       {
         id: 'marie',
         name: 'Akarunga Marie',
-        role: 'Chief Operating Officer',
+        role: 'Chief Operations Officer',
         image: MarieImage,
         bio: 'Oversees the day-to-day operations of the Legacy Team, coordinating members, logistics and collaboration with the Student Council.',
         links: { instagram: 'mammdd_tttt' },
